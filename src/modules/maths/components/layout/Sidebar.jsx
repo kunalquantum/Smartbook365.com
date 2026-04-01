@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { chapters } from '../../data/chapters';
 
 export const Sidebar = ({ activeChapter, onSelectChapter }) => {
@@ -54,6 +55,17 @@ export const Sidebar = ({ activeChapter, onSelectChapter }) => {
           );
         })}
       </div>
+
+      {/* Home Link */}
+      <Link to="/" style={{
+        padding: '24px', borderTop: '1px solid var(--border)',
+        display: 'flex', alignItems: 'center', gap: 10,
+        color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 600,
+        textDecoration: 'none'
+      }}>
+        <span>🏠</span> Back to Home
+      </Link>
     </div>
   );
 };
+

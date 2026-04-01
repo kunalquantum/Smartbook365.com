@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { TOTAL_TOPICS } from '../../data/chapters'
 
 const BRANCH_COLOR = {
@@ -92,6 +93,16 @@ export default function Sidebar({ chapters, activeId, onSelect, chapterDone, tot
                     )
                 })}
             </div>
+
+            {/* Home Link */}
+            <Link to="/" style={{
+                padding: '15px', borderTop: '1px solid var(--border)',
+                display: 'flex', alignItems: 'center', gap: 10,
+                color: 'var(--text2)', fontSize: 13, fontWeight: 600,
+                textDecoration: 'none'
+            }}>
+                <span>🏠</span> Back to Home
+            </Link>
         </aside>
     )
 }

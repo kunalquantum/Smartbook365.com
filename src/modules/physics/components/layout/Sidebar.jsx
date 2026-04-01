@@ -1,5 +1,6 @@
 import ProgressBar from '../ui/ProgressBar'
 import { TOTAL_TOPICS } from '../../data/physics'
+import { Link } from 'react-router-dom'
 
 export default function Sidebar({ chapters, activeId, onSelect, chapterDone, totalDone, isOpen }) {
     const globalPct = Math.round((totalDone / TOTAL_TOPICS) * 100)
@@ -67,6 +68,16 @@ export default function Sidebar({ chapters, activeId, onSelect, chapterDone, tot
                     )
                 })}
             </div>
+
+            {/* Home Link */}
+            <Link to="/" style={{
+                padding: '16px', borderTop: '1px solid var(--border)',
+                display: 'flex', alignItems: 'center', gap: 10,
+                color: 'var(--text2)', fontSize: 14, fontWeight: 600,
+                textDecoration: 'none'
+            }}>
+                <span>🏠</span> Back to Home
+            </Link>
         </aside>
     )
 }

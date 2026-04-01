@@ -68,9 +68,9 @@
 /* Buttons */
 .landing-page .btn {
     display: inline-block;
-    padding: 1rem 2.5rem;
+    padding: 0.8rem 2.5rem;
     border-radius: 50px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
     border: none;
@@ -85,13 +85,19 @@
 
 .landing-page .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 242, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 242, 255, 0.4);
 }
 
 .landing-page .btn-secondary {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: white;
+    backdrop-filter: blur(10px);
+}
+
+.landing-page .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
 }
 
 .landing-page .btn-outline {
@@ -104,6 +110,7 @@
     background: var(--primary);
     color: var(--background);
 }
+
 
 /* Header & Nav */
 .landing-page header {
@@ -167,17 +174,53 @@
 }
 
 .landing-page .hero-content h1 {
-    font-size: 4.5rem;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
+    font-size: 5.5rem;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
+    color: #ffffff;
 }
 
-.landing-page .hero-content p {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
-    margin-bottom: 2.5rem;
-    max-width: 500px;
+
+.landing-page .hero-dot-container {
+    position: relative;
+    display: inline-block;
 }
+
+.landing-page .hero-dot {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    width: 15px;
+    height: 15px;
+    background: var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--primary);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+.landing-page .hero-title-large {
+    font-size: 8rem;
+    display: block;
+    margin-top: 0.5rem;
+    filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.3));
+}
+
+
+.landing-page .hero-content p {
+    font-size: 1.35rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    max-width: 550px;
+    font-weight: 500;
+}
+
 
 .landing-page .hero-btns {
     display: flex;
