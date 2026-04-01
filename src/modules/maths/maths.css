@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+.maths-theme {
+  --bg:     #0A0F1E;    /* deep navy */
+  --bg2:    #0F1628;
+  --bg3:    #141D35;
+  --bg4:    #1A2545;
+  --border: rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --blue:   #4A8FE7;    /* primary — coordinate grids */
+  --indigo: #6C63FF;    /* functions */
+  --teal:   #1CB8A0;    /* geometry */
+  --gold:   #F0B429;    /* formulas */
+  --coral:  #E85D54;    /* errors/negatives */
+  --green:  #36C27A;    /* correct/positive */
+  --text1:  #E8EEF8;
+  --text2:  #8A9DC0;
+  --text3:  #3D5280;
+  --font:   'Inter', system-ui, sans-serif;
+  --mono:   'JetBrains Mono', monospace;
+  
+  /* Mapped names for existing components */
+  --primary: var(--blue);
+  --primary-light: var(--indigo);
+  --secondary: var(--teal);
+  --accent: var(--gold);
+  --success: var(--green);
+  --info: var(--blue);
+  
+  --bg-color: var(--bg);
+  --bg-surface-solid: var(--bg2);
+  --text-primary: var(--text1);
+  --text-secondary: var(--text2);
+  --text-muted: var(--text3);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  background-color: var(--bg);
+  color: var(--text1);
+  font-family: var(--font);
+  min-height: 100vh;
+}
+
+.maths-theme * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.maths-theme h1, .maths-theme h2, .maths-theme h3, .maths-theme h4, .maths-theme h5, .maths-theme h6 {
+  font-weight: 600;
+  color: var(--text1);
+}
+
+.maths-theme .math-font {
+  font-family: var(--mono);
+}
+
+.maths-theme .glass-panel {
+  background: rgba(15, 22, 40, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.maths-theme .bg-gradient-math {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(74, 143, 231, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+

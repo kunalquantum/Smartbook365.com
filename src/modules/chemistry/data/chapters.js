@@ -1,0 +1,578 @@
+export const CHAPTERS = [
+    {
+        id: 1, branch: 'Physical', branchKey: 'physical',
+        title: 'Some Basic Concepts of Chemistry',
+        desc: 'Mole concept, stoichiometry, laws of chemical combination — the quantitative foundation of all chemistry.',
+        topics: [
+            {
+                tag: 'physical', name: 'Laws of Chemical Combination',
+                detail: 'Conservation of mass, definite proportions, multiple proportions, reciprocal proportions.',
+                concept: 'All chemical reactions obey four fundamental laws. The Law of Conservation of Mass (Lavoisier) states mass is neither created nor destroyed. Law of Definite Proportions (Proust) states a compound always contains elements in fixed mass ratios. Law of Multiple Proportions (Dalton) applies when two elements form more than one compound.',
+                formula: ['mass reactants = mass products', 'Law of Definite Proportions', 'Ratio of masses = small whole numbers'],
+            },
+            {
+                tag: 'physical', name: 'Atomic & Molecular Mass',
+                detail: 'Relative atomic mass, molecular mass, molar mass, equivalent mass.',
+                concept: 'Atomic mass is the mass of an atom relative to 1/12th the mass of Carbon-12. Molecular mass is the sum of atomic masses of all atoms in a molecule. Molar mass is the mass of one mole (6.022×10²³ particles) of a substance in grams — numerically equal to molecular mass.',
+                formula: ['Molecular mass = Σ atomic masses', 'Molar mass (g/mol) = molecular mass (u)', '1 u = 1.66×10⁻²⁷ kg'],
+            },
+            {
+                tag: 'physical', name: 'Mole Concept',
+                detail: "Avogadro's number, mole-mass-particle-volume interconversion.",
+                concept: "One mole = 6.022×10²³ particles (Avogadro's number). This bridges the atomic world and the macroscopic world. At STP, 1 mole of any gas occupies 22.4 L. The mole is the central unit connecting mass, number of particles, and volume in all stoichiometric calculations.",
+                formula: ['N_A = 6.022×10²³ mol⁻¹', 'n = m/M', 'n = N/N_A', 'n = V/22.4 (at STP)'],
+            },
+            {
+                tag: 'physical', name: 'Stoichiometry',
+                detail: 'Mole ratios from balanced equations, limiting reagent, percentage yield.',
+                concept: 'Stoichiometry uses balanced equations to relate moles of reactants and products. The limiting reagent is the reactant that runs out first — it determines the maximum product formed. Percentage yield = (actual yield / theoretical yield) × 100.',
+                formula: ['% yield = actual/theoretical × 100', 'Limiting reagent → max product', 'Mole ratio from balanced equation'],
+            },
+            {
+                tag: 'physical', name: 'Empirical & Molecular Formula',
+                detail: 'Determining formulas from percentage composition data.',
+                concept: 'The empirical formula shows the simplest whole-number ratio of atoms. The molecular formula is a whole-number multiple of the empirical formula. To find it: convert % composition → grams → moles → divide by smallest mole value → get ratio → multiply to get whole numbers.',
+                formula: ['EF ratio: n = % / atomic mass', 'MF = n × EF', 'n = Molecular mass / EF mass'],
+            },
+        ],
+    },
+    {
+        id: 2, branch: 'Analytical', branchKey: 'analytical',
+        title: 'Introduction to Analytical Chemistry',
+        desc: 'Branches, techniques and importance of analytical chemistry in science and industry.',
+        topics: [
+            {
+                tag: 'analytical', name: 'Branches of Analytical Chemistry',
+                detail: 'Qualitative vs quantitative, classical vs instrumental methods.',
+                concept: 'Analytical chemistry answers two questions: What is present? (qualitative) and How much is present? (quantitative). Classical methods rely on chemical reactions and measurements of mass or volume. Instrumental methods use physical properties like light absorption, electrical signals, or mass.',
+                formula: ['Qualitative: identify substance', 'Quantitative: measure amount', 'Classical vs Instrumental'],
+            },
+            {
+                tag: 'analytical', name: 'Errors in Analysis',
+                detail: 'Systematic errors, random errors, accuracy vs precision.',
+                concept: 'Systematic errors are consistent, reproducible errors from faulty equipment or methods — they affect accuracy. Random errors are unpredictable fluctuations — they affect precision. Accuracy = closeness to true value. Precision = reproducibility of measurements.',
+                formula: ['Absolute error = |x − x_true|', 'Relative error = |x − x_true| / x_true', 'Mean = Σxᵢ/n'],
+            },
+            {
+                tag: 'analytical', name: 'Significant Figures',
+                detail: 'Rules for counting, rounding and propagation of error.',
+                concept: 'Significant figures communicate the precision of a measurement. All non-zero digits are significant. Zeros between non-zeros are significant. Leading zeros are not significant. Trailing zeros after decimal point are significant. During calculations, the result should have the same significant figures as the least precise measurement.',
+                formula: ['Addition: least decimal places', 'Multiplication: least sig figs', '3400 → 2 sig figs (ambiguous)'],
+            },
+            {
+                tag: 'analytical', name: 'Concentration Units',
+                detail: 'Molarity, molality, normality, mole fraction, ppm.',
+                concept: 'Molarity (M) = moles of solute per litre of solution. Molality (m) = moles per kg of solvent — does not change with temperature. Normality (N) = equivalents per litre. Mole fraction = moles of component / total moles. Parts per million (ppm) used for very dilute solutions.',
+                formula: ['M = n/V(L)', 'm = n/mass(kg)', 'χ = nᵢ/Σnᵢ', 'ppm = mg/L'],
+            },
+        ],
+    },
+    {
+        id: 3, branch: 'Analytical', branchKey: 'analytical',
+        title: 'Basic Analytical Techniques',
+        desc: 'Separation, purification and identification methods used in the chemistry laboratory.',
+        topics: [
+            {
+                tag: 'analytical', name: 'Filtration & Crystallisation',
+                detail: 'Separating solids from liquids, purification by repeated crystallisation.',
+                concept: 'Filtration separates an insoluble solid from a liquid. Crystallisation purifies soluble solids by dissolving in hot solvent and allowing slow cooling — pure crystals form as solubility decreases. Recrystallisation repeats this to improve purity.',
+                formula: ['Solubility ↑ with T (usually)', 'Crystals form on cooling', 'Filter → dry → weigh'],
+            },
+            {
+                tag: 'analytical', name: 'Distillation',
+                detail: 'Simple, fractional, steam, vacuum — separating liquids by boiling point.',
+                concept: 'Distillation separates liquids based on differences in boiling points. Simple distillation works for large boiling point differences. Fractional distillation uses a fractionating column for close boiling points (e.g., petroleum refining). Steam distillation isolates heat-sensitive compounds. Vacuum distillation lowers boiling point for high-BP substances.',
+                formula: ['BP depends on vapour pressure', 'Fractionating column: theoretical plates', 'Distillate = condensed vapour'],
+            },
+            {
+                tag: 'analytical', name: 'Chromatography',
+                detail: 'TLC, column, paper, HPLC — Rf value, stationary and mobile phases.',
+                concept: 'Chromatography separates mixtures based on differential migration through a stationary phase driven by a mobile phase. Rf value = distance travelled by spot / distance travelled by solvent front. Different components have different affinities for stationary vs mobile phase — more affinity for stationary phase → moves slower → lower Rf.',
+                formula: ['Rf = distance of spot / distance of solvent', '0 < Rf < 1', 'Rf is unique for each compound in a system'],
+            },
+            {
+                tag: 'analytical', name: 'Solvent Extraction',
+                detail: 'Partition coefficient, separating funnel, liquid-liquid extraction.',
+                concept: 'Solvent extraction separates compounds based on their relative solubility in two immiscible solvents. The partition coefficient K = [solute in organic] / [solute in aqueous]. Multiple small extractions are more efficient than one large extraction.',
+                formula: ['K = Corganic/Caqueous', 'Multiple small extractions > one large', 'Like dissolves like'],
+            },
+        ],
+    },
+    {
+        id: 4, branch: 'Physical', branchKey: 'physical',
+        title: 'Structure of Atom',
+        desc: 'From Thomson to Quantum mechanical model — discovering the architecture of the atom.',
+        topics: [
+            {
+                tag: 'physical', name: 'Atomic Models — Historical',
+                detail: "Thomson's plum pudding, Rutherford's nuclear model, Bohr's quantised orbits.",
+                concept: "Thomson's model: atom is a sphere of positive charge with electrons embedded. Rutherford's gold foil experiment: most of atom is empty space, positive charge concentrated in tiny nucleus. Bohr's model: electrons orbit in fixed energy levels, emit/absorb photons when jumping levels. Energy: Eₙ = −13.6/n² eV for hydrogen.",
+                formula: ['Eₙ = −13.6/n² eV', 'rₙ = n²a₀ = n²×0.529 Å', '1/λ = R(1/nf² − 1/ni²)'],
+            },
+            {
+                tag: 'physical', name: 'Quantum Mechanical Model',
+                detail: "Schrödinger equation, wave functions, probability density, orbitals.",
+                concept: "Schrödinger's equation treats electrons as standing waves. The wave function ψ has no direct meaning, but |ψ|² gives the probability density of finding the electron at a point. An orbital is a region of space where there is ~90% probability of finding the electron. Orbitals have characteristic shapes — s is spherical, p is dumbbell-shaped.",
+                formula: ['Ĥψ = Eψ', '|ψ|² = probability density', 'ΔxΔp ≥ ħ/2 (Heisenberg)'],
+            },
+            {
+                tag: 'physical', name: 'Quantum Numbers',
+                detail: 'n (principal), l (azimuthal), ml (magnetic), ms (spin) — rules and meaning.',
+                concept: 'Four quantum numbers uniquely describe each electron. n = 1,2,3... (energy/size). l = 0 to n−1 (shape: s,p,d,f). ml = −l to +l (orientation). ms = +½ or −½ (spin). No two electrons can have all four identical (Pauli exclusion). Maximum electrons per shell = 2n².',
+                formula: ['n = 1,2,3...', 'l = 0 to n−1', 'ml = −l to +l', 'ms = ±½'],
+            },
+            {
+                tag: 'physical', name: 'Electronic Configuration',
+                detail: "Aufbau principle, Pauli exclusion, Hund's rule, (n+l) rule.",
+                concept: "Aufbau: fill lowest energy orbitals first. Pauli exclusion: max 2 electrons per orbital with opposite spins. Hund's rule: within a subshell, electrons occupy separate orbitals with parallel spins before pairing. Energy order: 1s < 2s < 2p < 3s < 3p < 4s < 3d < 4p...",
+                formula: ['Fill order: (n+l) rule', 'Exceptions: Cr=[Ar]3d⁵4s¹, Cu=[Ar]3d¹⁰4s¹', 'Max e⁻ per orbital = 2'],
+            },
+            {
+                tag: 'physical', name: 'Dual Nature & Uncertainty',
+                detail: 'de Broglie wavelength, Heisenberg uncertainty, photoelectric effect.',
+                concept: 'De Broglie: every moving particle has wave nature with λ = h/mv. Lighter particles have longer wavelengths — electrons show diffraction. Heisenberg uncertainty: it is impossible to simultaneously know both position and momentum precisely — ΔxΔp ≥ ħ/2. This is not a measurement limitation but a fundamental property of nature.',
+                formula: ['λ = h/mv (de Broglie)', 'ΔxΔp ≥ ħ/2', 'E = hf (photon energy)'],
+            },
+        ],
+    },
+    {
+        id: 5, branch: 'Physical', branchKey: 'physical',
+        title: 'Chemical Bonding',
+        desc: 'Why atoms combine — ionic, covalent, metallic bonds, VSEPR and hybridisation.',
+        topics: [
+            {
+                tag: 'physical', name: 'Ionic Bonding',
+                detail: 'Lattice energy, Born-Haber cycle, properties of ionic compounds.',
+                concept: 'Ionic bonds form by complete transfer of electrons from metal to non-metal. Lattice energy is the energy released when gaseous ions form a crystalline lattice — higher lattice energy means greater stability. The Born-Haber cycle applies Hess\'s law to calculate lattice energy indirectly.',
+                formula: ['Lattice energy ∝ q⁺×q⁻ / r', 'Born-Haber: ΔHf = ΣΔH steps', 'High MP, brittle, conducts when molten'],
+            },
+            {
+                tag: 'physical', name: 'Covalent Bonding & Lewis Structures',
+                detail: 'Lewis structures, octet rule, formal charge, resonance.',
+                concept: "Covalent bonds form by sharing electron pairs. Lewis structures show bonding and lone pairs. Formal charge = valence e⁻ − lone pair e⁻ − ½ bonding e⁻. The structure with formal charges closest to zero is preferred. Resonance structures are used when a single Lewis structure doesn't adequately represent a molecule.",
+                formula: ['Formal charge = V − L − B/2', 'Bond order = (bonding − antibonding)/2', 'Octet rule: 8 e⁻ around each atom'],
+            },
+            {
+                tag: 'physical', name: 'VSEPR Theory',
+                detail: 'Electron pair repulsion, predicting bond angles and molecular geometry.',
+                concept: 'VSEPR: electron pairs (bonding and lone) arrange themselves to minimise repulsion. Lone pair − lone pair repulsion > lone pair − bonding pair > bonding pair − bonding pair. This distorts ideal geometries. AX₂ = linear, AX₃ = trigonal planar, AX₄ = tetrahedral, AX₃E = trigonal pyramidal, AX₂E₂ = bent.',
+                formula: ['LP−LP > LP−BP > BP−BP', 'CH₄: 109.5°, NH₃: 107°, H₂O: 104.5°', 'Steric number = bonding + lone pairs'],
+            },
+            {
+                tag: 'physical', name: 'Hybridisation',
+                detail: 'sp, sp², sp³, sp³d, sp³d² — geometry and examples.',
+                concept: 'Hybridisation is the mixing of atomic orbitals to form new equivalent hybrid orbitals. sp (linear, 180°): BeCl₂, CO₂. sp² (trigonal planar, 120°): BF₃, C₂H₄. sp³ (tetrahedral, 109.5°): CH₄, NH₃. sp³d (trigonal bipyramidal): PCl₅. sp³d² (octahedral): SF₆.',
+                formula: ['sp: linear, 180°', 'sp²: trigonal planar, 120°', 'sp³: tetrahedral, 109.5°'],
+            },
+            {
+                tag: 'physical', name: 'Molecular Orbital Theory',
+                detail: 'Bonding/antibonding MOs, bond order, paramagnetism of O₂.',
+                concept: 'In MO theory, atomic orbitals combine to form molecular orbitals that span the entire molecule. Bonding MOs are lower energy; antibonding MOs are higher. Bond order = (bonding e⁻ − antibonding e⁻)/2. MO theory correctly predicts O₂ is paramagnetic (has unpaired electrons in degenerate π* orbitals).',
+                formula: ['BO = (Nb − Na)/2', 'O₂: BO=2, paramagnetic', 'N₂: BO=3, diamagnetic'],
+            },
+            {
+                tag: 'physical', name: 'Hydrogen Bonding',
+                detail: 'Intermolecular vs intramolecular H-bonds, effects on physical properties.',
+                concept: 'Hydrogen bonding occurs when H is bonded to a highly electronegative atom (N, O, F) and is attracted to a lone pair on another electronegative atom. Intermolecular H-bonds (between molecules) raise boiling point — water has anomalously high BP. Intramolecular H-bonds (within one molecule) lower BP by blocking intermolecular association.',
+                formula: ['X−H···Y (X,Y = N,O,F)', 'H₂O: 100°C BP due to H-bonds', 'O-H···O bond energy ~20 kJ/mol'],
+            },
+        ],
+    },
+    {
+        id: 6, branch: 'Physical', branchKey: 'physical',
+        title: 'Redox Reactions',
+        desc: 'Oxidation states, electron transfer, balancing redox equations by half-reaction method.',
+        topics: [
+            {
+                tag: 'physical', name: 'Oxidation & Reduction',
+                detail: 'Electron transfer definitions, oxidising and reducing agents.',
+                concept: 'Oxidation: loss of electrons, increase in oxidation number. Reduction: gain of electrons, decrease in oxidation number. They always occur together (redox). The oxidising agent accepts electrons (gets reduced). The reducing agent donates electrons (gets oxidised). OIL RIG: Oxidation Is Loss, Reduction Is Gain.',
+                formula: ['Oxidation: lose e⁻, ON ↑', 'Reduction: gain e⁻, ON ↓', 'OIL RIG mnemonic'],
+            },
+            {
+                tag: 'physical', name: 'Oxidation Number Rules',
+                detail: 'Systematic rules for assigning oxidation states in any compound.',
+                concept: 'Rules: Free element = 0. Monatomic ion = charge. O = −2 (usually), H = +1 (usually). F = −1 always. Sum of ON in neutral molecule = 0. Sum in polyatomic ion = ion charge. These rules allow you to calculate the ON of any element in any compound.',
+                formula: ['O = −2, H = +1 (general)', 'Σ ON = 0 (neutral molecule)', 'Σ ON = ion charge'],
+            },
+            {
+                tag: 'physical', name: 'Balancing Redox — Half-Reaction Method',
+                detail: 'Split into oxidation/reduction halves, balance atoms, balance charge.',
+                concept: 'Step 1: split into two half-reactions. Step 2: balance atoms other than O and H. Step 3: balance O using H₂O, balance H using H⁺. Step 4: balance charge using electrons. Step 5: multiply half-reactions so electrons cancel. Step 6: add half-reactions. For basic medium, add OH⁻ to neutralise H⁺.',
+                formula: ['Acidic: use H⁺ and H₂O', 'Basic: add OH⁻ to both sides', 'Electrons must cancel when combined'],
+            },
+            {
+                tag: 'physical', name: 'Electrochemical Series',
+                detail: 'Standard electrode potentials, spontaneity, cell EMF calculation.',
+                concept: 'The electrochemical series ranks half-reactions by standard reduction potential E°. Higher E° = stronger oxidising agent. Cell EMF = E°cathode − E°anode. ΔG° = −nFE°. If E° > 0, the reaction is spontaneous. The series predicts which metal will displace another from solution.',
+                formula: ['E°cell = E°cathode − E°anode', 'ΔG° = −nFE°', 'E° > 0 → spontaneous'],
+            },
+        ],
+    },
+    {
+        id: 7, branch: 'Inorganic', branchKey: 'inorganic',
+        title: 'Modern Periodic Table',
+        desc: 'Periodic law, blocks, and trends in atomic radius, IE, EN, EA across the table.',
+        topics: [
+            {
+                tag: 'inorganic', name: 'Modern Periodic Law & Structure',
+                detail: 'Atomic number basis, periods, groups, s/p/d/f blocks.',
+                concept: 'Modern Periodic Law (Moseley): properties of elements are periodic functions of their atomic number. The table has 7 periods and 18 groups. s-block: groups 1,2 (valence e⁻ in s orbital). p-block: groups 13-18. d-block: groups 3-12 (transition metals). f-block: lanthanides and actinides (inner transition).',
+                formula: ['s-block: ns¹⁻²', 'p-block: ns²np¹⁻⁶', 'd-block: (n-1)d¹⁻¹⁰ns¹⁻²'],
+            },
+            {
+                tag: 'inorganic', name: 'Atomic & Ionic Radius Trends',
+                detail: 'Decrease across period, increase down group — cations smaller, anions larger.',
+                concept: 'Atomic radius decreases across a period (more protons → more nuclear attraction on same shell electrons). Increases down a group (new shells added). Cations are smaller than parent atom (fewer electrons, same protons). Anions are larger (more electrons, same protons). Isoelectronic series: size decreases as Z increases.',
+                formula: ['Period: radius ↓ (Z ↑, same shell)', 'Group: radius ↑ (new shells)', 'Cation < atom < anion'],
+            },
+            {
+                tag: 'inorganic', name: 'Ionisation Enthalpy',
+                detail: '1st, 2nd IE, trends, anomalies at B, O, Mg, and Al.',
+                concept: 'Ionisation enthalpy (IE) is the energy needed to remove the outermost electron from a gaseous atom. IE generally increases across a period (harder to remove electron from larger Z). Decreases down a group. Anomalies: IE of B < Be (B loses 2p electron, easier than 2s of Be). IE of O < N (O has paired 2p electron with extra repulsion).',
+                formula: ['IE₁(B) < IE₁(Be): 2p < 2s', 'IE₁(O) < IE₁(N): paired e⁻ repulsion', 'IE₂ >> IE₁ after noble gas config'],
+            },
+            {
+                tag: 'inorganic', name: 'Electronegativity',
+                detail: 'Pauling scale, Mulliken scale, trends, use in predicting bond character.',
+                concept: 'Electronegativity is the tendency of an atom to attract shared electrons in a bond. Pauling scale: F = 4.0 (highest). Increases across period, decreases down group. Electronegativity difference predicts bond type: >1.7 → ionic, 0.4-1.7 → polar covalent, <0.4 → non-polar covalent.',
+                formula: ['F = 4.0 (most electronegative)', 'ΔEN > 1.7: ionic', '0.4 < ΔEN < 1.7: polar covalent'],
+            },
+            {
+                tag: 'inorganic', name: 'Electron Gain Enthalpy',
+                detail: 'Trends, halogens, anomaly of F vs Cl, noble gases.',
+                concept: 'Electron gain enthalpy (EGA) is the energy change when a gaseous atom gains an electron. Generally becomes more negative across a period (more favourable). Halogens have high (negative) EGA — they readily gain electrons. Anomaly: Cl has more negative EGA than F — F has a small electron cloud causing higher interelectron repulsion.',
+                formula: ['EGA: more negative → more EA', 'Cl EGA > F EGA (anomaly)', 'Noble gases: positive EGA'],
+            },
+            {
+                tag: 'inorganic', name: 'Periodic Trends in Properties',
+                detail: 'Metallic character, valency, oxide character across period and group.',
+                concept: 'Metallic character decreases across a period and increases down a group. Oxide nature: metallic oxides are basic, non-metallic oxides are acidic. Across a period: Na₂O (basic) → MgO (basic) → Al₂O₃ (amphoteric) → SiO₂ → P₂O₅ → SO₃ → Cl₂O₇ (acidic). Valency varies non-uniformly across a period.',
+                formula: ['Period: metallic ↓, non-metallic ↑', 'Metal oxide + H₂O → base', 'Non-metal oxide + H₂O → acid'],
+            }
+        ],
+    },
+    {
+        id: 8, branch: 'Inorganic', branchKey: 'inorganic',
+        title: 'Elements of Group 1 and 2',
+        desc: 'Alkali and alkaline earth metals — properties, reactions, anomalous Li and Be behaviour.',
+        topics: [
+            {
+                tag: 'inorganic', name: 'Group 1 — Alkali Metals',
+                detail: 'Soft metals, low IE, reactions with water, oxygen, hydrogen.',
+                concept: 'Alkali metals (Li, Na, K, Rb, Cs, Fr) have one valence electron, low IE, and are highly reactive. They react vigorously with water: 2M + 2H₂O → 2MOH + H₂↑. With oxygen: Li → Li₂O, Na → Na₂O₂ (peroxide), K → KO₂ (superoxide). Reactivity increases down the group. All give characteristic flame colours.',
+                formula: ['2Na + 2H₂O → 2NaOH + H₂', '4Li + O₂ → 2Li₂O', '2Na + O₂ → Na₂O₂'],
+            },
+            {
+                tag: 'inorganic', name: 'Anomalous Behaviour of Li',
+                detail: 'Diagonal relationship Li−Mg, small size, high charge density.',
+                concept: 'Lithium resembles magnesium (diagonal relationship) more than its own group members due to similar charge/size ratio (charge density). Like Mg: Li forms normal oxide (not peroxide), Li₃N stable, LiCl partially covalent, Li₂CO₃ decomposes on heating. High charge density means strong polarising power.',
+                formula: ['Li resembles Mg (diagonal)', 'Charge density = charge/ionic radius', '4Li + N₂ → 2Li₃N (unique in group)'],
+            },
+            {
+                tag: 'inorganic', name: 'Group 2 — Alkaline Earth Metals',
+                detail: 'Two valence electrons, harder than Group 1, reactions and solubility trends.',
+                concept: 'Alkaline earth metals (Be, Mg, Ca, Sr, Ba) have two valence electrons. Higher IE and MP than Group 1. React with water: Ca/Sr/Ba react readily, Mg reacts with steam, Be is inert. Solubility of hydroxides and sulphates show opposite trends. CaCO₃ (limestone) decomposes: CaCO₃ → CaO + CO₂.',
+                formula: ['Ca + 2H₂O → Ca(OH)₂ + H₂', 'CaCO₃ → CaO + CO₂ (900°C)', 'Solubility: Mg(OH)₂ < Ca(OH)₂ < Ba(OH)₂'],
+            },
+            {
+                tag: 'inorganic', name: 'Anomalous Behaviour of Be',
+                detail: 'Diagonal relationship Be−Al, covalent bonding, amphoteric oxide.',
+                concept: 'Beryllium resembles aluminium (diagonal relationship). Be is amphoteric: BeO + H₂SO₄ → BeSO₄ + H₂O (basic) and BeO + NaOH → Na₂BeO₂ + H₂O (acidic). BeCl₂ is covalent (unlike other Group 2 chlorides). Be does not react with water due to protective oxide layer.',
+                formula: ['BeO + H₂SO₄ → BeSO₄ + H₂O', 'BeO + 2NaOH → Na₂BeO₂ + H₂O', 'Be resembles Al (diagonal)'],
+            },
+            {
+                tag: 'inorganic', name: 'Important Compounds',
+                detail: 'NaOH, Na₂CO₃, NaHCO₃, CaO, Ca(OH)₂, plaster of Paris.',
+                concept: 'NaOH (caustic soda): made by chlor-alkali process. Na₂CO₃ (washing soda): Solvay process. NaHCO₃ (baking soda): used in food and medicine. CaO (quicklime): from CaCO₃ decomposition. Ca(OH)₂ (slaked lime): CaO + H₂O. Plaster of Paris (CaSO₄·½H₂O): sets hard with water giving CaSO₄·2H₂O.',
+                formula: ['CaO + H₂O → Ca(OH)₂ + heat', '2CaSO₄·½H₂O + 3H₂O → 2CaSO₄·2H₂O', 'Solvay: NaCl + CaCO₃ → Na₂CO₃ + CaCl₂'],
+            },
+        ],
+    },
+    {
+        id: 9, branch: 'Inorganic', branchKey: 'inorganic',
+        title: 'Elements of Group 13, 14 and 15',
+        desc: 'Boron, carbon, nitrogen families — allotropy, acidic/basic oxides, key compounds.',
+        topics: [
+            {
+                tag: 'inorganic', name: 'Group 13 — Boron Family',
+                detail: 'Boron allotropes, borax, boric acid, aluminium and its compounds.',
+                concept: 'Boron is a metalloid — it forms covalent compounds. Borax (Na₂B₄O₇·10H₂O) is used in cleaning. Boric acid is a Lewis acid (accepts OH⁻ from water). Aluminium has an amphoteric oxide. Alums: MAl(SO₄)₂·12H₂O used in water purification.',
+                formula: ['B(OH)₃ + H₂O → [B(OH)₄]⁻ + H⁺', 'Al₂O₃ + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂O', 'Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O'],
+            },
+            {
+                tag: 'inorganic', name: 'Group 14 — Carbon Family',
+                detail: 'Allotropy of carbon, diamond/graphite/fullerene, silicon and silicates.',
+                concept: 'Carbon exists as diamond (sp³, hardest), graphite (sp², conducting, lubricant), fullerenes (C₆₀). CO is poisonous (binds haemoglobin). CO₂ is acidic oxide. SiO₂ (quartz) is acidic, used in glass. Silicates (SiO₄⁴⁻ units) form minerals. Si is a semiconductor.',
+                formula: ['CO + Hb → COHb (toxic)', 'SiO₂ + 2NaOH → Na₂SiO₃ + H₂O', 'C: diamond (sp³), graphite (sp²)'],
+            },
+            {
+                tag: 'inorganic', name: 'Group 15 — Nitrogen Family',
+                detail: 'N₂ fixation, ammonia (Haber process), nitric acid (Ostwald process), phosphorus.',
+                concept: "N₂ is very stable (triple bond, 945 kJ/mol). Haber process: N₂ + 3H₂ ⇌ 2NH₃ (Fe catalyst, 450°C, 200 atm). Ostwald process for HNO₃: NH₃ → NO → NO₂ → HNO₃. Phosphorus exists as white P (P₄, toxic) and red P (polymeric, safer).",
+                formula: ['N₂ + 3H₂ ⇌ 2NH₃ (Haber)', '4NH₃ + 5O₂ → 4NO + 6H₂O (Ostwald)', '3NO₂ + H₂O → 2HNO₃ + NO'],
+            },
+            {
+                tag: 'inorganic', name: 'Oxides and Oxoacids',
+                detail: 'Structure and properties of oxides of N and P, phosphoric acid.',
+                concept: 'Nitrogen oxides: N₂O (laughing gas), NO (colourless), N₂O₃, NO₂ (brown gas), N₂O₅. Higher oxidation state oxides are more acidic. Phosphorus oxoacids: H₃PO₄ (triprotic), H₃PO₃ (diprotic — one H not ionisable), H₃PO₂ (monoprotic). Basicity ≠ number of OH groups always.',
+                formula: ['N oxides: +1 to +5', 'H₃PO₃: diprotic (P−H bond)', 'H₃PO₂: monoprotic (2 P−H bonds)'],
+            },
+        ],
+    },
+    {
+        id: 10, branch: 'Physical', branchKey: 'physical',
+        title: 'States of Matter',
+        desc: 'Gas laws, kinetic molecular theory, real gases, liquids and solids.',
+        topics: [
+            {
+                tag: 'physical', name: 'Gas Laws',
+                detail: "Boyle's, Charles', Gay-Lussac's, Avogadro's law, ideal gas equation.",
+                concept: "Boyle's Law: at constant T, PV = constant. Charles' Law: at constant P, V/T = constant. Gay-Lussac's: at constant V, P/T = constant. Combined: PV/T = constant. Ideal gas equation: PV = nRT where R = 8.314 J/mol·K. Dalton's law of partial pressures: P_total = Σpᵢ.",
+                formula: ['PV = nRT', 'P₁V₁/T₁ = P₂V₂/T₂', "Dalton's: P_total = Σpᵢ"],
+            },
+            {
+                tag: 'physical', name: 'Kinetic Molecular Theory',
+                detail: 'Assumptions, root mean square speed, average speed, Maxwell distribution.',
+                concept: 'KMT assumptions: gas particles are point masses, no intermolecular forces, elastic collisions. Root mean square speed: u_rms = √(3RT/M). Average speed: ū = √(8RT/πM). Most probable speed: u_mp = √(2RT/M). Ratio u_mp : ū : u_rms = 1 : 1.128 : 1.225. Graham\'s law: rate of diffusion ∝ 1/√M.',
+                formula: ['u_rms = √(3RT/M)', 'ū = √(8RT/πM)', 'Graham\'s law: r ∝ 1/√M'],
+            },
+            {
+                tag: 'physical', name: 'Real Gases & van der Waals',
+                detail: 'Deviations from ideal behaviour, van der Waals equation, compression factor Z.',
+                concept: 'Real gases deviate from ideal because of (1) intermolecular attractions and (2) finite molecular volume. Van der Waals equation: (P + an²/V²)(V − nb) = nRT. a corrects for intermolecular attractions, b corrects for molecular volume. Compression factor Z = PV/nRT. Z < 1: attractions dominant. Z > 1: volume dominant.',
+                formula: ['(P + an²/V²)(V − nb) = nRT', 'Z = PV/nRT (ideal: Z=1)', 'Boyle temp: T_B = a/Rb'],
+            },
+            {
+                tag: 'physical', name: 'Liquids — Surface Tension & Viscosity',
+                detail: 'Surface tension, capillary action, viscosity, vapour pressure.',
+                concept: 'Surface tension is the energy required to increase surface area — molecules at surface have net inward force. Viscosity is resistance to flow — caused by intermolecular friction. Both decrease with temperature. Vapour pressure increases with temperature — boiling occurs when vapour pressure = atmospheric pressure.',
+                formula: ['Surface tension: J/m²', 'η (viscosity): Pa·s', 'BP: VP = P_atm'],
+            },
+            {
+                tag: 'physical', name: 'Solids — Crystal Structure',
+                detail: 'Unit cells, close packing (hcp, ccp), coordination number, packing efficiency.',
+                concept: 'Crystalline solids have long-range order. Unit cell is the smallest repeating unit. SC: 1 atom, CN=6, 52.4% packing. BCC: 2 atoms, CN=8, 68% packing. FCC/CCP: 4 atoms, CN=12, 74% packing. Closest packing (HCP and CCP) both achieve 74% efficiency. Point defects: Frenkel (displaced ion), Schottky (missing ion pair).',
+                formula: ['FCC: 4 atoms/unit cell', 'BCC: 2 atoms/unit cell', 'Packing efficiency: CCP = 74%'],
+            },
+        ],
+    },
+    {
+        id: 11, branch: 'Physical', branchKey: 'physical',
+        title: 'Adsorption and Colloids',
+        desc: 'Surface chemistry — adsorption, catalysis, colloids, Tyndall effect, coagulation.',
+        topics: [
+            {
+                tag: 'physical', name: 'Adsorption',
+                detail: 'Physisorption vs chemisorption, Freundlich isotherm, factors affecting.',
+                concept: 'Adsorption is accumulation of substance on a surface. Physisorption: weak van der Waals forces, reversible, multilayer, low temperature favoured. Chemisorption: strong covalent/ionic bonds, irreversible, monolayer, high temperature needed. Freundlich isotherm: x/m = kP^(1/n) where x/m = amount adsorbed per gram.',
+                formula: ['x/m = kP^(1/n) (Freundlich)', 'Physisorption: ΔH ~ −20 kJ/mol', 'Chemisorption: ΔH ~ −200 kJ/mol'],
+            },
+            {
+                tag: 'physical', name: 'Catalysis',
+                detail: 'Homogeneous, heterogeneous, enzyme catalysis, activation energy lowering.',
+                concept: 'A catalyst increases reaction rate without being consumed by lowering activation energy (Ea). Homogeneous: catalyst and reactants in same phase. Heterogeneous: different phases — catalyst provides surface (adsorption). Promoters enhance catalyst activity. Poisons deactivate catalyst. Enzyme catalysis: lock-and-key specificity, biological catalysts.',
+                formula: ['Catalyst lowers Ea', 'k = Ae^(−Ea/RT) (Arrhenius)', 'Enzyme: ES complex → products'],
+            },
+            {
+                tag: 'physical', name: 'Colloids',
+                detail: 'Types, preparation, properties, Tyndall effect, Brownian motion.',
+                concept: 'Colloids have dispersed particle size 1-1000 nm. Cannot be separated by normal filtration. Tyndall effect: scattering of light by colloidal particles (beam becomes visible). Brownian motion: random zigzag movement of colloidal particles. Types: sol (solid in liquid), emulsion (liquid in liquid), aerosol (liquid/solid in gas), gel (liquid in solid).',
+                formula: ['Particle size: 1−1000 nm', 'Tyndall effect: light scattering', 'Colloidal particles carry charge'],
+            },
+            {
+                tag: 'physical', name: 'Coagulation & Emulsions',
+                detail: "Hardy-Schulze rule, coagulation, emulsification, cleansing action of soaps.",
+                concept: "Coagulation is the aggregation and settling of colloidal particles by adding electrolytes. Hardy-Schulze rule: coagulating power ∝ charge of ion opposite to colloid charge. Emulsions are colloids of two immiscible liquids — need an emulsifier (soap, protein). Soaps: polar (COO⁻) and non-polar (hydrocarbon) ends — micelles trap grease.",
+                formula: ['Coag. power: Al³⁺ > Ca²⁺ > Na⁺', 'Micelle: grease in non-polar core', 'Critical micelle concentration (CMC)'],
+            },
+        ],
+    },
+    {
+        id: 12, branch: 'Physical', branchKey: 'physical',
+        title: 'Chemical Equilibrium',
+        desc: "Reversible reactions, Kc, Kp, Le Chatelier's principle, ionic equilibrium, pH.",
+        topics: [
+            {
+                tag: 'physical', name: 'Equilibrium Concept & Kc',
+                detail: 'Reversible reactions, dynamic equilibrium, equilibrium constant expression.',
+                concept: 'In a reversible reaction, forward and reverse rates become equal at equilibrium — concentrations remain constant. Kc = [products]^coeff / [reactants]^coeff (pure solids and liquids excluded). Large Kc: products favoured. Small Kc: reactants favoured. Kc is temperature-dependent.',
+                formula: ['aA + bB ⇌ cC + dD', 'Kc = [C]ᶜ[D]ᵈ / [A]ᵃ[B]ᵇ', 'Kc > 1: products favoured'],
+            },
+            {
+                tag: 'physical', name: 'Kp and the Relationship to Kc',
+                detail: 'Kp using partial pressures, Kp = Kc(RT)^Δn.',
+                concept: 'Kp uses partial pressures instead of concentrations. For gases: Kp = Kc(RT)^Δn where Δn = moles of gaseous products − moles of gaseous reactants. If Δn = 0, Kp = Kc. Units of Kp and Kc depend on the reaction.',
+                formula: ['Kp = Kc(RT)^Δn', 'Δn = Σn(products) − Σn(reactants)', 'Standard: concentrations in mol/L'],
+            },
+            {
+                tag: 'physical', name: "Le Chatelier's Principle",
+                detail: 'Effect of concentration, pressure, temperature changes on equilibrium position.',
+                concept: "Le Chatelier's Principle: if a system at equilibrium is disturbed, it shifts to counteract the disturbance. Adding reactant → forward shift. Removing product → forward shift. Increasing pressure → shift to fewer moles of gas. Increasing temperature → shift in endothermic direction. Catalyst: does not shift equilibrium, only speeds attainment.",
+                formula: ['↑ [reactant] → forward shift', '↑ P → shift to fewer gas moles', '↑ T → endothermic direction'],
+            },
+            {
+                tag: 'physical', name: 'Ionic Equilibrium & pH',
+                detail: 'Kw, pH scale, strong vs weak acids, Ka, Henderson-Hasselbalch.',
+                concept: 'Water autoionises: Kw = [H⁺][OH⁻] = 10⁻¹⁴ at 25°C. pH = −log[H⁺]. For weak acid HA: Ka = [H⁺][A⁻]/[HA]. Degree of dissociation α ≈ √(Ka/C). Buffer solution: resists pH change — Henderson-Hasselbalch: pH = pKa + log([A⁻]/[HA]).',
+                formula: ['pH = −log[H⁺]', 'Kw = 10⁻¹⁴ at 25°C', 'pH + pOH = 14'],
+            },
+            {
+                tag: 'physical', name: 'Solubility Product Ksp',
+                detail: 'Ksp expression, common ion effect, precipitation conditions.',
+                concept: 'Ksp is the equilibrium constant for dissolution of a sparingly soluble salt. AgCl: Ksp = [Ag⁺][Cl⁻]. If ionic product Q < Ksp: unsaturated (dissolves). Q = Ksp: saturated. Q > Ksp: precipitate forms. Common ion effect: adding a common ion decreases solubility (equilibrium shifts left).',
+                formula: ['Ksp = [M^n⁺]^a[X^m⁻]^b', 'Q > Ksp → precipitate', 'Common ion: solubility ↓'],
+            },
+        ],
+    },
+    {
+        id: 13, branch: 'Physical', branchKey: 'nuclear',
+        title: 'Nuclear Chemistry and Radioactivity',
+        desc: 'Radioactive decay, nuclear reactions, half-life, fission, fusion and applications.',
+        topics: [
+            {
+                tag: 'nuclear', name: 'Radioactivity & Types of Decay',
+                detail: 'α, β, γ radiation, properties, penetrating power, decay series.',
+                concept: 'Radioactivity is spontaneous emission of particles/radiation from unstable nuclei. α particle (₂⁴He): low penetration, high ionisation. β particle (e⁻ or e⁺): medium penetration. γ rays (high-energy photons): highest penetration, lowest ionisation. Decay series: chain of decays from heavy element to stable isotope (e.g., U-238 → Pb-206).',
+                formula: ['α: ₂₉²U → ₂₃₈Th + ₂⁴He', 'β⁻: n → p + e⁻ + ν̄', 'γ: nucleus relaxes to ground state'],
+            },
+            {
+                tag: 'nuclear', name: 'Radioactive Decay Law',
+                detail: 'N = N₀e^(−λt), half-life T½, mean life, activity A = λN.',
+                concept: 'Radioactive decay is first-order: rate proportional to number of undecayed nuclei. N = N₀e^(−λt). Half-life T½ = ln2/λ = 0.693/λ — time for half the nuclei to decay. Mean life τ = 1/λ = 1.44 × T½. Activity A = λN (in Becquerels: 1 Bq = 1 decay/s). Curie: 1 Ci = 3.7×10¹⁰ Bq.',
+                formula: ['N = N₀e^(−λt)', 'T½ = 0.693/λ', 'A = λN (Becquerel)'],
+            },
+            {
+                tag: 'nuclear', name: 'Binding Energy & Nuclear Stability',
+                detail: 'Mass defect, E = mc², binding energy per nucleon, stability curve.',
+                concept: 'Mass defect Δm = (mass of nucleons) − (mass of nucleus). Binding energy BE = Δmc². Binding energy per nucleon (BE/A) peaks at Fe-56 (~8.8 MeV/nucleon) — most stable nucleus. Elements lighter than Fe can release energy by fusion. Elements heavier than Fe can release energy by fission.',
+                formula: ['Δm = Σm(nucleons) − m(nucleus)', 'BE = Δm × 931.5 MeV/u', 'Fe-56: max BE/A ≈ 8.8 MeV'],
+            },
+            {
+                tag: 'nuclear', name: 'Nuclear Fission & Fusion',
+                detail: 'Chain reaction, critical mass, nuclear reactors, hydrogen bomb.',
+                concept: 'Fission: heavy nucleus splits into lighter fragments releasing enormous energy. ²³⁵U + n → fragments + 2-3 neutrons + ~200 MeV. Chain reaction requires critical mass. Fusion: light nuclei combine — even more energy per unit mass. ²H + ³H → ⁴He + n + 17.6 MeV. Powers the sun. Requires extremely high temperature.',
+                formula: ['²³⁵U + n → ⁹²Kr + ¹⁴¹Ba + 3n', '²H + ³H → ⁴He + n + 17.6 MeV', 'Critical mass: self-sustaining chain'],
+            },
+            {
+                tag: 'nuclear', name: 'Applications of Radioactivity',
+                detail: 'Carbon dating, nuclear medicine, tracers, radiation therapy.',
+                concept: 'Carbon dating: uses C-14 (T½ = 5730 y) to date organic material up to ~50,000 years old. Nuclear medicine: I-131 for thyroid, Tc-99m for imaging. Radiation therapy: γ rays/electron beams to destroy tumour cells. Tracers: radioactive isotopes follow metabolic pathways. Nuclear reactors: controlled fission → steam → electricity.',
+                formula: ['C-14 dating: t = (T½/0.693) × ln(A₀/A)', 'I-131: T½ = 8 days, thyroid', '1 u = 931.5 MeV/c²'],
+            },
+        ],
+    },
+    {
+        id: 14, branch: 'Organic', branchKey: 'organic',
+        title: 'Basic Principles of Organic Chemistry',
+        desc: 'IUPAC nomenclature, isomerism, reaction intermediates and electronic effects.',
+        topics: [
+            {
+                tag: 'organic', name: 'Classification & Functional Groups',
+                detail: 'Open chain, cyclic, aromatic; alkyl, acyl, functional groups.',
+                concept: 'Organic compounds are classified as open chain (aliphatic) or cyclic. Cyclic includes alicyclic (no delocalisation) and aromatic (delocalised π electrons, follows Hückel rule: 4n+2 π e⁻). Functional groups determine reactivity: −OH (alcohol), −COOH (acid), −NH₂ (amine), −CHO (aldehyde), −CO− (ketone), −X (halide).',
+                formula: ['Hückel rule: (4n+2) π e⁻', 'Functional group → reactivity', 'Homologous series: +CH₂ per member'],
+            },
+            {
+                tag: 'organic', name: 'IUPAC Nomenclature',
+                detail: 'Parent chain, prefixes, suffixes, locants for substituents and functional groups.',
+                concept: 'Rules: (1) Find longest carbon chain. (2) Number from end nearest substituent/functional group. (3) Name substituents as prefixes (methyl-, ethyl-, bromo-). (4) Name principal functional group as suffix. (5) List substituents alphabetically. Multiple substituents: di-, tri-. Double bond: -en-, Triple bond: -yn-.',
+                formula: ['Suffix: -ol, -al, -one, -oic acid', 'Prefix: alkyl (before main chain)', 'Lowest locant set rule'],
+            },
+            {
+                tag: 'organic', name: 'Isomerism',
+                detail: 'Chain, position, functional group isomerism; geometric and optical isomerism intro.',
+                concept: 'Structural isomers have same molecular formula but different connectivity. Chain isomers: different carbon skeleton. Position isomers: same functional group, different position. Functional group isomers: same formula, different functional group (e.g., CH₃COOH vs HCOOCH₃). Geometric (cis/trans) isomerism requires restricted rotation and two different groups on each carbon.',
+                formula: ['C₄H₁₀: n-butane, isobutane', 'Cis/trans: restricted rotation + 2 diff groups', 'Chiral centre: 4 different groups'],
+            },
+            {
+                tag: 'organic', name: 'Reaction Intermediates',
+                detail: 'Carbocations, carbanions, free radicals, carbenes — stability order.',
+                concept: 'Carbocation (R₃C⁺): stabilised by hyperconjugation and inductive effect. Stability: 3° > 2° > 1° > CH₃⁺. Carbanion (R₃C⁻): stabilised by electron-withdrawing groups. Stability: 1° > 2° > 3°. Free radical (R₃C·): stabilised by hyperconjugation. Stability: 3° > 2° > 1°. Carbene (:CH₂): highly reactive, neutral carbon with 6 valence electrons.',
+                formula: ['3° carbocation most stable', '1° carbanion most stable', 'Free radical: 3° > 2° > 1°'],
+            },
+            {
+                tag: 'organic', name: 'Electronic Effects',
+                detail: 'Inductive effect, resonance (mesomeric), hyperconjugation, their applications.',
+                concept: 'Inductive effect (+I or −I): transmission of charge through σ bonds — decreases with distance. −I: −NO₂, −CN, halogens. +I: alkyl groups. Resonance (mesomeric): delocalisation through π bonds — increases stability. Hyperconjugation: delocalisation involving C−H σ bonds adjacent to π system or carbocation — stabilises 3° > 2° > 1°.',
+                formula: ['+I: alkyl groups, −I: halogens', 'Resonance: conjugated system', 'Hyperconjugation: α C−H bonds'],
+            },
+        ],
+    },
+    {
+        id: 15, branch: 'Organic', branchKey: 'organic',
+        title: 'Hydrocarbons',
+        desc: 'Alkanes, alkenes, alkynes and arenes — structure, reactions and mechanisms.',
+        topics: [
+            {
+                tag: 'organic', name: 'Alkanes',
+                detail: 'IUPAC names, conformations (Newman), free radical halogenation mechanism.',
+                concept: 'Alkanes: CₙH₂ₙ₊₂, sp³ hybridised carbons, σ bonds only. Conformations of ethane: Newman projection shows staggered (more stable) vs eclipsed. Free radical halogenation: initiation (Cl₂ → 2Cl·), propagation (chain carrying steps), termination (radical combination). Reactivity: Cl > Br in rate. Selectivity: Br > Cl (more selective for 3°).',
+                formula: ['Initiation: Cl₂ + hν → 2Cl·', 'Propagation: Cl· + RH → HCl + R·', 'Selectivity: Br > Cl'],
+            },
+            {
+                tag: 'organic', name: 'Alkenes',
+                detail: 'Structure, addition reactions — HX (Markovnikov), H₂O, H₂, Br₂, oxidation.',
+                concept: "Alkenes: CₙH₂ₙ, sp² hybridised, one π bond. Markovnikov's rule: H adds to carbon with more H atoms (carbocation intermediate — most stable). Mechanism of HBr addition: protonation → most stable carbocation → Br⁻ attacks. Anti-Markovnikov: HBR with peroxide (radical mechanism). Ozonolysis: cleaves double bond.",
+                formula: ['CH₂=CH₂ + HBr → CH₃CH₂Br', "Markovnikov: H → C with more H's", 'Ozonolysis: C=C → C=O + O=C'],
+            },
+            {
+                tag: 'organic', name: 'Alkynes',
+                detail: 'Triple bond structure, acidic H, addition reactions, Lindlar catalyst.',
+                concept: 'Alkynes: CₙH₂ₙ₋₂, sp hybridised, two π bonds. Terminal alkynes (RC≡CH) are weakly acidic — react with Na to give RC≡CNa⁺ + H₂. Can add H₂ (Lindlar catalyst → cis alkene; Na/NH₃ → trans alkene). Add HX twice (Markovnikov each step). Hydration gives ketone (Markovnikov) or aldehyde (anti-Mark, using HgSO₄).',
+                formula: ['RC≡CH + Na → RC≡CNa + ½H₂', 'Lindlar: partial hydrog. → cis alkene', 'RC≡CH + H₂O → RCOCH₃'],
+            },
+            {
+                tag: 'organic', name: 'Aromatic Hydrocarbons & Benzene',
+                detail: "Benzene structure, aromaticity, Hückel rule, electrophilic aromatic substitution.",
+                concept: 'Benzene (C₆H₆): planar, all C−C bonds equal (1.40 Å), delocalised π electrons. Hückel rule: aromatic if planar, cyclic, conjugated with (4n+2) π electrons. EAS mechanism: electrophile attacks → arenium ion (σ-complex) → loss of H⁺ → restored aromaticity. Reactions: halogenation, nitration, sulphonation, Friedel-Crafts (alkylation, acylation).',
+                formula: ['Benzene: 6 π e⁻ (n=1, 4n+2=6)', 'EAS: E⁺ + ArH → ArE + H⁺', 'Activating groups: −OH, −NH₂, −CH₃'],
+            },
+            {
+                tag: 'organic', name: 'Petroleum & Fuels',
+                detail: 'Fractional distillation, cracking, reforming, octane number.',
+                concept: 'Petroleum is a mixture of hydrocarbons separated by fractional distillation. Fractions by BP: LPG (<30°C), petrol (30-200°C), kerosene, diesel, lubricating oil, paraffin wax, bitumen. Cracking breaks large molecules into smaller, more valuable ones. Octane number: measure of fuel\'s resistance to knocking. Iso-octane = 100, n-heptane = 0.',
+                formula: ['Octane no. 100: iso-octane', 'Cracking: C₁₆H₃₄ → C₈H₁₈ + C₈H₁₆', 'Reforming: alkane → arene + H₂'],
+            },
+        ],
+    },
+    {
+        id: 16, branch: 'Applied', branchKey: 'physical',
+        title: 'Chemistry in Everyday Life',
+        desc: 'Drugs, soaps, detergents, polymers, food additives and industrial chemicals.',
+        topics: [
+            {
+                tag: 'physical', name: 'Drugs & Medicines',
+                detail: 'Analgesics, antibiotics, antiseptics, antacids, antihistamines.',
+                concept: 'Analgesics: pain relievers. Non-narcotic: aspirin, paracetamol (inhibit prostaglandin synthesis). Narcotic: morphine (addictive). Antibiotics: kill/inhibit bacteria — penicillin disrupts cell wall synthesis. Antiseptics: kill microorganisms on living tissue (dettol, iodine). Antacids: NaHCO₃, Mg(OH)₂ — neutralise excess HCl in stomach.',
+                formula: ['Aspirin: acetylsalicylic acid', 'Penicillin: β-lactam ring', 'Antacid: Mg(OH)₂ + 2HCl → MgCl₂ + 2H₂O'],
+            },
+            {
+                tag: 'physical', name: 'Soaps and Detergents',
+                detail: 'Saponification, micelle formation, cleansing action, hard water problem.',
+                concept: 'Saponification: fat/oil + NaOH → soap (sodium salt of fatty acid) + glycerol. Soaps are sodium/potassium salts of long-chain fatty acids. Cleansing: non-polar tail dissolves grease, polar head (COO⁻) faces water — micelle forms with grease inside. Limitation: soaps don\'t work in hard water (Ca²⁺, Mg²⁺ form insoluble scum). Synthetic detergents work in hard water.',
+                formula: ['Fat + NaOH → Soap + Glycerol', 'RCOO⁻Na⁺ structure', 'Micelle: non-polar core, polar shell'],
+            },
+            {
+                tag: 'physical', name: 'Polymers',
+                detail: 'Addition vs condensation, natural vs synthetic, thermoplastic vs thermosetting.',
+                concept: 'Addition polymerisation: monomers join without losing atoms (polyethylene, PVC, rubber). Condensation polymerisation: monomers join with loss of small molecule (nylon, polyester, bakelite). Thermoplastics: can be reshaped on heating (PE, PVC, nylon). Thermosetting: permanently cross-linked on heating (bakelite, urea-formaldehyde). Natural polymers: cellulose, starch, proteins, natural rubber.',
+                formula: ['n CH₂=CH₂ → (−CH₂−CH₂−)ₙ', 'Nylon-6,6: diamine + diacid', 'Degree of polymerisation = M/m₀'],
+            },
+            {
+                tag: 'physical', name: 'Chemicals in Food',
+                detail: 'Preservatives, artificial sweeteners, antioxidants, food colours, edible dyes.',
+                concept: 'Preservatives prevent spoilage: NaCl, sugar, vinegar (traditional), sodium benzoate, SO₂ (modern). Artificial sweeteners: saccharin (~300× sweeter), aspartame (~200×), sucralose (~600×). Antioxidants prevent oxidative rancidity: BHA, BHT, Vitamin C, Vitamin E. Food colours must be certified safe. MSG: monosodium glutamate — flavour enhancer.',
+                formula: ['Saccharin: 300× sweeter than sugar', 'BHA/BHT: antioxidants', 'Sodium benzoate: C₆H₅COONa'],
+            },
+            {
+                tag: 'physical', name: 'Industrial Chemicals',
+                detail: 'Fertilisers (NPK), cement, dyes (azo, vat), explosives.',
+                concept: 'Fertilisers provide N, P, K. Urea (46% N): most used nitrogenous fertiliser. Ammonium phosphate: N+P. Potassium chloride: K. Cement: CaO + SiO₂ + Al₂O₃ → complex silicates + aluminates. Setting of cement involves hydration reactions. Azo dyes: −N=N− chromophore — largest class of synthetic dyes. TNT, RDX: nitro compounds used as explosives.',
+                formula: ['Urea: (NH₂)₂CO, 46% N', 'Cement: CaO·SiO₂·Al₂O₃', 'Azo dye: Ar−N=N−Ar chromophore'],
+            },
+        ],
+    },
+]
+
+export const TOTAL_TOPICS = CHAPTERS.reduce((sum, ch) => sum + ch.topics.length, 0)

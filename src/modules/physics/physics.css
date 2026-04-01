@@ -1,0 +1,37 @@
+.physics-theme {
+  --bg: #0B1929;
+  --bg2: #112236;
+  --bg3: #1A3350;
+  --border: rgba(255, 255, 255, 0.08);
+  --border2: rgba(255, 255, 255, 0.15);
+  --amber: #EF9F27;
+  --amber2: #FAC775;
+  --teal: #1D9E75;
+  --coral: #D85A30;
+  --text1: #E8EDF5;
+  --text2: #A0B0C8;
+  --text3: #506070;
+  --radius: 10px;
+  --font: 'Crimson Pro', Georgia, serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  background: var(--bg);
+  color: var(--text1);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  height: 100%;
+}
+
+.physics-theme *,
+.physics-theme *::before,
+.physics-theme *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.physics-theme button {
+  cursor: pointer;
+  font-family: inherit;
+}

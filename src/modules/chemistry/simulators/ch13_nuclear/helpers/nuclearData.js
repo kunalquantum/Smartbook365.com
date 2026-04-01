@@ -1,0 +1,83 @@
+export const ISOTOPES = {
+    'U-238': { Z: 92, A: 238, t_half: 4.47e9, unit: 'yr', decay: 'α', daughter: 'Th-234', color: '#EF9F27', stable: false },
+    'C-14': { Z: 6, A: 14, t_half: 5730, unit: 'yr', decay: 'β', daughter: 'N-14', color: '#1D9E75', stable: false },
+    'Ra-226': { Z: 88, A: 226, t_half: 1600, unit: 'yr', decay: 'α', daughter: 'Rn-222', color: '#D85A30', stable: false },
+    'I-131': { Z: 53, A: 131, t_half: 8.025, unit: 'days', decay: 'β', daughter: 'Xe-131', color: '#7F77DD', stable: false },
+    'Co-60': { Z: 27, A: 60, t_half: 5.27, unit: 'yr', decay: 'β+γ', daughter: 'Ni-60', color: '#378ADD', stable: false },
+    'Tc-99m': { Z: 43, A: 99, t_half: 6.01, unit: 'hr', decay: 'γ', daughter: 'Tc-99', color: '#888780', stable: false },
+    'Pb-206': { Z: 82, A: 206, t_half: Infinity, unit: '—', decay: '—', daughter: '—', color: '#A8D8B9', stable: true },
+    'N-14': { Z: 7, A: 14, t_half: Infinity, unit: '—', decay: '—', daughter: '—', color: '#1D9E75', stable: true },
+}
+
+export const DECAY_TYPES = {
+    α: {
+        name: 'Alpha decay',
+        color: '#EF9F27',
+        particle: '⁴₂He (α)',
+        penetration: 1,
+        stoppedBy: 'Paper, skin',
+        chargeChange: -2, massChange: -4,
+        example: '²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He',
+        biology: 'Dangerous if ingested — highly ionising inside body',
+        desc: 'Emission of a helium-4 nucleus. Atomic number decreases by 2, mass number by 4.',
+    },
+    β: {
+        name: 'Beta minus decay',
+        color: '#1D9E75',
+        particle: '⁰₋₁e (β⁻)',
+        penetration: 2,
+        stoppedBy: 'Aluminium foil (~3mm)',
+        chargeChange: +1, massChange: 0,
+        example: '¹⁴₆C → ¹⁴₇N + ⁰₋₁e + ν̄',
+        biology: 'Moderate danger — can penetrate skin',
+        desc: 'A neutron converts to a proton, emitting an electron and antineutrino.',
+    },
+    'β+γ': {
+        name: 'Beta + Gamma decay',
+        color: '#378ADD',
+        particle: 'β⁻ + γ photon',
+        penetration: 3,
+        stoppedBy: 'Lead (several cm)',
+        chargeChange: +1, massChange: 0,
+        example: '⁶⁰₂₇Co → ⁶⁰₂₈Ni + β⁻ + 2γ',
+        biology: 'Very penetrating — requires lead shielding',
+        desc: 'Beta emission followed by gamma ray as nucleus relaxes to ground state.',
+    },
+    γ: {
+        name: 'Gamma decay',
+        color: '#888780',
+        particle: 'γ photon (0 mass)',
+        penetration: 4,
+        stoppedBy: 'Lead or thick concrete',
+        chargeChange: 0, massChange: 0,
+        example: '⁹⁹ᵐ₄₃Tc → ⁹⁹₄₃Tc + γ',
+        biology: 'Most penetrating — gamma rays pass through body',
+        desc: 'High-energy photon from nuclear relaxation. No change in Z or A.',
+    },
+}
+
+export const BINDING_ENERGIES = [
+    { A: 2, symbol: 'H-2 (D)', BE_per_A: 1.11 },
+    { A: 4, symbol: 'He-4', BE_per_A: 7.07 },
+    { A: 12, symbol: 'C-12', BE_per_A: 7.68 },
+    { A: 16, symbol: 'O-16', BE_per_A: 7.97 },
+    { A: 20, symbol: 'Ne-20', BE_per_A: 8.03 },
+    { A: 40, symbol: 'Ca-40', BE_per_A: 8.55 },
+    { A: 56, symbol: 'Fe-56', BE_per_A: 8.79 },
+    { A: 89, symbol: 'Y-89', BE_per_A: 8.71 },
+    { A: 120, symbol: 'Sn-120', BE_per_A: 8.51 },
+    { A: 197, symbol: 'Au-197', BE_per_A: 7.92 },
+    { A: 238, symbol: 'U-238', BE_per_A: 7.57 },
+]
+
+export const DECAY_CHAIN_U238 = [
+    { iso: 'U-238', Z: 92, A: 238, t: '4.47 Gy', type: 'α', col: '#EF9F27' },
+    { iso: 'Th-234', Z: 90, A: 234, t: '24 d', type: 'β', col: '#1D9E75' },
+    { iso: 'Pa-234', Z: 91, A: 234, t: '1.17 m', type: 'β', col: '#1D9E75' },
+    { iso: 'U-234', Z: 92, A: 234, t: '245 ky', type: 'α', col: '#EF9F27' },
+    { iso: 'Th-230', Z: 90, A: 230, t: '75.4 ky', type: 'α', col: '#EF9F27' },
+    { iso: 'Ra-226', Z: 88, A: 226, t: '1.6 ky', type: 'α', col: '#EF9F27' },
+    { iso: 'Rn-222', Z: 86, A: 222, t: '3.82 d', type: 'α', col: '#EF9F27' },
+    { iso: 'Po-218', Z: 84, A: 218, t: '3.05 m', type: 'α', col: '#EF9F27' },
+    { iso: 'Pb-206', Z: 82, A: 206, t: 'stable', type: '—', col: '#A8D8B9' },
+]

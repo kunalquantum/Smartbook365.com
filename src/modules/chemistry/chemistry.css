@@ -1,0 +1,65 @@
+.chemistry-theme {
+    --bg: #0D1F1A;
+    --bg2: #122319;
+    --bg3: #1A3028;
+    --bg4: #1F3830;
+    --border: rgba(255, 255, 255, 0.07);
+    --border2: rgba(255, 255, 255, 0.13);
+    --green: #2D9E6E;
+    --teal: #1D9E75;
+    --gold: #D4A017;
+    --gold2: #F0C040;
+    --coral: #D85A30;
+    --purple: #7F77DD;
+    --blue: #378ADD;
+    --text1: #E8F5EF;
+    --text2: #8FB5A0;
+    --text3: #4A7060;
+    --radius: 10px;
+    --font: 'Crimson Pro', Georgia, serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    /* Branch colours */
+    --physical: #EF9F27;
+    --inorganic: #1D9E75;
+    --organic: #7F77DD;
+    --analytical: #D85A30;
+    --nuclear: #378ADD;
+
+    background: var(--bg);
+    color: var(--text1);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.65;
+    height: 100%;
+}
+
+.chemistry-theme *,
+.chemistry-theme *::before,
+.chemistry-theme *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.chemistry-theme button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.chemistry-theme input[type=range] {
+    accent-color: var(--gold);
+    width: 100%;
+    cursor: pointer;
+}
+
+.chemistry-theme select {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    color: var(--text1);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    cursor: pointer;
+}

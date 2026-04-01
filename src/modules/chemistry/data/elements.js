@@ -1,0 +1,35 @@
+// Periodic table data — used by Ch 07 periodic table simulator
+export const ELEMENTS = [
+    { Z: 1, sym: 'H', name: 'Hydrogen', mass: 1.008, group: 1, period: 1, block: 's', EN: 2.20, AR: 53, IE1: 1312, category: 'nonmetal' },
+    { Z: 2, sym: 'He', name: 'Helium', mass: 4.003, group: 18, period: 1, block: 's', EN: null, AR: 31, IE1: 2372, category: 'noble-gas' },
+    { Z: 3, sym: 'Li', name: 'Lithium', mass: 6.941, group: 1, period: 2, block: 's', EN: 0.98, AR: 167, IE1: 520, category: 'alkali-metal' },
+    { Z: 4, sym: 'Be', name: 'Beryllium', mass: 9.012, group: 2, period: 2, block: 's', EN: 1.57, AR: 112, IE1: 899, category: 'alkaline-earth' },
+    { Z: 5, sym: 'B', name: 'Boron', mass: 10.81, group: 13, period: 2, block: 'p', EN: 2.04, AR: 87, IE1: 800, category: 'metalloid' },
+    { Z: 6, sym: 'C', name: 'Carbon', mass: 12.011, group: 14, period: 2, block: 'p', EN: 2.55, AR: 67, IE1: 1086, category: 'nonmetal' },
+    { Z: 7, sym: 'N', name: 'Nitrogen', mass: 14.007, group: 15, period: 2, block: 'p', EN: 3.04, AR: 56, IE1: 1402, category: 'nonmetal' },
+    { Z: 8, sym: 'O', name: 'Oxygen', mass: 15.999, group: 16, period: 2, block: 'p', EN: 3.44, AR: 48, IE1: 1314, category: 'nonmetal' },
+    { Z: 9, sym: 'F', name: 'Fluorine', mass: 18.998, group: 17, period: 2, block: 'p', EN: 3.98, AR: 42, IE1: 1681, category: 'nonmetal' },
+    { Z: 10, sym: 'Ne', name: 'Neon', mass: 20.18, group: 18, period: 2, block: 'p', EN: null, AR: 38, IE1: 2081, category: 'noble-gas' },
+    { Z: 11, sym: 'Na', name: 'Sodium', mass: 22.990, group: 1, period: 3, block: 's', EN: 0.93, AR: 186, IE1: 496, category: 'alkali-metal' },
+    { Z: 12, sym: 'Mg', name: 'Magnesium', mass: 24.305, group: 2, period: 3, block: 's', EN: 1.31, AR: 160, IE1: 738, category: 'alkaline-earth' },
+    { Z: 13, sym: 'Al', name: 'Aluminium', mass: 26.982, group: 13, period: 3, block: 'p', EN: 1.61, AR: 143, IE1: 577, category: 'post-transition' },
+    { Z: 14, sym: 'Si', name: 'Silicon', mass: 28.086, group: 14, period: 3, block: 'p', EN: 1.90, AR: 117, IE1: 786, category: 'metalloid' },
+    { Z: 15, sym: 'P', name: 'Phosphorus', mass: 30.974, group: 15, period: 3, block: 'p', EN: 2.19, AR: 98, IE1: 1012, category: 'nonmetal' },
+    { Z: 16, sym: 'S', name: 'Sulfur', mass: 32.06, group: 16, period: 3, block: 'p', EN: 2.58, AR: 88, IE1: 1000, category: 'nonmetal' },
+    { Z: 17, sym: 'Cl', name: 'Chlorine', mass: 35.45, group: 17, period: 3, block: 'p', EN: 3.16, AR: 79, IE1: 1251, category: 'nonmetal' },
+    { Z: 18, sym: 'Ar', name: 'Argon', mass: 39.948, group: 18, period: 3, block: 'p', EN: null, AR: 71, IE1: 1521, category: 'noble-gas' },
+    { Z: 19, sym: 'K', name: 'Potassium', mass: 39.098, group: 1, period: 4, block: 's', EN: 0.82, AR: 227, IE1: 419, category: 'alkali-metal' },
+    { Z: 20, sym: 'Ca', name: 'Calcium', mass: 40.078, group: 2, period: 4, block: 's', EN: 1.00, AR: 197, IE1: 590, category: 'alkaline-earth' },
+]
+
+export const CATEGORY_COLORS = {
+    'alkali-metal': '#D85A30',
+    'alkaline-earth': '#EF9F27',
+    'transition': '#378ADD',
+    'post-transition': '#888780',
+    'metalloid': '#7F77DD',
+    'nonmetal': '#1D9E75',
+    'noble-gas': '#D4537E',
+    'lanthanide': '#639922',
+    'actinide': '#BA7517',
+}
