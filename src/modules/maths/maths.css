@@ -77,3 +77,26 @@
   z-index: -1;
 }
 
+/* Layout */
+.maths-theme .app-container {
+  display: flex !important;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.maths-theme .main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.maths-theme .page-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px;
+}
+
+
