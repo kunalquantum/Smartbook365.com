@@ -149,8 +149,9 @@ const LandingPage = () => {
                             </div>
                         </div>
                         <div className="hero-visual-container reveal delay-3" ref={heroVisualRef}>
+
                             <div className="glass-card visual-wrapper">
-                                <img src="https://via.placeholder.com/600x400/0a0b1e/00f2ff?text=Smartbook+Holographic+Visualizer" alt="Smartbook Holographic Hero" className="hero-img" />
+                                <img src="/assets/images/hero.png" alt="Smartbook Holographic Hero" className="hero-img" />
                             </div>
                             <div className="floating-badge badge-1">3D Sims</div>
                             <div className="floating-badge badge-2">Interactive</div>
@@ -159,27 +160,26 @@ const LandingPage = () => {
                     <div className="hero-bg-glow"></div>
                 </section>
 
-
                 <section id="features" className="features-section">
                     <div className="container section-header text-center">
                         <h2 className="reveal"><span className="typewriter-static">Built for the Modern Learner</span></h2>
-                        <p className="reveal delay-1">Smartbook goes beyond static text. It simulates reality to ensure deep understanding.</p>
+                        <p className="reveal delay-1">Smartbook goes beyond static text. It simulates reality to ensure deep understanding of complex scientific and mathematical concepts.</p>
                     </div>
                     <div className="container features-grid">
                         <div className="feature-card reveal delay-1">
                             <div className="feature-icon">🔬</div>
                             <h3>Interactive Visuals</h3>
-                            <p>Every topic is visualized with interactive controls. Rotate, zoom, and experiment in real-time.</p>
+                            <p>Every topic is visualized with interactive controls. Rotate, zoom, and experiment in real-time with medical-grade precision.</p>
                         </div>
                         <div className="feature-card reveal delay-2">
                             <div className="feature-icon">📚</div>
                             <h3>Subject Segregation</h3>
-                            <p>Meticulously organized structure across Science, Math, History, and more. Find any topic in seconds.</p>
+                            <p>Meticulously organized structure across Science and Mathematics. Find any chapter or topic from the HSC curriculum in seconds.</p>
                         </div>
                         <div className="feature-card reveal delay-3">
                             <div className="feature-icon">⚡</div>
                             <h3>Simulatory Learning</h3>
-                            <p>Don't just learn about gravity—simulate it. Modify parameters and see the results instantly.</p>
+                            <p>Don't just learn formulas—simulate them. Modify parameters and see the physical results instantly with real-time telemetry.</p>
                         </div>
                     </div>
                 </section>
@@ -191,37 +191,38 @@ const LandingPage = () => {
                     <div className="container subject-tabs">
                         <div className="subject-card reveal delay-1">
                             <div className="subject-preview">
-                                <img src="https://via.placeholder.com/400x200/0a0b1e/00f2ff?text=Chemistry+Module" alt="Chemistry Simulation Preview" />
+                                <img src="/assets/images/chemistry.png" alt="Chemistry Simulation Preview" />
                             </div>
                             <div className="subject-info">
                                 <h3>Chemistry</h3>
-                                <p>Atomic structures, chemical bonds, and reactions. Visualized down to the atomic level.</p>
+                                <p>Atomic structures, chemical bonds, and reactions. Visualized down to the atomic level with interactive 3D models.</p>
                                 <Link to="/chemistry" className="view-more">Launch Module &rarr;</Link>
                             </div>
                         </div>
                         <div className="subject-card reveal delay-2">
                             <div className="subject-preview">
-                                <img src="https://via.placeholder.com/400x200/0a0b1e/0080ff?text=Mathematics+Module" alt="Math Simulation Preview" />
+                                <img src="/assets/images/math.png" alt="Math Simulation Preview" />
                             </div>
                             <div className="subject-info">
                                 <h3>Mathematics</h3>
-                                <p>Calculus, Geometry, and Algebra. Abstract concepts made tangible through interaction.</p>
+                                <p>Calculus, Geometry, and Algebra. Abstract concepts made tangible through interactive coordinate grids and function visualizers.</p>
                                 <Link to="/maths" className="view-more">Launch Module &rarr;</Link>
                             </div>
                         </div>
                         <div className="subject-card reveal delay-3">
                             <div className="subject-preview">
-                                <img src="https://via.placeholder.com/400x200/0a0b1e/ff00c8?text=Physics+Module" alt="Physics Simulation Preview" />
+                                <img src="/assets/images/physics.png" alt="Physics Simulation Preview" />
                             </div>
                             <div className="subject-info">
                                 <h3>Physics</h3>
-                                <p>Mechanics, Optics, and Electromagnetism. Simulate the laws of the universe.</p>
+                                <p>Mechanics, Optics, and Electromagnetism. Simulate the laws of the universe with high-fidelity physics engines.</p>
                                 <Link to="/physics" className="view-more">Launch Module &rarr;</Link>
                             </div>
                         </div>
                     </div>
                 </section>
             </main>
+
 
             <footer id="main-footer">
                 <div className="container footer-grid">

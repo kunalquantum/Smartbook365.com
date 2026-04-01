@@ -14,8 +14,9 @@
     --text-secondary: #a0a6cc;
     --gradient-1: linear-gradient(135deg, #00f2ff 0%, #7000ff 100%);
     --gradient-2: linear-gradient(135deg, #7000ff 0%, #ff00c8 100%);
-    --container-max-width: 1200px;
-    --border-radius: 20px;
+    --container-max-width: 1440px;
+    --border-radius: 24px;
+
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-slow: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -160,11 +161,12 @@
 /* Hero Section */
 .landing-page .hero-section {
     position: relative;
-    padding: 12rem 0 8rem;
+    padding: 14rem 0 10rem;
     min-height: 100vh;
     display: flex;
     align-items: center;
 }
+
 
 .landing-page .hero-grid {
     display: grid;
@@ -240,16 +242,19 @@
     width: 100%;
     border-radius: var(--border-radius);
     transition: var(--transition);
+    transform: perspective(1000px) rotateY(-5deg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
 .landing-page .glass-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(30px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--border-radius);
-    padding: 1rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
 }
+
 
 .landing-page .floating-badge {
     position: absolute;
@@ -315,12 +320,13 @@
 }
 
 .landing-page .feature-card {
-    padding: 3.5rem 2.5rem;
-    background: var(--card-bg);
+    padding: 4rem 3rem;
+    background: rgba(255, 255, 255, 0.02);
     border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transition: var(--transition);
 }
+
 
 .landing-page .feature-card:hover {
     transform: translateY(-10px);
