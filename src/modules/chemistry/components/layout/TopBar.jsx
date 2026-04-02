@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function TopBar({ onMenuClick, onReset }) {
     return (
         <div style={{
@@ -12,6 +14,20 @@ export default function TopBar({ onMenuClick, onReset }) {
                 color: 'var(--gold)', fontSize: 18,
                 padding: '4px 6px',
             }}>☰</button>
+
+            <Link to="/" style={{ 
+                textDecoration: 'none', 
+                color: 'var(--gold)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '4px',
+                fontSize: '11px',
+                fontWeight: '600',
+                paddingRight: '12px',
+                borderRight: '1px solid var(--border)'
+            }}>
+                <span>←</span> HOME
+            </Link>
 
             <span style={{
                 fontFamily: 'var(--mono)', fontSize: 10,

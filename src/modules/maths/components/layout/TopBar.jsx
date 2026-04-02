@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Book, Cpu, Beaker, FileText } from 'lucide-react';
+import { Book, Cpu, Beaker, FileText, Home } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const TopBar = ({ activeChapter }) => {
   return (
@@ -16,6 +17,19 @@ export const TopBar = ({ activeChapter }) => {
       zIndex: 10
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <Link to="/" style={{
+          background: 'rgba(255,255,255,0.05)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          width: '40px', height: '40px',
+          borderRadius: '12px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: 'var(--primary)',
+          cursor: 'pointer',
+          transition: 'all 0.2s',
+          textDecoration: 'none'
+        }}>
+          <Home size={20} />
+        </Link>
         <div style={{
           background: 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)',
           width: '40px', height: '40px',
