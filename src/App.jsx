@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SubscriptionPage from './pages/SubscriptionPage';
+import AdminDashboard from './pages/AdminDashboard';
 import ChemistryModule from './modules/chemistry/ChemistryModule';
 import MathsModule from './modules/maths/MathsModule';
 import PhysicsModule from './modules/physics/PhysicsModule';
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/subscription" element={<SubscriptionPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route 
             path="/chemistry/*" 
             element={

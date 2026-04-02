@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { CHAPTERS as PHYSICS_CHAPTERS } from '../modules/physics/data/physics';
 import { CHAPTERS as CHEMISTRY_CHAPTERS } from '../modules/chemistry/data/chapters';
 import { chapters as MATHS_CHAPTERS } from '../modules/maths/data/chapters';
-import { PRICING, ADMIN_PHONE } from '../data/pricing';
+import { ADMIN_PHONE } from '../data/pricing';
 
 const SubscriptionPage = () => {
-  const { user } = useAuth();
+  const { user, pricing } = useAuth();
   const [selectedSubjects, setSelectedSubjects] = useState({}); // { physics: boolean, ... }
   const [selectedChapters, setSelectedChapters] = useState({}); // { physics: [id, id], ... }
 
@@ -50,10 +50,10 @@ const SubscriptionPage = () => {
     let total = 0;
     subjects.forEach(sub => {
       if (selectedSubjects[sub.id]) {
-        total += PRICING[sub.id].fullPrice;
+        total += pricing[sub.id].fullPrice;
       } else {
         const chaptersCount = (selectedChapters[sub.id] || []).length;
-        total += chaptersCount * PRICING[sub.id].chapterPrice;
+        total += chaptersCount * pricing[sub.id].chapterPrice;
       }
     });
     return total;
@@ -65,14 +65,14 @@ const SubscriptionPage = () => {
 
     subjects.forEach(sub => {
       if (selectedSubjects[sub.id]) {
-        message += `*${sub.name}*: FULL MODULE (₹${PRICING[sub.id].fullPrice})\n`;
+        message += `*${sub.name}*: FULL MODULE (₹${pricing[sub.id].fullPrice})\n`;
         hasSelection = true;
       } else if (selectedChapters[sub.id]?.length > 0) {
         const chTitles = sub.data
           .filter(ch => selectedChapters[sub.id].includes(ch.id))
           .map(ch => `Ch ${ch.id}: ${ch.title}`)
           .join(', ');
-        const cost = selectedChapters[sub.id].length * PRICING[sub.id].chapterPrice;
+        const cost = selectedChapters[sub.id].length * pricing[sub.id].chapterPrice;
         message += `*${sub.name}*: ${selectedChapters[sub.id].length} Chapters (${chTitles}) - ₹${cost}\n`;
         hasSelection = true;
       }
@@ -148,7 +148,7 @@ const SubscriptionPage = () => {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '14px', fontWeight: '800', color: sub.color }}>₹{PRICING[sub.id].fullPrice}</div>
+                      <div style={{ fontSize: '14px', fontWeight: '800', color: sub.color }}>₹{pricing[sub.id].fullPrice}</div>
                       <div style={{ fontSize: '10px', color: 'var(--text4)' }}>Full Module</div>
                     </div>
                     <button 
@@ -170,7 +170,7 @@ const SubscriptionPage = () => {
                 </div>
 
                 <div style={{ padding: '24px' }}>
-                  <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text3)', marginBottom: '16px' }}>OR SELECT CHAPTERS (₹{PRICING[sub.id].chapterPrice} each)</h4>
+                  <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text3)', marginBottom: '16px' }}>OR SELECT CHAPTERS (₹{pricing[sub.id].chapterPrice} each)</h4>
                   <div style={{ 
                     display: 'grid', 
                     gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
@@ -244,7 +244,7 @@ const SubscriptionPage = () => {
                       {sub.name} {isFull ? '(All)' : `(${chCount} Ch)`}
                     </span>
                     <span style={{ fontWeight: '600' }}>
-                      ₹{isFull ? PRICING[sub.id].fullPrice : chCount * PRICING[sub.id].chapterPrice}
+                      ₹{isFull ? pricing[sub.id].fullPrice : chCount * pricing[sub.id].chapterPrice}
                     </span>
                   </div>
                 );

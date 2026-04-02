@@ -17,204 +17,6 @@ export const CHAPTERS = [
         title: 'Mathematical Methods',
         desc: 'Scalars, vectors, and the calculus tools physics needs.',
         topics: [
-            { tag: 'vectors', name: 'Scalars & Vectors', detail: 'Types, representation, angles' },
-            { tag: 'vectors', name: 'Vector Operations', detail: 'Addition, triangle & parallelogram law' },
-            { tag: 'vectors', name: 'Dot & Cross Product', detail: 'Scalar product, vector product, uses' },
-            { tag: 'calculus', name: 'Calculus in Physics', detail: 'Differentiation & integration basics' },
-        ],
-    },
-    {
-        id: 3, unit: 'Unit II',
-        title: 'Motion in a Plane',
-        desc: 'Kinematics extended to two dimensions — projectiles and circles.',
-        topics: [
-            { tag: 'kinematics', name: 'Projectile Motion', detail: 'Trajectory, range, time of flight' },
-            { tag: 'kinematics', name: 'Uniform Circular Motion', detail: 'Angular velocity, centripetal acceleration' },
-            { tag: 'kinematics', name: 'Relative Velocity in 2D', detail: 'River-boat, rain-umbrella problems' },
-        ],
-    },
-    {
-        id: 4, unit: 'Unit II',
-        title: 'Laws of Motion',
-        desc: "Newton's three laws — the rules governing every force and acceleration.",
-        topics: [
-            {
-                tag: 'newton',
-                name: "Newton's First Law",
-                detail: 'Inertia, frames of reference, equilibrium',
-                concept: "A body continues in its state of rest or uniform motion in a straight line unless acted upon by an external unbalanced force. This is the law of inertia. The tendency to resist change in state of motion is called inertia — directly proportional to mass. A body is in equilibrium when net force = 0: either at rest (static) or moving at constant velocity (dynamic).",
-                formula: ['F_net = 0 → a = 0', 'p = mv (momentum)', 'Inertia ∝ mass', 'ΣF = 0 (equilibrium)'],
-            },
-            {
-                tag: 'newton',
-                name: "Newton's Second Law",
-                detail: 'F = ma, momentum, impulse',
-                concept: "The rate of change of momentum of a body is directly proportional to the applied force and takes place in the direction of the force. F = ma is the most used form. Impulse = F × Δt = change in momentum. A larger force produces larger acceleration; a larger mass resists acceleration more — this is why a truck needs more force than a car to accelerate at the same rate.",
-                formula: ['F = ma', 'F = dp/dt', 'Impulse J = FΔt = Δp', 'a = F/m'],
-            },
-            {
-                tag: 'newton',
-                name: "Newton's Third Law",
-                detail: 'Action-reaction, apparent weight, rocket propulsion',
-                concept: "For every action there is an equal and opposite reaction — acting on different bodies. When you push a wall, the wall pushes back with equal force. A rocket expels gas backward (action); the gas pushes the rocket forward (reaction). Apparent weight in a lift: heavier when accelerating up (N = m(g+a)), lighter when accelerating down (N = m(g−a)).",
-                formula: ['F_AB = −F_BA', 'N = m(g+a) (lift up)', 'N = m(g−a) (lift down)', 'N = 0 (free fall)'],
-            },
-            {
-                tag: 'friction',
-                name: 'Friction',
-                detail: 'Static, kinetic, rolling friction, angle of friction',
-                concept: 'Friction opposes relative motion between surfaces. Static friction can be up to μₛN before the object moves. Once moving, kinetic friction μₖN acts (μₖ < μₛ). The angle of friction λ = tan⁻¹(μ). The angle of repose θ = λ. On an inclined plane, the object slides when inclination > angle of repose.',
-                formula: ['f_s ≤ μₛN', 'f_k = μₖN', 'tan λ = μ', 'θ_repose = tan⁻¹(μ)'],
-            },
-            {
-                tag: 'dynamics',
-                name: 'Circular Motion Dynamics',
-                detail: 'Banking of roads, conical pendulum, centripetal force',
-                concept: 'For circular motion, a centripetal force directed toward the centre is required. On a banked road, the horizontal component of normal force provides centripetal force — the optimum banking angle θ = tan⁻¹(v²/Rg). A conical pendulum has the string sweeping a cone — the horizontal tension component provides centripetal force.',
-                formula: ['F_c = mv²/r = mω²r', 'tan θ = v²/Rg (banking)', 'T cosθ = mg', 'T sinθ = mω²r'],
-            },
-        ],
-    },
-    {
-        id: 5, unit: 'Unit III',
-        title: 'Gravitation',
-        desc: 'From falling apples to orbiting satellites — universal gravitation.',
-        topics: [
-            { tag: 'gravity', name: "Newton's Law of Gravitation", detail: 'Universal constant G, field lines' },
-            { tag: 'gravity', name: 'Acceleration due to Gravity', detail: 'Variation with height, depth, latitude' },
-            { tag: 'orbits', name: 'Satellites & Orbital Motion', detail: 'Orbital speed, escape velocity' },
-            { tag: 'energy', name: 'Gravitational Potential Energy', detail: 'GPE, binding energy, geo-stationary orbit' },
-        ],
-    },
-    {
-        id: 6, unit: 'Unit III',
-        title: 'Mechanical Properties of Solids',
-        desc: "How materials deform — elasticity, stress, strain and Hooke's law.",
-        topics: [
-            { tag: 'elastic', name: 'Elasticity & Plasticity', detail: 'Elastic limit, permanent set' },
-            { tag: 'stress', name: 'Stress and Strain', detail: 'Tensile, compressive, shear types' },
-            { tag: 'moduli', name: 'Elastic Moduli', detail: "Young's, Bulk, Shear, Poisson's ratio" },
-            { tag: 'energy', name: 'Elastic Potential Energy', detail: 'Energy stored in a stretched wire' },
-        ],
-    },
-    {
-        id: 7, unit: 'Unit III',
-        title: 'Thermal Properties of Matter',
-        desc: 'Temperature, heat, and how matter responds to thermal energy.',
-        topics: [
-            { tag: 'heat', name: 'Temperature Scales', detail: 'Celsius, Fahrenheit, Kelvin' },
-            { tag: 'heat', name: 'Thermal Expansion', detail: 'Linear, area, volume coefficients' },
-            { tag: 'calorimetry', name: 'Calorimetry', detail: 'Specific heat, latent heat, mixtures' },
-            { tag: 'transfer', name: 'Heat Transfer', detail: 'Conduction, convection, radiation' },
-            { tag: 'gas', name: 'Ideal Gas Laws', detail: "Boyle's, Charles', Gay-Lussac's" },
-        ],
-    },
-    {
-        id: 8, unit: 'Unit III',
-        title: 'Sound',
-        desc: 'Longitudinal waves — from vibrating strings to the Doppler effect.',
-        topics: [
-            { tag: 'waves', name: 'Wave Motion', detail: 'Transverse vs longitudinal, wave equation' },
-            { tag: 'sound', name: 'Speed of Sound', detail: "Newton's formula, Laplace correction" },
-            { tag: 'sound', name: 'Superposition & Interference', detail: 'Beats, standing waves, resonance' },
-            { tag: 'music', name: 'Vibrations in Strings & Pipes', detail: 'Nodes, antinodes, harmonics, overtones' },
-            { tag: 'doppler', name: 'Doppler Effect', detail: 'Apparent frequency, applications' },
-        ],
-    },
-    {
-        id: 9, unit: 'Unit IV',
-        title: 'Optics',
-        desc: 'Reflection, refraction, lenses, and the wave nature of light.',
-        topics: [
-            { tag: 'geo', name: 'Reflection of Light', detail: 'Spherical mirrors, mirror formula' },
-            { tag: 'geo', name: 'Refraction of Light', detail: "Snell's law, TIR, optical fibre" },
-            { tag: 'lenses', name: 'Lenses', detail: 'Thin lens formula, power, lens maker' },
-            { tag: 'optical', name: 'Optical Instruments', detail: 'Microscope, telescope, human eye' },
-            { tag: 'wave', name: 'Wave Optics', detail: "Huygens' principle, interference, diffraction" },
-        ],
-    },
-    {
-        id: 10, unit: 'Unit IV',
-        title: 'Electrostatics',
-        desc: "Electric charges at rest — Coulomb's law to capacitors.",
-        topics: [
-            { tag: 'charge', name: "Electric Charge & Coulomb's Law", detail: 'Properties, permittivity, superposition' },
-            { tag: 'field', name: 'Electric Field & Potential', detail: 'Field lines, potential, equipotential' },
-            { tag: 'gauss', name: "Gauss's Law", detail: 'Electric flux, symmetric distributions' },
-            { tag: 'capacitor', name: 'Capacitance & Capacitors', detail: 'Parallel plate, dielectrics, energy' },
-        ],
-    },
-    {
-        id: 11, unit: 'Unit IV',
-        title: 'Electric Current Through Conductors',
-        desc: "Moving charges — Ohm's law, resistance, and Kirchhoff's laws.",
-        topics: [
-            { tag: 'current', name: 'Electric Current & Drift Velocity', detail: 'Current density, mobility, conductivity' },
-            { tag: 'ohm', name: "Ohm's Law & Resistance", detail: 'Resistivity, temperature dependence' },
-            { tag: 'circuit', name: "Kirchhoff's Laws", detail: 'Junction rule, loop rule, Wheatstone bridge' },
-            { tag: 'power', name: 'Electrical Power & Energy', detail: 'Joule heating, household circuits' },
-        ],
-    },
-    {
-        id: 12, unit: 'Unit V',
-        title: 'Magnetism',
-        desc: 'Magnetic fields, forces, and the link between electricity and magnetism.',
-        topics: [
-            { tag: 'magnets', name: "Bar Magnets & Earth's Magnetism", detail: 'Dipole, field lines, declination, dip' },
-            { tag: 'field', name: 'Magnetic Field & Forces', detail: 'Lorentz force, Hall effect, cyclotron' },
-            { tag: 'current', name: "Magnetic Effect of Current", detail: "Biot-Savart, Ampere's law, solenoid" },
-            { tag: 'matter', name: 'Magnetic Properties of Matter', detail: 'Dia, para, ferro; hysteresis loop' },
-        ],
-    },
-    {
-        id: 13, unit: 'Unit V',
-        title: 'Electromagnetic Induction',
-        desc: 'How changing magnetic fields generate electric currents.',
-        topics: [
-            { tag: 'faraday', name: "Faraday's Laws of Induction", detail: "EMF, Lenz's law, motional EMF" },
-            { tag: 'self', name: 'Self & Mutual Inductance', detail: 'L, M coefficients, energy stored' },
-            { tag: 'ac', name: 'Alternating Current Basics', detail: 'AC generation, RMS, phasors' },
-            { tag: 'transformer', name: 'Transformers', detail: 'Step-up/down, efficiency, energy losses' },
-        ],
-    },
-    {
-        id: 14, unit: 'Unit V',
-        title: 'Semiconductors',
-        desc: 'The quantum-mechanical world of p-n junctions and transistors.',
-        topics: [
-            { tag: 'band', name: 'Energy Bands & Classification', detail: 'Conductors, insulators, band gap' },
-            { tag: 'sc', name: 'Intrinsic & Extrinsic Semiconductors', detail: 'n-type, p-type, doping' },
-            { tag: 'diode', name: 'p-n Junction & Diode', detail: 'Depletion layer, bias, I-V curve' },
-            { tag: 'devices', name: 'Semiconductor Devices', detail: 'LED, photodiode, solar cell, Zener' },
-        ],
-    },
-    {
-        id: 15, unit: 'Unit VI',
-        title: 'Communication Systems',
-        desc: 'Modulation, transmission, and modern communication technology.',
-        topics: [
-            { tag: 'basics', name: 'Elements of Communication', detail: 'Transmitter, channel, receiver, S/N' },
-            { tag: 'modulation', name: 'Modulation & Demodulation', detail: 'AM, FM, bandwidth, carrier wave' },
-            { tag: 'propagation', name: 'Wave Propagation', detail: 'Ground, sky, space, satellite' },
-            { tag: 'digital', name: 'Digital Communication', detail: 'Digitisation, optical fibre basics' },
-        ],
-    },
-    {
-        id: 16, unit: 'Unit VI',
-        title: 'Modern Physics',
-        desc: 'Atoms, nuclei, and the quantum world — where classical physics ends.',
-        topics: [
-            { tag: 'atomic', name: 'Atomic Structure', detail: 'Rutherford, Bohr model, spectral series' },
-            { tag: 'quantum', name: 'Quantum Numbers & Orbitals', detail: 'n, l, m, s; Pauli exclusion principle' },
-            { tag: 'nuclear', name: 'Nuclear Physics', detail: 'Binding energy, radioactivity, decay laws' },
-            { tag: 'modern', name: 'Dual Nature of Radiation', detail: 'Photoelectric effect, de Broglie, uncertainty' },
-        ],
-    },
-    {
-        id: 2, unit: 'Unit I',
-        title: 'Mathematical Methods',
-        desc: 'Scalars, vectors, and the calculus tools physics needs.',
-        topics: [
             {
                 tag: 'vectors',
                 name: 'Scalars & Vectors',
@@ -289,7 +91,50 @@ export const CHAPTERS = [
                 ],
             },
         ],
-    }, {
+    },
+    {
+        id: 4, unit: 'Unit II',
+        title: 'Laws of Motion',
+        desc: "Newton's three laws — the rules governing every force and acceleration.",
+        topics: [
+            {
+                tag: 'newton',
+                name: "Newton's First Law",
+                detail: 'Inertia, frames of reference, equilibrium',
+                concept: "A body continues in its state of rest or uniform motion in a straight line unless acted upon by an external unbalanced force. This is the law of inertia. The tendency to resist change in state of motion is called inertia — directly proportional to mass. A body is in equilibrium when net force = 0: either at rest (static) or moving at constant velocity (dynamic).",
+                formula: ['F_net = 0 → a = 0', 'p = mv (momentum)', 'Inertia ∝ mass', 'ΣF = 0 (equilibrium)'],
+            },
+            {
+                tag: 'newton',
+                name: "Newton's Second Law",
+                detail: 'F = ma, momentum, impulse',
+                concept: "The rate of change of momentum of a body is directly proportional to the applied force and takes place in the direction of the force. F = ma is the most used form. Impulse = F × Δt = change in momentum. A larger force produces larger acceleration; a larger mass resists acceleration more — this is why a truck needs more force than a car to accelerate at the same rate.",
+                formula: ['F = ma', 'F = dp/dt', 'Impulse J = FΔt = Δp', 'a = F/m'],
+            },
+            {
+                tag: 'newton',
+                name: "Newton's Third Law",
+                detail: 'Action-reaction, apparent weight, rocket propulsion',
+                concept: "For every action there is an equal and opposite reaction — acting on different bodies. When you push a wall, the wall pushes back with equal force. A rocket expels gas backward (action); the gas pushes the rocket forward (reaction). Apparent weight in a lift: heavier when accelerating up (N = m(g+a)), lighter when accelerating down (N = m(g−a)).",
+                formula: ['F_AB = −F_BA', 'N = m(g+a) (lift up)', 'N = m(g−a) (lift down)', 'N = 0 (free fall)'],
+            },
+            {
+                tag: 'friction',
+                name: 'Friction',
+                detail: 'Static, kinetic, rolling friction, angle of friction',
+                concept: 'Friction opposes relative motion between surfaces. Static friction can be up to μₛN before the object moves. Once moving, kinetic friction μₖN acts (μₖ < μₛ). The angle of friction λ = tan⁻¹(μ). The angle of repose θ = λ. On an inclined plane, the object slides when inclination > angle of repose.',
+                formula: ['f_s ≤ μₛN', 'f_k = μₖN', 'tan λ = μ', 'θ_repose = tan⁻¹(μ)'],
+            },
+            {
+                tag: 'dynamics',
+                name: 'Circular Motion Dynamics',
+                detail: 'Banking of roads, conical pendulum, centripetal force',
+                concept: 'For circular motion, a centripetal force directed toward the centre is required. On a banked road, the horizontal component of normal force provides centripetal force — the optimum banking angle θ = tan⁻¹(v²/Rg). A conical pendulum has the string sweeping a cone — the horizontal tension component provides centripetal force.',
+                formula: ['F_c = mv²/r = mω²r', 'tan θ = v²/Rg (banking)', 'T cosθ = mg', 'T sinθ = mω²r'],
+            },
+        ],
+    },
+    {
         id: 5, unit: 'Unit III',
         title: 'Gravitation',
         desc: 'From falling apples to orbiting satellites — universal gravitation.',
@@ -323,15 +168,16 @@ export const CHAPTERS = [
                 formula: ['U = −GMm/r', 'E = −GMm/2r', 'BE = GMm/2r', 'V = −GM/r'],
             },
         ],
-    }, {
+    },
+    {
         id: 6, unit: 'Unit III',
         title: 'Mechanical Properties of Solids',
-        desc: 'How materials deform under force — elasticity, stress, strain and breaking points.',
+        desc: "How materials deform — elasticity, stress, strain and Hooke's law.",
         topics: [
             {
                 tag: 'elastic',
                 name: 'Elasticity & Plasticity',
-                detail: 'Elastic limit, permanent set, stress-strain curve',
+                detail: 'Elastic limit, permanent set',
                 concept: 'Within the elastic limit a material returns to its original shape when force is removed. Beyond it, permanent deformation occurs (plastic region). The stress-strain curve tells the full story — proportional limit, elastic limit, yield point, ultimate stress, and fracture point all appear on it.',
                 formula: [
                     'Hooke\'s Law: F = kx',
@@ -355,7 +201,7 @@ export const CHAPTERS = [
             {
                 tag: 'moduli',
                 name: 'Elastic Moduli',
-                detail: "Young's, Bulk, Shear modulus, Poisson's ratio",
+                detail: "Young's, Bulk, Shear, Poisson's ratio",
                 concept: "Young's modulus measures resistance to stretching. Bulk modulus measures resistance to uniform compression. Shear modulus (rigidity) measures resistance to shape change. Poisson's ratio is the ratio of lateral contraction to longitudinal extension.",
                 formula: [
                     'Y = FL / AΔL',
@@ -367,7 +213,7 @@ export const CHAPTERS = [
             {
                 tag: 'energy',
                 name: 'Elastic Potential Energy',
-                detail: 'Energy stored in stretched wire, spring',
+                detail: 'Energy stored in a stretched wire',
                 concept: 'When you stretch a wire, work is done against intermolecular forces. This work is stored as elastic potential energy. It equals the area under the force-extension graph (a triangle for Hookean materials). Energy per unit volume = ½ × stress × strain.',
                 formula: [
                     'U = ½Fx = ½kx²',
@@ -377,7 +223,8 @@ export const CHAPTERS = [
                 ],
             },
         ],
-    }, {
+    },
+    {
         id: 7, unit: 'Unit III',
         title: 'Thermal Properties of Matter',
         desc: 'Temperature, heat, and how matter responds to thermal energy.',
@@ -385,21 +232,21 @@ export const CHAPTERS = [
             {
                 tag: 'heat',
                 name: 'Temperature Scales',
-                detail: 'Celsius, Fahrenheit, Kelvin conversions',
+                detail: 'Celsius, Fahrenheit, Kelvin',
                 concept: 'Temperature is the measure of average kinetic energy of molecules. Three scales exist: Celsius (°C) based on water, Fahrenheit (°F) used in the US, and Kelvin (K) — the absolute scale where 0 K is absolute zero, the lowest possible temperature. All gas law calculations must use Kelvin.',
                 formula: ['K = °C + 273.15', 'F = (9/5)°C + 32', '°C = (F − 32) × 5/9', 'Absolute zero = −273.15°C'],
             },
             {
                 tag: 'heat',
                 name: 'Thermal Expansion',
-                detail: 'Linear, area, volume expansion coefficients',
+                detail: 'Linear, area, volume coefficients',
                 concept: 'When heated, solids expand because molecular vibrations increase. Linear expansion (α) applies to length, area expansion (β = 2α) to surfaces, and volume expansion (γ = 3α) to volumes. Liquids and gases also expand — gases expand far more than solids.',
                 formula: ['ΔL = αL₀ΔT', 'ΔA = βA₀ΔT  (β=2α)', 'ΔV = γV₀ΔT  (γ=3α)', 'α_steel = 11×10⁻⁶ /°C'],
             },
             {
                 tag: 'calorimetry',
                 name: 'Calorimetry',
-                detail: 'Specific heat, latent heat, method of mixtures',
+                detail: 'Specific heat, latent heat, mixtures',
                 concept: 'Heat flows from hot to cold until thermal equilibrium. The heat gained by the cold body equals heat lost by the hot body (conservation of energy). Specific heat capacity is how much heat 1 kg of a substance needs to rise by 1°C. Latent heat is energy for phase change — temperature stays constant during melting/boiling.',
                 formula: ['Q = mcΔT', 'Q_lost = Q_gained', 'Q_latent = mL', 'T_eq = (m₁c₁T₁ + m₂c₂T₂)/(m₁c₁ + m₂c₂)'],
             },
@@ -413,12 +260,13 @@ export const CHAPTERS = [
             {
                 tag: 'gas',
                 name: 'Ideal Gas Laws',
-                detail: "Boyle's, Charles', Gay-Lussac's, ideal gas equation",
+                detail: "Boyle's, Charles', Gay-Lussac's",
                 concept: "Boyle's Law: at constant T, P∝1/V. Charles' Law: at constant P, V∝T. Gay-Lussac's Law: at constant V, P∝T. Combined into the ideal gas equation PV=nRT. An ideal gas has perfectly elastic collisions and no intermolecular forces — real gases approximate this at low pressure and high temperature.",
                 formula: ['PV = nRT', 'P₁V₁/T₁ = P₂V₂/T₂', 'R = 8.314 J/mol·K', 'PV = NkT'],
             },
         ],
-    }, {
+    },
+    {
         id: 8, unit: 'Unit III',
         title: 'Sound',
         desc: 'Longitudinal waves — from vibrating strings to the Doppler effect.',
@@ -433,7 +281,7 @@ export const CHAPTERS = [
             {
                 tag: 'sound',
                 name: 'Speed of Sound',
-                detail: "Newton's formula, Laplace correction, medium dependence",
+                detail: "Newton's formula, Laplace correction",
                 concept: "Sound travels fastest in solids (tightly packed molecules), slower in liquids, slowest in gases. Newton assumed isothermal propagation — Laplace corrected this to adiabatic, giving the right answer. Speed also increases with temperature in gases: v ∝ √T.",
                 formula: ['v = √(B/ρ)  (Newton)', 'v = √(γP/ρ)  (Laplace)', 'v_air = 331 + 0.6T m/s', 'v_steel ≈ 5100 m/s'],
             },
@@ -454,12 +302,13 @@ export const CHAPTERS = [
             {
                 tag: 'doppler',
                 name: 'Doppler Effect',
-                detail: 'Apparent frequency, moving source/observer',
+                detail: 'Apparent frequency, applications',
                 concept: "When a source moves toward you, wavefronts bunch up — you hear higher frequency. Moving away, wavefronts spread — lower frequency. Same for a moving observer. The Doppler formula accounts for both source and observer motion. This is why a siren sounds higher as an ambulance approaches and lower as it passes.",
                 formula: ['f\' = f(v ± v_o)/(v ∓ v_s)', 'v_s < v (subsonic)', 'Mach = v_s/v', 'f\' > f when approaching'],
             },
         ],
-    }, {
+    },
+    {
         id: 9, unit: 'Unit IV',
         title: 'Optics',
         desc: 'Reflection, refraction, lenses, and the wave nature of light.',
@@ -467,28 +316,28 @@ export const CHAPTERS = [
             {
                 tag: 'geo',
                 name: 'Reflection of Light',
-                detail: 'Spherical mirrors, mirror formula, magnification',
+                detail: 'Spherical mirrors, mirror formula',
                 concept: 'Angle of incidence equals angle of reflection — always measured from the normal. For spherical mirrors, the mirror formula relates object distance (u), image distance (v), and focal length (f). The sign convention (New Cartesian) sets distances: real = negative for mirrors. Concave mirrors can form real or virtual images; convex mirrors always form virtual, erect, diminished images.',
                 formula: ['1/v + 1/u = 1/f', 'f = R/2', 'm = −v/u', 'P = 1/f (dioptres)'],
             },
             {
                 tag: 'geo',
                 name: 'Refraction of Light',
-                detail: "Snell's law, TIR, critical angle, optical fibre",
+                detail: "Snell's law, TIR, optical fibre",
                 concept: "Light bends when it crosses from one medium to another because its speed changes. Snell's law: n₁sinθ₁ = n₂sinθ₂. When going from denser to rarer medium, if the angle exceeds the critical angle, Total Internal Reflection occurs — no refraction at all. Optical fibres exploit TIR to guide light around bends with zero loss.",
                 formula: ['n₁sinθ₁ = n₂sinθ₂', 'sinθc = n₂/n₁  (TIR)', 'n = c/v', 'n_glass ≈ 1.5'],
             },
             {
                 tag: 'lenses',
                 name: 'Lenses',
-                detail: 'Thin lens formula, power, lens maker\'s equation',
+                detail: 'Thin lens formula, power, lens maker',
                 concept: 'Converging (convex) lenses bring parallel rays to a real focal point. Diverging (concave) lenses spread rays and have a virtual focus. The thin lens formula is identical in form to the mirror formula. Power = 1/f in dioptres. The lens maker\'s equation relates focal length to the radii of curvature and refractive index.',
                 formula: ['1/v − 1/u = 1/f', 'P = 1/f (D)', 'm = v/u', '1/f = (n−1)(1/R₁ − 1/R₂)'],
             },
             {
                 tag: 'optical',
                 name: 'Optical Instruments',
-                detail: 'Microscope, telescope, human eye, defects',
+                detail: 'Microscope, telescope, human eye',
                 concept: 'A compound microscope uses two converging lenses — the objective forms a real magnified image which the eyepiece magnifies further. A telescope uses a large objective to collect light from distant objects and an eyepiece to magnify. Magnifying power depends on focal lengths. The eye has a near point (~25 cm) and accommodates by changing lens curvature.',
                 formula: ['M_micro = (L/fo) × (D/fe)', 'M_scope = −fo/fe', 'D = 25 cm (near pt)', 'P_eye = 40D to 64D'],
             },
@@ -500,41 +349,43 @@ export const CHAPTERS = [
                 formula: ['β = λD/d', 'Path diff = d sinθ', 'Bright: nλ', 'Dark: (n+½)λ'],
             },
         ],
-    }, {
+    },
+    {
         id: 10, unit: 'Unit IV',
         title: 'Electrostatics',
-        desc: 'Electric charges at rest — Coulomb\'s law to capacitors.',
+        desc: "Electric charges at rest — Coulomb's law to capacitors.",
         topics: [
             {
                 tag: 'charge',
                 name: "Electric Charge & Coulomb's Law",
-                detail: 'Properties of charge, permittivity, superposition',
+                detail: 'Properties, permittivity, superposition',
                 concept: 'Charge comes in two types — positive and negative. Like charges repel, unlike attract. Coulomb\'s law gives the force between two point charges: it follows an inverse-square law just like gravity but is vastly stronger. The superposition principle lets you find the total force from many charges by vector addition.',
                 formula: ['F = kq₁q₂/r²', 'k = 1/4πε₀ = 9×10⁹ Nm²C⁻²', 'ε₀ = 8.85×10⁻¹² C²N⁻¹m⁻²', 'F_net = ΣFᵢ'],
             },
             {
                 tag: 'field',
                 name: 'Electric Field & Potential',
-                detail: 'Field lines, electric potential, equipotential surfaces',
+                detail: 'Field lines, potential, equipotential',
                 concept: 'Electric field is the force per unit positive test charge. Field lines show direction — they start on positive charges and end on negative. Electric potential is the work done per unit charge to bring a test charge from infinity. Equipotential surfaces are perpendicular to field lines everywhere.',
                 formula: ['E = F/q = kQ/r²', 'V = kQ/r', 'E = −dV/dr', 'W = q(V₁−V₂)'],
             },
             {
                 tag: 'gauss',
                 name: "Gauss's Law",
-                detail: 'Electric flux, symmetric charge distributions',
+                detail: 'Electric flux, symmetric distributions',
                 concept: "Gauss's law states that the total electric flux through any closed surface equals the enclosed charge divided by ε₀. It's equivalent to Coulomb's law but far more powerful for symmetric charge distributions — a single line of algebra replaces pages of integration.",
                 formula: ['Φ = ∮E·dA = Q_enc/ε₀', 'E(sphere) = kQ/r²', 'E(plane) = σ/2ε₀', 'E(wire) = λ/2πε₀r'],
             },
             {
                 tag: 'capacitor',
                 name: 'Capacitance & Capacitors',
-                detail: 'Parallel plate capacitor, dielectrics, energy stored',
+                detail: 'Parallel plate, dielectrics, energy',
                 concept: 'A capacitor stores charge by maintaining a potential difference between two conductors. Capacitance C = Q/V. For a parallel plate capacitor, C = ε₀A/d. A dielectric material between the plates increases C by the dielectric constant κ. Energy stored = ½CV² = ½QV = Q²/2C.',
                 formula: ['C = Q/V = ε₀A/d', 'C_dielectric = κC₀', 'U = ½CV²', 'E = σ/ε₀ = V/d'],
             },
         ],
-    }, {
+    },
+    {
         id: 11, unit: 'Unit IV',
         title: 'Electric Current Through Conductors',
         desc: "Moving charges — Ohm's law, resistance, and Kirchhoff's laws.",
@@ -549,7 +400,7 @@ export const CHAPTERS = [
             {
                 tag: 'ohm',
                 name: "Ohm's Law & Resistance",
-                detail: 'Resistivity, temperature dependence, superconductivity',
+                detail: 'Resistivity, temperature dependence',
                 concept: "Ohm's law: V = IR. Resistance depends on material (resistivity ρ), length L, and cross-section A: R = ρL/A. Resistivity increases with temperature for metals (positive temperature coefficient) but decreases for semiconductors. At very low temperatures some materials become superconductors with zero resistance.",
                 formula: ['V = IR', 'R = ρL/A', 'ρ(T) = ρ₀[1 + α(T−T₀)]', 'G = 1/R (siemens)'],
             },
@@ -563,12 +414,13 @@ export const CHAPTERS = [
             {
                 tag: 'power',
                 name: 'Electrical Power & Energy',
-                detail: 'Joule heating, power dissipation, household circuits',
+                detail: 'Joule heating, household circuits',
                 concept: 'When current flows through resistance, electrical energy converts to heat — Joule heating. Power P = VI = I²R = V²/R. Energy = Pt (joules) = Pt/3.6×10⁶ (kWh). A 1 kW device running for 1 hour consumes 1 unit of electricity. Higher resistance means more heat for the same current — the basis of heaters and filament bulbs.',
                 formula: ['P = VI = I²R = V²/R', 'H = I²Rt', 'E = Pt (J)', '1 kWh = 3.6×10⁶ J'],
             },
         ],
-    }, {
+    },
+    {
         id: 12, unit: 'Unit V',
         title: 'Magnetism',
         desc: 'Magnetic fields, forces, and the link between electricity and magnetism.',
@@ -576,7 +428,7 @@ export const CHAPTERS = [
             {
                 tag: 'magnets',
                 name: "Bar Magnets & Earth's Magnetism",
-                detail: 'Magnetic dipole, field lines, declination, dip',
+                detail: 'Dipole, field lines, declination, dip',
                 concept: "A bar magnet is a magnetic dipole — field lines emerge from the north pole and enter the south pole, forming closed loops inside the magnet. Earth behaves like a giant bar magnet with its geographic south near the magnetic north. Magnetic declination is the angle between geographic and magnetic north. Angle of dip (inclination) is the angle the Earth's field makes with the horizontal.",
                 formula: ['B = μ₀M/4πr³', 'B_axial = μ₀2M/4πr³', 'B_equatorial = μ₀M/4πr³', 'M = m × 2l'],
             },
@@ -589,15 +441,15 @@ export const CHAPTERS = [
             },
             {
                 tag: 'current',
-                name: 'Magnetic Effect of Current',
-                detail: 'Biot-Savart law, Ampere\'s law, solenoid, toroid',
+                name: "Magnetic Effect of Current",
+                detail: "Biot-Savart, Ampere's law, solenoid",
                 concept: "Every current-carrying conductor creates a magnetic field. Biot-Savart law gives the field contribution from each tiny current element. Ampere's law is the magnetic analogue of Gauss's law — the line integral of B around a closed loop equals μ₀ times the enclosed current. A solenoid creates a nearly uniform field inside.",
                 formula: ['dB = μ₀Idl×r̂/4πr²', 'B_wire = μ₀I/2πr', 'B_solenoid = μ₀nI', '∮B·dl = μ₀I_enc'],
             },
             {
                 tag: 'matter',
                 name: 'Magnetic Properties of Matter',
-                detail: 'Dia, para, ferro materials, hysteresis loop',
+                detail: 'Dia, para, ferro; hysteresis loop',
                 concept: 'Diamagnetic materials (χ < 0) weakly repel magnetic fields — all materials have this. Paramagnetic (χ > 0) weakly attract. Ferromagnetic materials (iron, nickel) have large χ and retain magnetization. The hysteresis loop shows how ferromagnets retain memory of past magnetization — the area of the loop = energy lost per cycle.',
                 formula: ['B = μ₀(H + M)', 'M = χH', 'μᵣ = 1 + χ', 'B_r = remanence'],
             },
@@ -618,14 +470,14 @@ export const CHAPTERS = [
             {
                 tag: 'self',
                 name: 'Self & Mutual Inductance',
-                detail: 'L, M coefficients, energy stored in inductor',
+                detail: 'L, M coefficients, energy stored',
                 concept: 'Self-inductance L is a coil\'s tendency to oppose changes in its own current — the induced back-EMF = −L dI/dt. Mutual inductance M describes how much EMF is induced in one coil by changing current in another. Energy stored in an inductor = ½LI². A solenoid of N turns, length l, area A has L = μ₀N²A/l.',
                 formula: ['ε = −L dI/dt', 'ε₂ = −M dI₁/dt', 'L = μ₀N²A/l', 'U = ½LI²'],
             },
             {
                 tag: 'ac',
                 name: 'Alternating Current Basics',
-                detail: 'AC generation, RMS values, phasors',
+                detail: 'AC generation, RMS, phasors',
                 concept: 'A coil rotating in a uniform magnetic field generates a sinusoidal EMF: ε = ε₀ sinωt. The RMS (root mean square) value is what matters for power calculations — it equals the peak value divided by √2. RMS voltage drives the same power as an equivalent DC voltage. Phasors represent sinusoidal quantities as rotating vectors.',
                 formula: ['ε = NBAω sinωt', 'V_rms = V₀/√2', 'I_rms = I₀/√2', 'P = V_rms × I_rms'],
             },
@@ -637,41 +489,43 @@ export const CHAPTERS = [
                 formula: ['V₂/V₁ = N₂/N₁', 'I₁/I₂ = N₂/N₁', 'η = P_out/P_in × 100%', 'P₁ = P₂ (ideal)'],
             },
         ],
-    }, {
+    },
+    {
         id: 14, unit: 'Unit V',
         title: 'Semiconductors',
-        desc: 'The quantum world of p-n junctions, transistors, and optoelectronics.',
+        desc: 'The quantum-mechanical world of p-n junctions and transistors.',
         topics: [
             {
                 tag: 'band',
                 name: 'Energy Bands & Classification',
-                detail: 'Conductors, insulators, semiconductors, band gap',
+                detail: 'Conductors, insulators, band gap',
                 concept: 'In solids, atomic energy levels broaden into bands. The valence band is the highest filled band; the conduction band is the lowest empty one. The gap between them is the band gap E_g. Conductors: bands overlap (E_g = 0). Semiconductors: small gap (~1 eV) — thermal energy can bridge it. Insulators: large gap (>5 eV) — electrons cannot cross at room temperature.',
                 formula: ['E_g(Si) = 1.1 eV', 'E_g(Ge) = 0.7 eV', 'E_g(GaAs) = 1.4 eV', 'n_i = A T^(3/2) e^(-Eg/2kT)'],
             },
             {
                 tag: 'sc',
                 name: 'Intrinsic & Extrinsic Semiconductors',
-                detail: 'n-type, p-type, doping, carrier concentration',
+                detail: 'n-type, p-type, doping',
                 concept: 'Pure (intrinsic) silicon has equal electrons and holes. Adding pentavalent impurities (P, As) donates extra electrons → n-type. Adding trivalent impurities (B, Al) creates holes → p-type. Doping increases conductivity by many orders of magnitude. The Fermi level shifts toward the conduction band for n-type and toward the valence band for p-type.',
                 formula: ['n·p = nᵢ²', 'n ≈ N_D (n-type)', 'p ≈ N_A (p-type)', 'σ = e(nμₑ + pμₕ)'],
             },
             {
                 tag: 'diode',
                 name: 'p-n Junction & Diode',
-                detail: 'Depletion layer, forward/reverse bias, I-V curve',
+                detail: 'Depletion layer, bias, I-V curve',
                 concept: 'At a p-n junction, electrons diffuse from n to p and holes from p to n, creating a depletion region with a built-in electric field (~0.6V for Si) that opposes further diffusion. Forward bias shrinks the depletion layer and allows large current. Reverse bias widens it — only a tiny leakage current flows until breakdown voltage is reached.',
                 formula: ['I = I₀(e^(V/V_T)−1)', 'V_T = kT/e = 26 mV', 'V_bi ≈ 0.6 V (Si)', 'I₀ ≈ 10⁻¹² A'],
             },
             {
                 tag: 'devices',
                 name: 'Semiconductor Devices',
-                detail: 'LED, photodiode, solar cell, Zener diode',
+                detail: 'LED, photodiode, solar cell, Zener',
                 concept: 'LED: forward-biased junction emits photons when electrons recombine with holes — photon energy = band gap. Photodiode: reverse-biased — incident photons generate electron-hole pairs creating a photocurrent. Solar cell: same principle but optimised for maximum power output. Zener diode: heavily doped, operates in reverse breakdown — acts as a precision voltage reference.',
                 formula: ['E_photon = hf = E_g', 'I_photo = G × P_light', 'V_oc = (kT/e)ln(I_sc/I₀ + 1)', 'P_max = V_mp × I_mp'],
             },
         ],
-    }, {
+    },
+    {
         id: 15, unit: 'Unit VI',
         title: 'Communication Systems',
         desc: 'Modulation, transmission, and modern communication technology.',
@@ -679,7 +533,7 @@ export const CHAPTERS = [
             {
                 tag: 'basics',
                 name: 'Elements of Communication',
-                detail: 'Transmitter, channel, receiver, signal vs noise',
+                detail: 'Transmitter, channel, receiver, S/N',
                 concept: 'Every communication system has three core elements: a transmitter (converts information to signal), a channel (the medium — air, cable, fibre), and a receiver (converts signal back to information). Real channels always add noise. Signal-to-Noise Ratio (SNR) measures how much stronger the signal is than the noise. Bandwidth is the range of frequencies a channel can carry.',
                 formula: ['SNR = P_signal / P_noise', 'SNR_dB = 10 log₁₀(SNR)', 'BW = f_max − f_min', 'C = B log₂(1 + SNR)'],
             },
@@ -693,19 +547,20 @@ export const CHAPTERS = [
             {
                 tag: 'propagation',
                 name: 'Wave Propagation',
-                detail: 'Ground, sky, space waves; satellite communication',
+                detail: 'Ground, sky, space, satellite',
                 concept: 'Ground waves travel along Earth\'s surface — used for AM radio (up to ~2 MHz). Sky waves reflect off the ionosphere — used for shortwave (2–30 MHz). Space waves travel line-of-sight — used for VHF/UHF/microwave/satellite. The ionosphere (60–400 km altitude) reflects waves below the critical frequency and lets higher frequencies pass through to space.',
                 formula: ['d_horizon = √(2Rh)', 'f_critical = 9√(N_max)', 'Skip distance: ground + sky', 'GEO altitude: 35,786 km'],
             },
             {
                 tag: 'digital',
                 name: 'Digital Communication',
-                detail: 'Sampling theorem, aliasing, optical fibre',
+                detail: 'Digitisation, optical fibre basics',
                 concept: "Shannon's sampling theorem: to faithfully reconstruct a signal, it must be sampled at least twice the highest frequency (Nyquist rate). Sampling below this causes aliasing — a false lower frequency appears. Digital signals are immune to noise accumulation (regenerative repeaters). Optical fibres carry data as light pulses with extremely low loss.",
                 formula: ['f_s ≥ 2f_max  (Nyquist)', 'f_alias = |f_s − f|', 'Bit rate = f_s × bits/sample', 'Fibre loss: ~0.2 dB/km'],
             },
         ],
-    }, {
+    },
+    {
         id: 16, unit: 'Unit VI',
         title: 'Modern Physics',
         desc: 'Atoms, nuclei, and the quantum world — where classical physics ends.',
@@ -720,7 +575,7 @@ export const CHAPTERS = [
             {
                 tag: 'quantum',
                 name: 'Quantum Numbers & Orbitals',
-                detail: 'n, l, m, s quantum numbers, Pauli exclusion',
+                detail: 'n, l, m, s; Pauli exclusion principle',
                 concept: 'Four quantum numbers completely describe an electron: n (principal — energy/size), l (azimuthal — shape: 0=s,1=p,2=d,3=f), mₗ (magnetic — orientation), mₛ (spin: +½ or −½). Pauli exclusion: no two electrons in an atom can have identical sets of all four quantum numbers. Maximum electrons per shell = 2n².',
                 formula: ['n = 1,2,3...', 'l = 0 to n−1', 'mₗ = −l to +l', 'mₛ = ±½'],
             },
@@ -734,14 +589,12 @@ export const CHAPTERS = [
             {
                 tag: 'modern',
                 name: 'Dual Nature of Radiation',
-                detail: 'Photoelectric effect, de Broglie, Heisenberg uncertainty',
+                detail: 'Photoelectric effect, de Broglie, uncertainty',
                 concept: 'Einstein explained the photoelectric effect: light consists of photons each carrying energy E = hf. If hf > φ (work function), an electron is ejected with KE = hf − φ. de Broglie: every moving particle has a wavelength λ = h/mv. Heisenberg uncertainty: you cannot simultaneously know both position and momentum precisely — ΔxΔp ≥ ħ/2.',
                 formula: ['KE_max = hf − φ', 'V_stop = (hf − φ)/e', 'λ = h/mv  (de Broglie)', 'ΔxΔp ≥ ħ/2'],
             },
         ],
     },
-
-
 ]
 
 export const TOTAL_TOPICS = CHAPTERS.reduce((sum, ch) => sum + ch.topics.length, 0)

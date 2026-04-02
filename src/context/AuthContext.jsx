@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
+import { PRICING as STATIC_PRICING } from '../data/pricing';
+
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -22,6 +24,44 @@ export const AuthProvider = ({ children }) => {
     maths: []
   };
 
+  const [pricing, setPricing] = useState(STATIC_PRICING);
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('smartbook_settings')
+        .select('*')
+        .eq('key', 'pricing')
+        .single();
+      
+      if (data && data.value) {
+        setPricing(data.value);
+      }
+    } catch (err) {
+      console.log('Using static pricing (dynamic table not ready)');
+    }
+  };
+
+  const updatePricing = async (newPricing) => {
+    if (user?.role !== 'admin') return;
+    try {
+      const { error } = await supabase
+        .from('smartbook_settings')
+        .upsert({ key: 'pricing', value: newPricing });
+      
+      if (error) throw error;
+      setPricing(newPricing);
+      return true;
+    } catch (err) {
+      console.error('Error updating pricing:', err.message);
+      return false;
+    }
+  };
+
   useEffect(() => {
     const savedUser = localStorage.getItem('sb_user');
     if (savedUser) {
@@ -35,16 +75,17 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       
       // Query the Smartbook365Users table for matching username and password
-      const { data, error } = await supabase
+      const { data: users, error } = await supabase
         .from('Smartbook365Users')
         .select('*')
         .eq('username', username)
-        .eq('password', password)
-        .single();
+        .eq('password', password);
 
-      if (error || !data) {
+      if (error || !users || users.length === 0) {
         throw new Error('Invalid username or password');
       }
+
+      const data = users[0];
 
       // Prepare user object with subscriptions
       // We assume data might have a 'subscriptions' column (jsonb)
@@ -54,8 +95,8 @@ export const AuthProvider = ({ children }) => {
         name: data.username,
         username: data.username,
         email: `${data.username}@smartbook.com`, // Fallback for email-based UI
-        role: data.username === 'admin' ? 'admin' : 'user',
-        subscriptions: data.subscriptions || (data.username === 'admin' ? {
+        role: data.role || (data.username === 'admin' ? 'admin' : 'user'),
+        subscriptions: data.subscriptions || ( (data.role === 'admin' || data.username === 'admin') ? {
           physics: 'all',
           chemistry: 'all',
           maths: 'all'
@@ -87,8 +128,65 @@ export const AuthProvider = ({ children }) => {
     return sub.includes(Number(chapterId));
   };
 
+  const fetchUsers = async () => {
+    if (user?.role !== 'admin') return [];
+    try {
+      const { data, error } = await supabase
+        .from('Smartbook365Users')
+        .select('*');
+      if (error) throw error;
+      return data;
+    } catch (err) {
+      console.error('Error fetching users:', err.message);
+      return [];
+    }
+  };
+
+  const updateSubscriptions = async (userId, newSubs) => {
+    if (user?.role !== 'admin') return;
+    try {
+      const { error } = await supabase
+        .from('Smartbook365Users')
+        .update({ subscriptions: newSubs })
+        .eq('id', userId);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error updating subscriptions:', err.message);
+      return false;
+    }
+  };
+
+  const addNewUser = async (newUserData) => {
+    if (user?.role !== 'admin') return;
+    try {
+      const { error } = await supabase
+        .from('Smartbook365Users')
+        .insert([{
+          ...newUserData,
+          subscriptions: newUserData.subscriptions || DEFAULT_SUBSCRIPTIONS
+        }]);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error adding user:', err.message);
+      return false;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, hasAccess, loading }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      login, 
+      logout, 
+      hasAccess, 
+      loading, 
+      fetchUsers, 
+      updateSubscriptions,
+      addNewUser,
+      pricing,
+      updatePricing
+    }}>
       {children}
     </AuthContext.Provider>
   );

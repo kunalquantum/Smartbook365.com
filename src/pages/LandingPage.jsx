@@ -128,6 +128,9 @@ const LandingPage = () => {
                         <li><a href="#subjects">Subjects</a></li>
                         {user ? (
                             <>
+                                {user.role === 'admin' && (
+                                    <li><Link to="/admin" style={{ color: 'var(--amber)', fontWeight: '700', marginRight: '15px', border: '1px solid var(--amber)', padding: '4px 10px', borderRadius: '8px' }}>ADMIN CONSOLE</Link></li>
+                                )}
                                 <li><Link to="/subscription" style={{ color: 'var(--amber)', fontWeight: '700' }}>My Subscription</Link></li>
                                 <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '10px' }}>
                                     <div style={{
