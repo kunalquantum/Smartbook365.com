@@ -2,8 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { chapters } from '../../data/chapters';
+import { useAuth } from '../../../../context/AuthContext';
 
 export const Sidebar = ({ activeChapter, onSelectChapter }) => {
+  const { hasAccess } = useAuth();
   return (
     <div className="glass-panel" style={{
       width: '280px',
@@ -24,6 +26,8 @@ export const Sidebar = ({ activeChapter, onSelectChapter }) => {
       <div style={{ flex: 1, overflowY: 'auto', padding: '0 12px 24px 12px' }}>
         {chapters.map((ch, idx) => {
           const isActive = ch.id === activeChapter;
+          const locked = !hasAccess('maths', Number(ch.id));
+          
           return (
             <motion.button
               key={ch.id}
@@ -42,12 +46,16 @@ export const Sidebar = ({ activeChapter, onSelectChapter }) => {
                 color: isActive ? 'white' : 'var(--text-secondary)',
                 display: 'flex',
                 flexDirection: 'column',
-                transition: 'background 0.2s, color 0.2s'
+                transition: 'background 0.2s, color 0.2s',
+                opacity: locked ? 0.6 : 1
               }}
             >
-              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: isActive ? 'var(--primary-light)' : 'var(--text-muted)', marginBottom: '4px' }}>
-                CHAPTER {ch.id}
-              </span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: isActive ? 'var(--primary-light)' : 'var(--text-muted)', marginBottom: '4px' }}>
+                  CHAPTER {ch.id}
+                </span>
+                {locked && <span style={{ fontSize: '0.75rem' }}>🔒</span>}
+              </div>
               <span style={{ fontSize: '0.95rem', fontWeight: isActive ? 600 : 500, lineHeight: 1.3 }}>
                 {ch.title}
               </span>
@@ -68,4 +76,3 @@ export const Sidebar = ({ activeChapter, onSelectChapter }) => {
     </div>
   );
 };
-

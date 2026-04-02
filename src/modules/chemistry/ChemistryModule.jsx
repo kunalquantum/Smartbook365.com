@@ -7,6 +7,8 @@ import ChapterPage from './components/book/ChapterPage'
 import ValueCard from './components/ui/ValueCard'
 import BranchBadge from './components/ui/BranchBadge'
 import AtomicExplorerPage from './components/Atom3D/AtomicExplorerPage'
+import { useAuth } from '../../context/AuthContext'
+import AccessDenied from '../../components/auth/AccessDenied'
 import './chemistry.css'
 
 const BRANCH_COLOR = {
@@ -18,8 +20,10 @@ const BRANCH_COLOR = {
 export default function ChemistryModule() {
     const [activeId, setActiveId] = useState(null)
     const { done, toggle, chapterDone, reset } = useProgress()
+    const { hasAccess } = useAuth()
 
     const activeChapter = CHAPTERS.find(c => c.id === activeId)
+    const isLocked = activeChapter && !hasAccess('chemistry', activeChapter.id)
     const bColor = activeChapter ? (BRANCH_COLOR[activeChapter.branch] || 'var(--gold)') : 'var(--gold)'
 
     return (
@@ -111,11 +115,15 @@ export default function ChemistryModule() {
                         )}
 
                         {activeChapter && (
-                            <ChapterPage
-                                chapter={activeChapter}
-                                done={done}
-                                onToggle={toggle}
-                            />
+                            isLocked ? (
+                                <AccessDenied subject="Chemistry" chapterTitle={activeChapter.title} />
+                            ) : (
+                                <ChapterPage
+                                    chapter={activeChapter}
+                                    done={done}
+                                    onToggle={toggle}
+                                />
+                            )
                         )}
 
                         {activeId === 'atom3d' && (

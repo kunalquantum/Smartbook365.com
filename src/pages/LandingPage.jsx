@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import '../styles/landing.css';
 
 const LandingPage = () => {
+    const { user, logout } = useAuth();
     const [scrolled, setScrolled] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
@@ -121,11 +123,33 @@ const LandingPage = () => {
                         <span className="logo-icon">▲</span>
                         <span className="logo-text">Smartbook</span>
                     </div>
-                    <ul className="nav-links">
+                    <ul className="nav-links" style={{ alignItems: 'center' }}>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#subjects">Subjects</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#join" className="btn btn-secondary">Join Now</a></li>
+                        {user ? (
+                            <>
+                                <li><Link to="/subscription" style={{ color: 'var(--amber)', fontWeight: '700' }}>My Subscription</Link></li>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '10px' }}>
+                                    <div style={{
+                                        width: '32px',
+                                        height: '32px',
+                                        borderRadius: '50%',
+                                        background: 'var(--amber)',
+                                        color: '#000',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '14px',
+                                        fontWeight: '800'
+                                    }}>
+                                        {user.name.charAt(0)}
+                                    </div>
+                                    <button onClick={logout} className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '12px' }}>Logout</button>
+                                </li>
+                            </>
+                        ) : (
+                            <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
+                        )}
                     </ul>
                 </nav>
             </header>

@@ -6,14 +6,18 @@ import TopBar from './components/layout/TopBar'
 import ChapterView from './components/chapter/ChapterView'
 import ChapterList from './components/chapter/ChapterList'
 import StatCard from './components/ui/StatCard'
+import { useAuth } from '../../context/AuthContext'
+import AccessDenied from '../../components/auth/AccessDenied'
 import './physics.css'
 
 export default function PhysicsModule() {
   const [activeId, setActiveId] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { done, toggle, chapterDone, reset } = useProgress()
+  const { hasAccess } = useAuth()
 
   const activeChapter = CHAPTERS.find(c => c.id === activeId)
+  const isLocked = activeChapter && !hasAccess('physics', activeChapter.id)
 
   return (
     <div className="physics-theme">
@@ -63,10 +67,15 @@ export default function PhysicsModule() {
               </div>
             )}
 
-            {activeChapter
-              ? <ChapterView chapter={activeChapter} done={done} onToggle={toggle} chapterDone={chapterDone} />
-              : <ChapterList chapters={CHAPTERS} chapterDone={chapterDone} />
-            }
+            {activeChapter ? (
+              isLocked ? (
+                <AccessDenied subject="Physics" chapterTitle={activeChapter.title} />
+              ) : (
+                <ChapterView chapter={activeChapter} done={done} onToggle={toggle} chapterDone={chapterDone} />
+              )
+            ) : (
+              <ChapterList chapters={CHAPTERS} chapterDone={chapterDone} />
+            )}
           </main>
         </div>
       </div>
