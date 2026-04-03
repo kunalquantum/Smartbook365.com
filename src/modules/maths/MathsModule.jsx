@@ -10,6 +10,7 @@ import './App.css';
 
 function MathsModule() {
   const [activeChapter, setActiveChapter] = useState('1');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { hasAccess } = useAuth();
 
   const chapterData = chapters.find(ch => ch.id === activeChapter);
@@ -18,11 +19,18 @@ function MathsModule() {
   return (
     <div className="maths-theme">
       <div className="bg-gradient-math"></div>
-      <div className="app-container">
-        <Sidebar activeChapter={activeChapter} onSelectChapter={setActiveChapter} />
+      <div className={`app-container ${sidebarOpen ? 'sidebar-open' : ''}`}>
+        <Sidebar 
+          activeChapter={activeChapter} 
+          onSelectChapter={(id) => { setActiveChapter(id); setSidebarOpen(false); }} 
+          isOpen={sidebarOpen}
+        />
         
         <div className="main-content">
-          <TopBar activeChapter={activeChapter} />
+          <TopBar 
+            activeChapter={activeChapter} 
+            onMenuClick={() => setSidebarOpen(o => !o)}
+          />
           <div className="page-content">
             {isLocked ? (
               <AccessDenied subject="Mathematics" chapterTitle={chapterData?.title || 'This Chapter'} />

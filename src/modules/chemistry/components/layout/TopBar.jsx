@@ -9,11 +9,16 @@ export default function TopBar({ onMenuClick, onReset }) {
             background: 'var(--bg2)',
             gap: 12, flexShrink: 0,
         }}>
-            <button onClick={onMenuClick} style={{
-                background: 'none', border: 'none',
-                color: 'var(--gold)', fontSize: 18,
-                padding: '4px 6px',
-            }}>☰</button>
+            <button 
+                onClick={onMenuClick} 
+                className="menu-btn"
+                style={{
+                    background: 'none', border: 'none',
+                    color: 'var(--gold)', fontSize: 18,
+                    padding: '4px 6px',
+                    display: 'none',
+                }}
+            >☰</button>
 
             <Link to="/" style={{ 
                 textDecoration: 'none', 
@@ -29,7 +34,7 @@ export default function TopBar({ onMenuClick, onReset }) {
                 <span>←</span> HOME
             </Link>
 
-            <span style={{
+            <span className="module-title" style={{
                 fontFamily: 'var(--mono)', fontSize: 10,
                 color: 'var(--text3)', letterSpacing: '1.5px',
             }}>
@@ -38,18 +43,36 @@ export default function TopBar({ onMenuClick, onReset }) {
 
             <div style={{ flex: 1 }} />
 
-            <button onClick={onReset} style={{
-                background: 'none', border: '1px solid var(--border)',
-                color: 'var(--text3)', fontSize: 11,
-                padding: '4px 12px', borderRadius: 6,
-                fontFamily: 'var(--mono)',
-                transition: 'color 0.15s',
-            }}
+            <button 
+                onClick={onReset} 
+                className="reset-btn"
+                style={{
+                    background: 'none', border: '1px solid var(--border)',
+                    color: 'var(--text3)', fontSize: 11,
+                    padding: '4px 12px', borderRadius: 6,
+                    fontFamily: 'var(--mono)',
+                    transition: 'color 0.15s',
+                }}
                 onMouseEnter={e => e.target.style.color = 'var(--coral)'}
                 onMouseLeave={e => e.target.style.color = 'var(--text3)'}
             >
                 reset
             </button>
+
+            <style>{`
+                @media (max-width: 768px) {
+                    .menu-btn {
+                        display: block !important;
+                    }
+                    .module-title {
+                        display: none !important;
+                    }
+                    .reset-btn {
+                        padding: 4px 8px !important;
+                        font-size: 10px !important;
+                    }
+                }
+            `}</style>
         </div>
     )
 }

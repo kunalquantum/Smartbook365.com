@@ -6,11 +6,21 @@ import '../styles/landing.css';
 const LandingPage = () => {
     const { user, logout } = useAuth();
     const [scrolled, setScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [followerPos, setFollowerPos] = useState({ x: 0, y: 0 });
     const [scrollWidth, setScrollWidth] = useState(0);
     const heroVisualRef = useRef(null);
+
+    // Close menu on resize
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 768) setIsMenuOpen(false);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // 1. Reveal on Scroll Animation
     useEffect(() => {
@@ -117,41 +127,37 @@ const LandingPage = () => {
             <div id="custom-cursor" style={{ transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0)` }}></div>
             <div id="cursor-follower" style={{ transform: `translate3d(${followerPos.x - 14}px, ${followerPos.y - 14}px, 0)` }}></div>
 
-            <header id="main-header" className={scrolled ? 'scrolled' : ''}>
+            <header id="main-header" className={`${scrolled ? 'scrolled' : ''} ${isMenuOpen ? 'menu-active' : ''}`}>
                 <nav className="container">
                     <div className="logo">
                         <span className="logo-icon">▲</span>
                         <span className="logo-text">Smartbook</span>
                     </div>
-                    <ul className="nav-links" style={{ alignItems: 'center' }}>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#subjects">Subjects</a></li>
+
+                    <div className={`burger-menu ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <ul className={`nav-links ${isMenuOpen ? 'mobile-show' : ''}`} style={{ alignItems: 'center' }}>
+                        <li><a href="#features" onClick={() => setIsMenuOpen(false)}>Features</a></li>
+                        <li><a href="#subjects" onClick={() => setIsMenuOpen(false)}>Subjects</a></li>
                         {user ? (
                             <>
                                 {user.role === 'admin' && (
-                                    <li><Link to="/admin" style={{ color: 'var(--amber)', fontWeight: '700', marginRight: '15px', border: '1px solid var(--amber)', padding: '4px 10px', borderRadius: '8px' }}>ADMIN CONSOLE</Link></li>
+                                    <li><Link to="/admin" onClick={() => setIsMenuOpen(false)} style={{ color: 'var(--amber)', fontWeight: '700', marginRight: '15px', border: '1px solid var(--amber)', padding: '4px 10px', borderRadius: '8px' }}>ADMIN CONSOLE</Link></li>
                                 )}
-                                <li><Link to="/subscription" style={{ color: 'var(--amber)', fontWeight: '700' }}>My Subscription</Link></li>
-                                <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '10px' }}>
-                                    <div style={{
-                                        width: '32px',
-                                        height: '32px',
-                                        borderRadius: '50%',
-                                        background: 'var(--amber)',
-                                        color: '#000',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        fontSize: '14px',
-                                        fontWeight: '800'
-                                    }}>
+                                <li><Link to="/subscription" onClick={() => setIsMenuOpen(false)} style={{ color: 'var(--amber)', fontWeight: '700' }}>My Subscription</Link></li>
+                                <li className="user-profile-nav">
+                                    <div className="avatar">
                                         {user.name.charAt(0)}
                                     </div>
-                                    <button onClick={logout} className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '12px' }}>Logout</button>
+                                    <button onClick={logout} className="btn btn-outline">Logout</button>
                                 </li>
                             </>
                         ) : (
-                            <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
+                            <li><Link to="/subscription" onClick={() => setIsMenuOpen(false)} className="btn btn-secondary">Join Now</Link></li>
                         )}
                     </ul>
                 </nav>

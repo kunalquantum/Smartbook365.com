@@ -99,4 +99,22 @@
   padding: 40px;
 }
 
+/* Responsive */
+@media (max-width: 1024px) {
+  .maths-theme .page-content {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .maths-theme .page-content {
+    padding: 16px;
+  }
+  
+  .maths-theme .sidebar-open .main-content {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
 

@@ -19,6 +19,7 @@ const BRANCH_COLOR = {
 
 export default function ChemistryModule() {
     const [activeId, setActiveId] = useState(null)
+    const [sidebarOpen, setSidebarOpen] = useState(false)
     const { done, toggle, chapterDone, reset } = useProgress()
     const { hasAccess } = useAuth()
 
@@ -32,14 +33,15 @@ export default function ChemistryModule() {
                 <Sidebar
                     chapters={CHAPTERS}
                     activeId={activeId}
-                    onSelect={setActiveId}
+                    onSelect={(id) => { setActiveId(id); setSidebarOpen(false) }}
                     chapterDone={chapterDone}
                     totalDone={done.size}
+                    isOpen={sidebarOpen}
                 />
 
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
                     <TopBar
-                        onMenuClick={() => { }}
+                        onMenuClick={() => setSidebarOpen(o => !o)}
                         onReset={() => { if (confirm('Reset all Chemistry progress?')) reset() }}
                     />
 

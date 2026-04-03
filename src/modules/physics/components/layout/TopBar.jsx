@@ -33,12 +33,13 @@ export default function TopBar({ onMenuClick, onReset }) {
             }}>
                 <span>←</span> HOME
             </Link>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text3)', letterSpacing: '1.5px' }}>
+            <span className="module-title" style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text3)', letterSpacing: '1.5px' }}>
                 MAHARASHTRA · HSC · PHYSICS XI
             </span>
             <div style={{ flex: 1 }} />
             <button
                 onClick={onReset}
+                className="reset-btn"
                 style={{
                     background: 'none', border: '1px solid var(--border)',
                     color: 'var(--text3)', fontSize: 12, padding: '4px 12px',
@@ -50,6 +51,21 @@ export default function TopBar({ onMenuClick, onReset }) {
             >
                 reset
             </button>
+
+            <style>{`
+                @media (max-width: 768px) {
+                    .menu-btn {
+                        display: block !important;
+                    }
+                    .module-title {
+                        display: none !important;
+                    }
+                    .reset-btn {
+                        padding: 4px 8px !important;
+                        font-size: 10px !important;
+                    }
+                }
+            `}</style>
         </div>
     )
 }

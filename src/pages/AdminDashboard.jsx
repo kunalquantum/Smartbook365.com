@@ -18,6 +18,8 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('users'); // 'users' or 'pricing'
   const [editingPricing, setEditingPricing] = useState(pricing);
 
+  const [viewMode, setViewMode] = useState('list'); // 'list' or 'detail' for mobile
+
   const subjects = [
     { id: 'physics', name: 'Physics', icon: '⚛️', chapters: PHYSICS_CHAPTERS },
     { id: 'chemistry', name: 'Chemistry', icon: '🧪', chapters: CHEMISTRY_CHAPTERS },
@@ -43,6 +45,11 @@ const AdminDashboard = () => {
     const data = await fetchUsers();
     setUsers(data);
     setLoading(false);
+  };
+
+  const handleSelectUser = (u) => {
+    setSelectedUser(u);
+    setViewMode('detail');
   };
 
   const handleToggleAccess = (subject, chapterId) => {
@@ -112,7 +119,7 @@ const AdminDashboard = () => {
       justifyContent: 'center',
       fontFamily: 'var(--sans)' 
     }}>
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', padding: '20px' }}>
         <div style={{ fontSize: '24px', fontWeight: '700', marginBottom: '10px' }}>🔐 Verifying Credentials...</div>
         <div style={{ color: '#94a3b8' }}>Please wait while we access the administrative console.</div>
       </div>
@@ -120,31 +127,32 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', color: '#f1f5f9', fontFamily: 'var(--sans)', padding: '40px' }}>
-      <header style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="admin-container" style={{ minHeight: '100vh', background: '#0f172a', color: '#f1f5f9', fontFamily: 'var(--sans)', padding: '40px' }}>
+      <header className="admin-header" style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h1 style={{ fontSize: '32px', fontWeight: '800', margin: 0 }}>Portal Management</h1>
           <p style={{ color: '#94a3b8', marginTop: '4px' }}>Administrative Control Center for Smartbook365</p>
         </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div className="admin-tabs" style={{ display: 'flex', gap: '12px' }}>
           <button 
             onClick={() => setActiveTab('users')}
-            style={{ padding: '10px 20px', borderRadius: '10px', background: activeTab === 'users' ? '#334155' : 'transparent', color: '#fff', border: '1px solid #334155', cursor: 'pointer' }}
+            style={{ padding: '10px 20px', borderRadius: '10px', background: activeTab === 'users' ? '#334155' : 'transparent', color: '#fff', border: '1px solid #334155', cursor: 'pointer', fontSize: '14px' }}
           >
-            User Management
+            Users
           </button>
           <button 
             onClick={() => setActiveTab('pricing')}
-            style={{ padding: '10px 20px', borderRadius: '10px', background: activeTab === 'pricing' ? '#334155' : 'transparent', color: '#fff', border: '1px solid #334155', cursor: 'pointer' }}
+            style={{ padding: '10px 20px', borderRadius: '10px', background: activeTab === 'pricing' ? '#334155' : 'transparent', color: '#fff', border: '1px solid #334155', cursor: 'pointer', fontSize: '14px' }}
           >
-            Pricing Configuration
+            Pricing
           </button>
         </div>
       </header>
 
       {activeTab === 'users' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '40px' }}>
-          <div style={{ background: '#1e293b', borderRadius: '24px', padding: '24px', border: '1px solid #334155' }}>
+        <div className="admin-grid" style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '40px' }}>
+          {/* User List Panel */}
+          <div className={`user-list-panel ${viewMode === 'detail' ? 'mobile-hide' : ''}`} style={{ background: '#1e293b', borderRadius: '24px', padding: '24px', border: '1px solid #334155' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <h3 style={{ margin: 0 }}>Students</h3>
               <button onClick={() => setShowAddUserModal(true)} style={{ color: 'var(--amber)', background: 'transparent', border: 'none', cursor: 'pointer', fontWeight: '600' }}>+ New</button>
@@ -155,7 +163,7 @@ const AdminDashboard = () => {
             />
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '60vh', overflowY: 'auto' }}>
               {filteredUsers.map(u => (
-                <div key={u.id} onClick={() => setSelectedUser(u)}
+                <div key={u.id} onClick={() => handleSelectUser(u)}
                   style={{ padding: '16px', background: selectedUser?.id === u.id ? '#334155' : 'transparent', borderRadius: '12px', cursor: 'pointer', border: selectedUser?.id === u.id ? '1px solid var(--amber)' : '1px solid transparent' }}
                 >
                   <div style={{ fontWeight: '600' }}>{u.username}</div>
@@ -165,16 +173,18 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div style={{ background: '#1e293b', borderRadius: '24px', padding: '40px', border: '1px solid #334155' }}>
+          {/* User Detail Panel */}
+          <div className={`user-detail-panel ${viewMode === 'list' ? 'mobile-hide' : ''}`} style={{ background: '#1e293b', borderRadius: '24px', padding: '40px', border: '1px solid #334155' }}>
             {selectedUser ? (
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px' }}>
+                <div className="detail-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', gap: '16px' }}>
                   <div>
+                    <button className="mobile-back-btn" onClick={() => setViewMode('list')} style={{ display: 'none', background: 'transparent', border: 'none', color: 'var(--amber)', marginBottom: '12px', cursor: 'pointer', fontWeight: '600' }}>← Back to List</button>
                     <h2 style={{ margin: 0 }}>Managing: {selectedUser.username}</h2>
                     <p style={{ color: '#94a3b8', marginTop: '4px' }}>Assign modules and chapters to this student</p>
                   </div>
                   <button onClick={saveAccessChanges} disabled={isUpdating}
-                    style={{ padding: '14px 28px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '14px', fontWeight: '700', cursor: 'pointer' }}
+                    style={{ padding: '14px 28px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '14px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}
                   >
                     {isUpdating ? 'Saving...' : 'Save All Changes'}
                   </button>
@@ -185,15 +195,15 @@ const AdminDashboard = () => {
                     const activeChapters = Array.isArray(selectedUser.subscriptions[sub.id]) ? selectedUser.subscriptions[sub.id] : [];
                     return (
                       <div key={sub.id} style={{ borderBottom: '1px solid #334155', paddingBottom: '32px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                        <div className="subject-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}><span style={{ fontSize: '24px' }}>{sub.icon}</span><h4 style={{ margin: 0, fontSize: '18px' }}>{sub.name}</h4></div>
                           <button onClick={() => handleToggleFullModule(sub.id)}
-                            style={{ padding: '6px 12px', background: isFull ? '#10b981' : 'transparent', color: isFull ? '#fff' : '#10b981', border: '1px solid #10b981', borderRadius: '8px', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
+                            style={{ padding: '8px 16px', background: isFull ? '#10b981' : 'transparent', color: isFull ? '#fff' : '#10b981', border: '1px solid #10b981', borderRadius: '8px', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
                           >
                             {isFull ? '✓ FULL MODULE' : 'GRANT FULL ACCESS'}
                           </button>
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '12px', opacity: isFull ? 0.5 : 1, pointerEvents: isFull ? 'none' : 'auto' }}>
+                        <div className="chapter-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '12px', opacity: isFull ? 0.5 : 1, pointerEvents: isFull ? 'none' : 'auto' }}>
                           {sub.chapters.map(ch => {
                             const hasAccess = activeChapters.includes(ch.id);
                             return (
@@ -201,7 +211,7 @@ const AdminDashboard = () => {
                                 style={{ padding: '12px 16px', background: hasAccess ? 'rgba(16, 185, 129, 0.1)' : 'rgba(255,255,255,0.02)', border: `1px solid ${hasAccess ? '#10b981' : '#334155'}`, borderRadius: '12px', cursor: 'pointer', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '10px' }}
                               >
                                 <div style={{ width: '16px', height: '16px', border: '2px solid #10b981', borderRadius: '4px', background: hasAccess ? '#10b981' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '10px' }}>{hasAccess && '✓'}</div>
-                                <span>Ch {ch.id}: {ch.title}</span>
+                                <span style={{ flex: 1 }}>Ch {ch.id}: {ch.title}</span>
                               </div>
                             );
                           })}
@@ -212,7 +222,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
             ) : (
-              <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', flexDirection: 'column' }}>
+              <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', flexDirection: 'column', textAlign: 'center' }}>
                 <div style={{ fontSize: '60px', marginBottom: '20px' }}>👤</div>
                 <p>Select a student from the sidebar to manage their access rights.</p>
               </div>
@@ -221,14 +231,14 @@ const AdminDashboard = () => {
         </div>
       ) : (
         /* Pricing Tab */
-        <div style={{ background: '#1e293b', borderRadius: '32px', padding: '48px', border: '1px solid #334155', maxWidth: '800px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+        <div className="pricing-card" style={{ background: '#1e293b', borderRadius: '32px', padding: '48px', border: '1px solid #334155', maxWidth: '800px', margin: '0 auto' }}>
+          <div className="pricing-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', gap: '20px', flexWrap: 'wrap' }}>
             <div>
               <h2 style={{ margin: 0 }}>Pricing Configuration</h2>
               <p style={{ color: '#94a3b8', marginTop: '4px' }}>Set global costs for modules and individual chapters</p>
             </div>
             <button onClick={handleSavePricing} disabled={isUpdating}
-              style={{ padding: '14px 28px', background: 'var(--amber)', color: '#000', border: 'none', borderRadius: '14px', fontWeight: '700', cursor: 'pointer' }}
+              style={{ padding: '14px 28px', background: 'var(--amber)', color: '#000', border: 'none', borderRadius: '14px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}
             >
               {isUpdating ? 'Updating...' : 'Save Pricing'}
             </button>
@@ -240,7 +250,7 @@ const AdminDashboard = () => {
                   <span style={{ fontSize: '24px' }}>{sub.icon}</span>
                   <h4 style={{ margin: 0, fontSize: '18px' }}>{sub.name} Module</h4>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="pricing-inputs" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '12px', color: '#94a3b8', marginBottom: '8px' }}>FULL MODULE COST (₹)</label>
                     <input 
@@ -266,8 +276,8 @@ const AdminDashboard = () => {
 
       {/* Add User Modal */}
       {showAddUserModal && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#1e293b', padding: '40px', borderRadius: '24px', width: '400px', border: '1px solid #334155' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, padding: '20px' }}>
+          <div style={{ background: '#1e293b', padding: '40px', borderRadius: '24px', width: '100%', maxWidth: '400px', border: '1px solid #334155' }}>
             <h2 style={{ marginBottom: '24px' }}>Add New Student</h2>
             <form onSubmit={handleAddUser}>
               <div style={{ marginBottom: '20px' }}>
@@ -290,6 +300,27 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .admin-container { padding: 24px !important; }
+          .admin-grid { grid-template-columns: 300px 1fr !important; gap: 24px !important; }
+        }
+
+        @media (max-width: 768px) {
+          .admin-header { flex-direction: column; align-items: flex-start !important; gap: 20px; }
+          .admin-grid { grid-template-columns: 1fr !important; }
+          .mobile-hide { display: none !important; }
+          .admin-header h1 { font-size: 24px !important; }
+          .user-detail-panel { padding: 24px !important; }
+          .mobile-back-btn { display: block !important; }
+          .pricing-card { padding: 24px !important; }
+          .pricing-inputs { grid-template-columns: 1fr !important; }
+          .detail-header { flex-direction: column; }
+          .subject-row { flex-direction: column; align-items: flex-start !important; }
+          .chapter-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   );
 };
