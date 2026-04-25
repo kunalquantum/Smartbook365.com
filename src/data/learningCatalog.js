@@ -82,6 +82,19 @@ export const DOMAIN_CATALOG = [
         accent: '#a78bfa',
         glow: 'rgba(167, 139, 250, 0.18)',
     },
+    {
+        id: 'software-placement',
+        title: 'Software Placement',
+        code: 'Domain 05',
+        summary: 'Technical interview prep, algorithmic intuition, and coding proficiency for top-tier roles.',
+        helper: 'Software placement domain opens into specific prep tracks like DSA and System Design for focused career preparation.',
+        sectionTitle: 'Placement Prep Tracks',
+        sectionCopy: 'Choose your preparation track below. These modules provide interactive visualizations for complex technical concepts.',
+        status: 'Prep Tracks Live',
+        highlights: ['Algorithmic logic', 'Data structure intuition', 'Interview patterns'],
+        accent: '#f472b6',
+        glow: 'rgba(244, 114, 182, 0.18)',
+    },
 ]
 
 export function getDomainById(domainId) {
@@ -232,6 +245,24 @@ export const LANGUAGE_LEVELS = [
 
 export function getComputerLanguageTrackById(trackId) {
     return COMPUTER_LANGUAGE_TRACKS.find((track) => track.id === trackId) || null
+}
+
+export const SOFTWARE_PLACEMENT_TRACKS = [
+    {
+        id: 'dsa-practice',
+        title: 'DSA Practice',
+        code: 'Prep 01',
+        summary: 'Data structures, algorithm visualizations, and interactive problem solving.',
+        status: 'Module Live',
+        accent: '#f472b6',
+        glow: 'rgba(244, 114, 182, 0.18)',
+        highlights: ['Sorting visualizers', 'Tree structures', 'Graph logic'],
+        route: '/domains/software-placement/dsa-practice'
+    }
+]
+
+export function getSoftwarePlacementTrackById(trackId) {
+    return SOFTWARE_PLACEMENT_TRACKS.find((track) => track.id === trackId) || null
 }
 
 export const ENGINEERING_SUBJECTS = {

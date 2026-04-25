@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Core palette */
+  --bg0: #05080d;
+  --bg1: #080c12;
+  --bg2: #0c1118;
+  --bg3: #10161e;
+  --bg4: #151c26;
+  --bg5: #1a2230;
+
+  /* Borders */
+  --border0: #1a2030;
+  --border1: #1e2836;
+  --border2: #243040;
+  --border3: #2d3a4a;
+
+  /* Text */
+  --t0: #eef2f7;
+  --t1: #c8d4e0;
+  --t2: #8a9ab0;
+  --t3: #566070;
+  --t4: #3a4455;
+
+  /* Accent colors */
+  --cyan:    #00c8e8;
+  --cyan2:   #0090b0;
+  --blue:    #4d9ef7;
+  --violet:  #8b5cf6;
+  --violet2: #6d3fd4;
+  --green:   #22d47a;
+  --green2:  #16a058;
+  --amber:   #f5a623;
+  --amber2:  #c07a10;
+  --red:     #f05060;
+  --red2:    #b03040;
+  --pink:    #e879a0;
+  --orange:  #f07840;
+
+  /* Fonts */
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Syne', sans-serif;
+  --sans: 'Inter', sans-serif;
+
+  /* Shadows */
+  --shadow-cyan: 0 0 20px #00c8e820, 0 0 60px #00c8e808;
+  --shadow-violet: 0 0 20px #8b5cf620, 0 0 60px #8b5cf608;
+  --shadow-green: 0 0 20px #22d47a20, 0 0 60px #22d47a08;
+  --shadow-amber: 0 0 20px #f5a62320, 0 0 60px #f5a62308;
+}
+
+.dsa-visualizer-module {
+  --bg0: #05080d;
+  /* ... rest of variables are already in :root, which is fine but maybe move them here too if needed ... */
+}
+
+.dsa-visualizer-module *, .dsa-visualizer-module *::before, .dsa-visualizer-module *::after { box-sizing: border-box; }
+
+.dsa-visualizer-module {
+  font-family: var(--mono);
+  background: var(--bg0);
+  color: var(--t0);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg1); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border3); }
+
+button { font-family: var(--mono); cursor: pointer; border: none; outline: none; }
+input, textarea, select { font-family: var(--mono); outline: none; }
+a { text-decoration: none; color: inherit; }
+
+/* Utility animations */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px currentColor; }
+  50% { box-shadow: 0 0 24px currentColor, 0 0 48px currentColor; }
+}
+@keyframes ripple {
+  from { transform: scale(0.8); opacity: 1; }
+  to   { transform: scale(2); opacity: 0; }
+}
+@keyframes bounce-in {
+  0%   { transform: scale(0.6); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes scan-line {
+  from { top: 0; }
+  to   { top: 100%; }
+}

@@ -1,0 +1,84 @@
+.panel {
+  background: var(--bg2);
+  border-top: 1px solid var(--border0);
+  overflow: hidden;
+}
+
+.title {
+  padding: 8px 16px 6px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--t4);
+  border-bottom: 1px solid var(--border0);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.title::before {
+  content: '⌥';
+  color: var(--t4);
+}
+
+.code {
+  padding: 6px 0;
+  overflow-y: auto;
+  max-height: 140px;
+  font-family: var(--mono);
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 1px 16px;
+  border-left: 2px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.line.active {
+  background: linear-gradient(to right, rgba(var(--accent-rgb, 0,200,232), 0.08), transparent);
+  border-left-color: var(--accent, var(--cyan));
+}
+
+.lineNum {
+  font-size: 0.64rem;
+  color: var(--t4);
+  min-width: 28px;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.line.active .lineNum {
+  color: var(--accent, var(--cyan));
+}
+
+.lineText {
+  font-size: 0.7rem;
+  line-height: 1.8;
+  color: var(--t3);
+  white-space: pre;
+}
+
+.line.active .lineText {
+  color: var(--accent, var(--cyan));
+}
+
+.cursor {
+  display: inline-block;
+  width: 6px;
+  height: 13px;
+  background: var(--accent, var(--cyan));
+  margin-left: 3px;
+  border-radius: 1px;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  opacity: 0.8;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0; }
+}

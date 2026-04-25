@@ -1,0 +1,36 @@
+.root { display: grid; grid-template-rows: auto auto 1fr auto auto; height: 100%; overflow: hidden; background: var(--bg1); }
+.header { padding: 14px 24px 12px; border-bottom: 1px solid var(--border1); background: var(--bg2); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.title { font-family: var(--display); font-size: 1rem; font-weight: 700; color: var(--t0); letter-spacing: -0.02em; }
+.sub { font-size: 0.65rem; color: var(--t3); margin-top: 2px; font-family: var(--sans); }
+.controls { padding: 8px 24px; border-bottom: 1px solid var(--border0); background: linear-gradient(to bottom, var(--bg2), var(--bg3)); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.body { display: grid; grid-template-columns: 1fr 210px; overflow: hidden; min-height: 0; }
+.mainArea { padding: 18px 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; border-right: 1px solid var(--border0); }
+.spaceIndicator { display: flex; flex-direction: column; gap: 6px; }
+.spaceLabel { font-size: 0.68rem; color: var(--t3); font-family: var(--sans); }
+.spaceFill { height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--cyan) var(--fill, 100%), var(--border2) var(--fill, 100%)); transition: --fill 0.4s; }
+.cells { display: flex; gap: 5px; flex-wrap: wrap; }
+.cellWrap { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.label { font-size: 0.6rem; font-weight: 700; line-height: 1; }
+.cell { width: 44px; height: 44px; border: 2px solid; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); font-variant-numeric: tabular-nums; }
+.cellIdx { font-size: 0.56rem; color: var(--t4); }
+.targetRow { display: flex; align-items: center; gap: 12px; }
+.targetBox { background: var(--bg3); border: 1px solid var(--border1); border-radius: 8px; padding: 8px 14px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.targetLabel { font-size: 0.58rem; color: var(--t3); text-transform: uppercase; letter-spacing: 0.08em; }
+.targetVal { font-family: var(--display); font-size: 1.2rem; font-weight: 800; color: var(--t0); }
+.cmpBox { font-family: var(--display); font-size: 1.4rem; font-weight: 800; color: var(--t2); }
+.log { display: flex; flex-direction: column; gap: 2px; max-height: 100px; overflow-y: auto; }
+.logLine { font-size: 0.67rem; color: var(--t3); line-height: 1.8; padding: 1px 6px; border-radius: 3px; transition: all 0.2s; display: flex; gap: 6px; }
+.logLine.logActive { background: rgba(0,200,232,0.06); color: var(--cyan); }
+.logIdx { color: var(--t4); flex-shrink: 0; }
+.sideCol { padding: 14px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+.logN { background: var(--bg3); border: 1px solid var(--border1); border-radius: 8px; padding: 12px; }
+.logNTitle { font-size: 0.65rem; color: var(--t2); margin-bottom: 10px; font-family: var(--sans); }
+.logNBars { display: flex; gap: 4px; flex-wrap: wrap; }
+.logNBar { width: 20px; height: 20px; border-radius: 3px; transition: background 0.3s; }
+.logNSub { font-size: 0.62rem; color: var(--t3); margin-top: 8px; }
+.complexBox { background: var(--bg3); border: 1px solid var(--border1); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+.complexRow { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--t3); }
+.complexRow b { font-weight: 600; }
+.legend { display: flex; flex-direction: column; gap: 5px; }
+.legendRow { display: flex; align-items: center; gap: 7px; font-size: 0.65rem; color: var(--t3); font-family: var(--sans); }
+.legendDot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }

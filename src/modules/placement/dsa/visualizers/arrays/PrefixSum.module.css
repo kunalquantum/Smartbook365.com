@@ -1,0 +1,35 @@
+.root { display: grid; grid-template-rows: auto auto 1fr auto auto; height: 100%; overflow: hidden; background: var(--bg1); }
+.header { padding: 14px 24px 12px; border-bottom: 1px solid var(--border1); background: var(--bg2); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.title { font-family: var(--display); font-size: 1rem; font-weight: 700; color: var(--t0); letter-spacing: -0.02em; }
+.sub { font-size: 0.65rem; color: var(--t3); margin-top: 2px; font-family: var(--sans); }
+.controls { padding: 8px 24px; border-bottom: 1px solid var(--border0); background: linear-gradient(to bottom, var(--bg2), var(--bg3)); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.body { display: grid; grid-template-columns: 1fr 220px; overflow: hidden; min-height: 0; }
+.vizCol { padding: 18px 24px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; border-right: 1px solid var(--border0); }
+.section { display: flex; flex-direction: column; gap: 10px; }
+.sectionLabel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); }
+.cells { display: flex; gap: 6px; flex-wrap: wrap; }
+.cellWrap { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.cell { width: 46px; height: 46px; border: 2px solid; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); font-variant-numeric: tabular-nums; }
+.cellIdx { font-size: 0.55rem; color: var(--t4); }
+.connector { display: flex; align-items: center; gap: 12px; padding: 0 4px; }
+.connLine { flex: 1; height: 1px; background: linear-gradient(to right, var(--border0), var(--violet), var(--border0)); }
+.connLabel { font-size: 0.65rem; color: var(--t3); font-family: var(--mono); white-space: nowrap; }
+.queryPanel { background: var(--bg3); border: 1px solid var(--border2); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.queryTitle { font-size: 0.65rem; font-weight: 600; color: var(--t2); }
+.queryControls { display: flex; gap: 12px; align-items: center; }
+.queryLabel { font-size: 0.7rem; color: var(--t3); display: flex; align-items: center; gap: 8px; }
+.queryResult { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--bg2); border-radius: 8px; padding: 10px 14px; border: 1px solid var(--border1); }
+.qr { font-size: 0.78rem; color: var(--t2); }
+.qeq { font-size: 0.9rem; color: var(--t3); }
+.qterm { font-size: 0.85rem; font-weight: 700; }
+.qans { font-size: 1.2rem; font-weight: 800; color: var(--amber); background: #1a1200; padding: 3px 12px; border-radius: 6px; border: 1px solid #3a2800; }
+.msgBox { padding: 10px 14px; border-radius: 7px; background: var(--bg3); border: 1px solid var(--border1); font-size: 0.73rem; color: var(--t1); min-height: 38px; display: flex; align-items: center; }
+.sideCol { padding: 14px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+.complexBox { background: var(--bg3); border: 1px solid var(--border1); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 7px; }
+.complexTitle { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t4); margin-bottom: 3px; }
+.complexRow { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--t3); }
+.complexRow b { font-weight: 600; }
+.insightBox { background: var(--bg3); border: 1px solid var(--border1); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.insightTitle { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t4); }
+.insightBox p { font-size: 0.67rem; color: var(--t3); line-height: 1.6; font-family: var(--sans); }
+.insightBox b { color: var(--cyan); font-weight: 600; }

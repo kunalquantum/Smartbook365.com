@@ -18,6 +18,7 @@ const ChemistryModule = lazy(() => import('./modules/chemistry/ChemistryModule')
 const MathsModule = lazy(() => import('./modules/maths/MathsModule'));
 const PhysicsModule = lazy(() => import('./modules/physics/PhysicsModule'));
 const Microprocessor8085Module = lazy(() => import('./modules/engineering/microprocessor8085/Microprocessor8085Module'));
+const DSAVisualizerModule = lazy(() => import('./modules/placement/dsa/DSAVisualizerModule'));
 
 // Fallback Loading Screen with Typewriter Effect
 const LoadingScreen = () => {
@@ -109,6 +110,7 @@ function App() {
             <Route path="/subscription" element={<SubscriptionPage />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/demo" element={<DemoPage />} />
+            <Route path="/domains/software-placement/dsa-practice/*" element={<DSAVisualizerModule />} />
             
             {/* Demo routes — public, no auth */}
             <Route path="/demo/chemistry/*" element={<ChemistryModule isDemoMode={true} />} />
