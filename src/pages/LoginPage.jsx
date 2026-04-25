@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logoImg from '../assets/logo-removebg-preview.png';
+import '../styles/auth.css';
 
 const LoginPage = () => {
+  const [activeTab, setActiveTab] = useState('login');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
@@ -14,7 +19,7 @@ const LoginPage = () => {
 
   const from = location.state?.from?.pathname || '/';
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -29,122 +34,170 @@ const LoginPage = () => {
     }
   };
 
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+
+    setLoading(true);
+    
+    try {
+      // For now, signup uses the same login flow
+      await login(username, password);
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(typeof err === 'string' ? err : 'Registration failed. Please contact the administrator.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetFields = (tab) => {
+    setActiveTab(tab);
+    setError('');
+    setUsername('');
+    setPassword('');
+    setEmail('');
+    setConfirmPassword('');
+  };
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'radial-gradient(circle at top right, #1a1a2e, #16213e)',
-      fontFamily: 'var(--sans)',
-      padding: '20px'
-    }}>
-      <div style={{
-        width: '100%',
-        maxWidth: '400px',
-        background: 'rgba(255, 255, 255, 0.03)',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '24px',
-        padding: '40px',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
-      }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <div style={{ 
-            fontSize: '32px', 
-            fontWeight: '800', 
-            color: '#fff', 
-            letterSpacing: '-1px',
-            marginBottom: '8px'
-          }}>
-            Smartbook<span style={{ color: 'var(--amber)' }}>365</span>
-          </div>
-          <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px' }}>
-            Enter your credentials to access your modules
-          </div>
+    <div className="auth-page">
+      <div className="auth-scanlines"></div>
+
+      <div className="auth-back">
+        <Link to="/">← BACK TO HOME</Link>
+      </div>
+
+      <div className="auth-card">
+        {/* Header */}
+        <div className="auth-header">
+          <img src={logoImg} alt="Smartbook 365" className="auth-logo" />
+          <div className="auth-system-tag">SECURE ACCESS PROTOCOL</div>
+          <h1>SMARTBOOK <span>365</span></h1>
+          <p className="auth-subtitle">
+            {activeTab === 'login' ? 'AUTHENTICATE TO ACCESS MODULES' : 'CREATE YOUR LEARNING PROFILE'}
+          </p>
         </div>
 
-        {error && (
-          <div style={{
-            background: 'rgba(255, 71, 87, 0.1)',
-            border: '1px solid rgba(255, 71, 87, 0.3)',
-            color: '#ff4757',
-            padding: '12px',
-            borderRadius: '12px',
-            fontSize: '13px',
-            marginBottom: '20px',
-            textAlign: 'center'
-          }}>
-            {error}
-          </div>
+        {/* Tab Switcher */}
+        <div className="auth-tabs">
+          <button 
+            className={`auth-tab ${activeTab === 'login' ? 'active' : ''}`}
+            onClick={() => resetFields('login')}
+          >
+            SIGN IN
+          </button>
+          <button 
+            className={`auth-tab ${activeTab === 'signup' ? 'active' : ''}`}
+            onClick={() => resetFields('signup')}
+          >
+            SIGN UP
+          </button>
+        </div>
+
+        {/* Error */}
+        {error && <div className="auth-error">{error}</div>}
+
+        {/* Login Form */}
+        {activeTab === 'login' && (
+          <form onSubmit={handleLogin}>
+            <div className="auth-field">
+              <label>USERNAME</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+
+            <div className="auth-field">
+              <label>PASSWORD</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button type="submit" className="auth-submit" disabled={loading}>
+              {loading ? 'AUTHENTICATING...' : 'ACCESS MODULES'}
+            </button>
+          </form>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '12px', marginBottom: '8px', fontWeight: '600' }}>USERNAME</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="admin"
-              style={{
-                width: '100%',
-                padding: '14px 18px',
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '12px',
-                color: '#fff',
-                outline: 'none',
-                fontSize: '15px'
-              }}
-              required
-            />
-          </div>
+        {/* Signup Form */}
+        {activeTab === 'signup' && (
+          <form onSubmit={handleSignup}>
+            <div className="auth-field">
+              <label>USERNAME</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Choose a username"
+                required
+              />
+            </div>
 
-          <div style={{ marginBottom: '32px' }}>
-            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '12px', marginBottom: '8px', fontWeight: '600' }}>PASSWORD</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              style={{
-                width: '100%',
-                padding: '14px 18px',
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '12px',
-                color: '#fff',
-                outline: 'none',
-                fontSize: '15px'
-              }}
-              required
-            />
-          </div>
+            <div className="auth-field">
+              <label>EMAIL</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              width: '100%',
-              padding: '16px',
-              background: loading ? '#333' : 'var(--amber)',
-              color: loading ? '#666' : '#000',
-              border: 'none',
-              borderRadius: '12px',
-              fontWeight: '700',
-              fontSize: '16px',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              transition: 'all 0.2s ease',
-              boxShadow: '0 4px 15px rgba(255, 171, 0, 0.2)'
-            }}
-          >
-            {loading ? 'Authenticating...' : 'Sign In'}
-          </button>
-        </form>
+            <div className="auth-field">
+              <label>PASSWORD</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Min 6 characters"
+                required
+              />
+            </div>
 
-        <div style={{ marginTop: '32px', textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>
-          Don't have an account? <Link to="/subscription" style={{ color: 'var(--amber)', textDecoration: 'none', fontWeight: '600' }}>Contact Administrator</Link>
+            <div className="auth-field">
+              <label>CONFIRM PASSWORD</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button type="submit" className="auth-submit" disabled={loading}>
+              {loading ? 'CREATING PROFILE...' : 'INITIATE ACCESS'}
+            </button>
+          </form>
+        )}
+
+        {/* Footer */}
+        <div className="auth-footer">
+          {activeTab === 'login' 
+            ? <>New to Smartbook? <a href="#" onClick={(e) => { e.preventDefault(); resetFields('signup'); }}>Create an account</a></>
+            : <>Already have access? <a href="#" onClick={(e) => { e.preventDefault(); resetFields('login'); }}>Sign in</a></>
+          }
         </div>
       </div>
     </div>

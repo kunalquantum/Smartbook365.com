@@ -187,12 +187,8 @@ const LandingPage = () => {
                             <h1 className="reveal">
                                 SMARTBOOK
                             </h1>
-                            <p className="reveal delay-1">
-                                THE NEXT-GEN INTERACTIVE 3D VISUALIZER.<br />
-                                EXPERIENCE SCIENCE IN PURE DIGITAL FORM.
-                            </p>
                             <div className="hero-btns reveal delay-2">
-                                <Link to="/subscription" className="btn btn-primary">GET STARTED</Link>
+                                <Link to="/login" className="btn btn-primary">GET STARTED</Link>
                                 <a href="#features" className="btn btn-outline">LEARN MORE</a>
                             </div>
                         </div>
