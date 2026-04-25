@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/landing.css';
+import Chatbot from '../components/Chatbot';
 
 const LandingPage = () => {
     const { user, logout } = useAuth();
@@ -11,7 +12,10 @@ const LandingPage = () => {
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [followerPos, setFollowerPos] = useState({ x: 0, y: 0 });
     const [scrollWidth, setScrollWidth] = useState(0);
-    const heroVisualRef = useRef(null);
+    const [isChatOpen, setIsChatOpen] = useState(false);
+    const [isRoaming, setIsRoaming] = useState(false);
+    const [showBubble, setShowBubble] = useState(false);
+    const containerRef = useRef(null);
 
     // Close menu on resize
     useEffect(() => {
@@ -39,25 +43,55 @@ const LandingPage = () => {
 
     // 2. Scroll Effects
     useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        let frameId;
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-
-            // Progress bar
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolledPercent = (winScroll / height) * 100;
-            setScrollWidth(scrolledPercent);
-
-            // Parallax for Hero
-            if (heroVisualRef.current) {
-                const speed = 0.2;
-                const yPos = -(window.scrollY * speed);
-                heroVisualRef.current.style.transform = `translateY(${yPos}px)`;
-            }
+            const scrollTop = container.scrollTop;
+            const height = container.scrollHeight - container.clientHeight;
+            const progress = height > 0 ? scrollTop / height : 0;
+            
+            // Set global scroll variable for parallax
+            container.style.setProperty('--scroll-progress', progress);
+            container.style.setProperty('--scroll-top', scrollTop);
+            
+            frameId = requestAnimationFrame(() => {
+                setScrolled(scrollTop > 50);
+                const width = progress * 100;
+                setScrollWidth(width);
+            });
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        container.addEventListener('scroll', handleScroll);
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        handleScroll();
+        
+        return () => {
+            container.removeEventListener('scroll', handleScroll);
+            document.body.style.overflow = 'auto';
+            cancelAnimationFrame(frameId);
+        };
+    }, []);
+
+    // Proactive AI Engagement (Roaming Behavior)
+    useEffect(() => {
+        const sequence = async () => {
+            await new Promise(r => setTimeout(r, 3000)); // Initial wait
+            setIsRoaming(true);
+            
+            await new Promise(r => setTimeout(r, 2000)); // Moving to center
+            setShowBubble(true);
+            
+            await new Promise(r => setTimeout(r, 3000)); // Show bubble
+            setShowBubble(false);
+            
+            await new Promise(r => setTimeout(r, 1000)); // Small pause
+            setIsRoaming(false); // Return back
+        };
+
+        sequence();
     }, []);
 
     // 3. Custom Cursor
@@ -130,171 +164,146 @@ const LandingPage = () => {
             <header id="main-header" className={`${scrolled ? 'scrolled' : ''} ${isMenuOpen ? 'menu-active' : ''}`}>
                 <nav className="container">
                     <div className="logo">
-                        <span className="logo-icon">▲</span>
+                        <img src="/src/assets/logo-removebg-preview.png" alt="Smartbook 365 Logo" className="logo-img" />
                         <span className="logo-text">Smartbook</span>
                     </div>
 
-                    <div className={`burger-menu ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-
-                    <ul className={`nav-links ${isMenuOpen ? 'mobile-show' : ''}`} style={{ alignItems: 'center' }}>
-                        <li><a href="#features" onClick={() => setIsMenuOpen(false)}>Features</a></li>
-                        <li><a href="#subjects" onClick={() => setIsMenuOpen(false)}>Subjects</a></li>
-                        {user ? (
-                            <>
-                                {user.role === 'admin' && (
-                                    <li><Link to="/admin" onClick={() => setIsMenuOpen(false)} style={{ color: 'var(--amber)', fontWeight: '700', marginRight: '15px', border: '1px solid var(--amber)', padding: '4px 10px', borderRadius: '8px' }}>ADMIN CONSOLE</Link></li>
-                                )}
-                                <li><Link to="/subscription" onClick={() => setIsMenuOpen(false)} style={{ color: 'var(--amber)', fontWeight: '700' }}>My Subscription</Link></li>
-                                <li className="user-profile-nav">
-                                    <div className="avatar">
-                                        {user.name.charAt(0)}
-                                    </div>
-                                    <button onClick={logout} className="btn btn-outline">Logout</button>
-                                </li>
-                            </>
-                        ) : (
-                            <li><Link to="/subscription" onClick={() => setIsMenuOpen(false)} className="btn btn-secondary">Join Now</Link></li>
-                        )}
+                    <ul className="nav-links">
+                        <li><a href="#features">Experience</a></li>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
                     </ul>
                 </nav>
             </header>
 
-            <main>
+            <div className="landing-page-container" ref={containerRef}>
                 <section id="hero" className="hero-section">
                     <div className="container hero-grid">
                         <div className="hero-content">
                             <h1 className="reveal">
-                                Stop Reading. <br />
-                                <div className="hero-dot-container">
-                                    <div className="hero-dot"></div>
-                                    <span className="gradient-text hero-title-large">Explore</span>
-                                </div>
+                                SMARTBOOK
                             </h1>
-
-                            <p className="reveal delay-1">The first truly interactive educational visualizer that brings every topic of every subject to life with stunning 3D simulations.</p>
+                            <p className="reveal delay-1">
+                                THE NEXT-GEN INTERACTIVE 3D VISUALIZER.<br />
+                                EXPERIENCE SCIENCE IN PURE DIGITAL FORM.
+                            </p>
                             <div className="hero-btns reveal delay-2">
-                                <a href="#demo" className="btn btn-primary">Try Demo</a>
-                                <a href="#subjects" className="btn btn-outline">Explore Subjects</a>
+                                <Link to="/subscription" className="btn btn-primary">GET STARTED</Link>
+                                <a href="#features" className="btn btn-outline">LEARN MORE</a>
                             </div>
-                        </div>
-                        <div className="hero-visual-container reveal delay-3" ref={heroVisualRef}>
-
-                            <div className="glass-card visual-wrapper">
-                                <img src="/assets/images/hero.png" alt="Smartbook Holographic Hero" className="hero-img" />
-                            </div>
-                            <div className="floating-badge badge-1">3D Sims</div>
-                            <div className="floating-badge badge-2">Interactive</div>
                         </div>
                     </div>
-                    <div className="hero-bg-glow"></div>
                 </section>
 
                 <section id="features" className="features-section">
-                    <div className="container section-header text-center">
-                        <h2 className="reveal"><span className="typewriter-static">Built for the Modern Learner</span></h2>
-                        <p className="reveal delay-1">Smartbook goes beyond static text. It simulates reality to ensure deep understanding of complex scientific and mathematical concepts.</p>
-                    </div>
-                    <div className="container features-grid">
-                        <div className="feature-card reveal delay-1">
-                            <div className="feature-icon">🔬</div>
-                            <h3>Interactive Visuals</h3>
-                            <p>Every topic is visualized with interactive controls. Rotate, zoom, and experiment in real-time with medical-grade precision.</p>
+                    <div className="container">
+                        <div className="section-header">
+                            <h2 className="reveal">The Architecture</h2>
+                            <p className="reveal delay-1">REDEFINING EDUCATION THROUGH HIGH-FIDELITY SIMULATIONS.</p>
                         </div>
-                        <div className="feature-card reveal delay-2">
-                            <div className="feature-icon">📚</div>
-                            <h3>Subject Segregation</h3>
-                            <p>Meticulously organized structure across Science and Mathematics. Find any chapter or topic from the HSC curriculum in seconds.</p>
-                        </div>
-                        <div className="feature-card reveal delay-3">
-                            <div className="feature-icon">⚡</div>
-                            <h3>Simulatory Learning</h3>
-                            <p>Don't just learn formulas—simulate them. Modify parameters and see the physical results instantly with real-time telemetry.</p>
+                        <div className="features-grid">
+                            <div className="feature-card reveal delay-1">
+                                <h3>Visual Precision</h3>
+                                <p>MEDICAL-GRADE 3D REPRESENTATIONS OF ATOMIC AND PHYSICAL SYSTEMS.</p>
+                            </div>
+                            <div className="feature-card reveal delay-2">
+                                <h3>Total Control</h3>
+                                <p>MANIPULATE PARAMETERS IN REAL-TIME TO SEE INSTANT PHYSICAL RESULTS.</p>
+                            </div>
+                            <div className="feature-card reveal delay-3">
+                                <h3>Pure Immersion</h3>
+                                <p>A DISTRACTION-FREE ENVIRONMENT DESIGNED FOR DEEP TECHNICAL FOCUS.</p>
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 <section id="subjects" className="subjects-section">
-                    <div className="container section-header text-center">
-                        <h2 className="reveal">Explore the <span className="gradient-text">Smart Universe</span></h2>
-                    </div>
-                    <div className="container subject-tabs">
-                        <div className="subject-card reveal delay-1">
-                            <div className="subject-preview">
-                                <img src="/assets/images/chemistry.png" alt="Chemistry Simulation Preview" />
-                            </div>
-                            <div className="subject-info">
-                                <h3>Chemistry</h3>
-                                <p>Atomic structures, chemical bonds, and reactions. Visualized down to the atomic level with interactive 3D models.</p>
-                                <Link to="/chemistry" className="view-more">Launch Module &rarr;</Link>
-                            </div>
+                    <div className="container">
+                        <div className="section-header">
+                            <h2 className="reveal">Target Modules</h2>
                         </div>
-                        <div className="subject-card reveal delay-2">
-                            <div className="subject-preview">
-                                <img src="/assets/images/math.png" alt="Math Simulation Preview" />
+                        <div className="subject-tabs">
+                            <div className="subject-card reveal delay-1">
+                                <div className="subject-visual">
+                                    <img src="/src/assets/subject-chemistry.png" alt="Chemistry Module Visual" />
+                                </div>
+                                <div className="subject-info">
+                                    <h3>Chemistry</h3>
+                                    <p>QUANTUM STRUCTURES AND BONDS.</p>
+                                    <Link to="/chemistry" className="view-more">ENTER MODULE &rarr;</Link>
+                                </div>
                             </div>
-                            <div className="subject-info">
-                                <h3>Mathematics</h3>
-                                <p>Calculus, Geometry, and Algebra. Abstract concepts made tangible through interactive coordinate grids and function visualizers.</p>
-                                <Link to="/maths" className="view-more">Launch Module &rarr;</Link>
+                            <div className="subject-card reveal delay-2">
+                                <div className="subject-visual">
+                                    <img src="/src/assets/subject-physics.png" alt="Physics Module Visual" />
+                                </div>
+                                <div className="subject-info">
+                                    <h3>Physics</h3>
+                                    <p>GRAVITY AND ORBITAL SYSTEMS.</p>
+                                    <Link to="/physics" className="view-more">ENTER MODULE &rarr;</Link>
+                                </div>
                             </div>
-                        </div>
-                        <div className="subject-card reveal delay-3">
-                            <div className="subject-preview">
-                                <img src="/assets/images/physics.png" alt="Physics Simulation Preview" />
-                            </div>
-                            <div className="subject-info">
-                                <h3>Physics</h3>
-                                <p>Mechanics, Optics, and Electromagnetism. Simulate the laws of the universe with high-fidelity physics engines.</p>
-                                <Link to="/physics" className="view-more">Launch Module &rarr;</Link>
+                            <div className="subject-card reveal delay-3">
+                                <div className="subject-visual">
+                                    <img src="/src/assets/subject-maths.png" alt="Mathematics Module Visual" />
+                                </div>
+                                <div className="subject-info">
+                                    <h3>Mathematics</h3>
+                                    <p>GEOMETRIC MANIFOLD DYNAMICS.</p>
+                                    <Link to="/maths" className="view-more">ENTER MODULE &rarr;</Link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
-            </main>
 
-
-            <footer id="main-footer">
-                <div className="container footer-grid">
-                    <div className="footer-brand">
-                        <div className="logo">
-                            <span className="logo-icon">▲</span>
-                            <span className="logo-text">Smartbook</span>
+                <footer id="main-footer" style={{ scrollSnapAlign: 'start' }}>
+                    <div className="container footer-grid">
+                        <div className="footer-brand">
+                             <div className="logo">
+                                <img src="/src/assets/logo-removebg-preview.png" alt="Smartbook 365 Logo" className="logo-img" />
+                                <span className="logo-text">Smartbook</span>
+                            </div>
+                            <p>SMARTBOOK 365 VISUALIZER INTERFACE 1.0</p>
                         </div>
-                        <p>The premium educational visualizer for the next generation.</p>
-                    </div>
-                    <div className="footer-links">
-                        <h4>Product</h4>
-                        <ul>
-                            <li><a href="#">Simulations</a></li>
-                            <li><a href="#">Subjects</a></li>
-                            <li><a href="#">Pricing</a></li>
-                        </ul>
-                    </div>
-                    <div className="footer-links">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div className="footer-social">
-                        <h4>Follow Us</h4>
-                        <div className="social-icons">
-                            <a href="#">Tw</a>
-                            <a href="#">In</a>
-                            <a href="#">Fb</a>
+                        <div className="footer-links">
+                            <h4>Protocol</h4>
+                            <ul>
+                                <li><a href="#">Simulations</a></li>
+                                <li><a href="#">Network</a></li>
+                            </ul>
+                        </div>
+                        <div className="footer-social">
+                            <h4>Connect</h4>
+                            <div className="social-icons">
+                                <a href="#">TW</a>
+                                <a href="#">IG</a>
+                            </div>
                         </div>
                     </div>
+                </footer>
+            </div>
+
+            {/* Chatbot Floating Button / Mascot */}
+            <div 
+                className={`chatbot-fab ${isChatOpen ? 'hidden' : 'reveal delay-3'} ${isRoaming ? 'roaming' : ''}`} 
+                onClick={() => setIsChatOpen(true)}
+            >
+                <div className="chatbot-inner">
+                    <img src="/src/assets/logo-removebg-preview.png" alt="Chatbot Support" />
                 </div>
-                <div className="footer-bottom text-center">
-                    <p>&copy; 2026 Smartbook Visualizer. All rights reserved.</p>
-                </div>
-            </footer>
+                <div className="chatbot-glow"></div>
+                
+                {showBubble && (
+                    <div className="chat-speech-bubble">
+                        CAN I HELP U?
+                    </div>
+                )}
+            </div>
+
+            {/* Chatbot Window */}
+            <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
         </div>
     );
 };
