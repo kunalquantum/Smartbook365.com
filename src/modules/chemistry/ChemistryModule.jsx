@@ -33,11 +33,9 @@ export default function ChemistryModule({ isDemoMode = false }) {
             : !hasAccess('chemistry', activeChapter.id)
     )
 
-    const bColor = activeChapter ? (BRANCH_COLOR[activeChapter.branch] || 'var(--gold)') : 'var(--gold)'
-
     return (
         <div className="chemistry-theme">
-            <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', height: '100dvh', overflow: 'hidden' }}>
                 <Sidebar
                     chapters={CHAPTERS}
                     activeId={activeId}

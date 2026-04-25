@@ -4,14 +4,14 @@ import { generateElectrons } from './ElectronShells'
 import { getShells } from './AtomData'
 import ChemSlider from '../ui/ChemSlider'
 
-export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, offsetY = 0, compact = false, ionCharge = 0, excitation = 0, temperature = 0 }) {
+export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, offsetY = 0, compact = false, ionCharge = 0, excitation = 0, temperature = 0, mobile = false }) {
     const pCount = z;
     const nCount = Math.round(mass) - z;
     const eCount = z - ionCharge;
     
     // Dynamic generation based on Electron Count
     const shells = useMemo(() => getShells(eCount), [eCount])
-    const nuc = useMemo(() => generateNucleus(pCount, nCount), [z, mass])
+    const nuc = useMemo(() => generateNucleus(pCount, nCount), [nCount, pCount])
     
     // Animation Time
     const [t, setT] = useState(0)
@@ -21,6 +21,7 @@ export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, 
     const [dragActive, setDragActive] = useState(false)
     const [eSpeed, setESpeed] = useState(1)
     const [explode, setExplode] = useState(0)
+    const [zoom, setZoom] = useState(1)
     
     // Advanced Visualization Toggles
     const [viewMode, setViewMode] = useState('orbital') // 'orbital' | 'cloud'
@@ -30,8 +31,11 @@ export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, 
     
     const lastPos = useRef({ x: 0, y: 0 })
     const speedRef = useRef(eSpeed)
-    speedRef.current = eSpeed
-    const zoomRef = useRef(1);
+    const zoomRef = useRef(1)
+
+    useEffect(() => {
+        speedRef.current = eSpeed
+    }, [eSpeed])
     
     // Animation Loop
     useEffect(() => {
@@ -46,8 +50,10 @@ export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, 
                 setT(curr => curr + dt * speedRef.current)
             }
             
-            const targetZoom = focusShell === 'All' ? 1 : 120 / (35 + parseInt(focusShell) * 25);
-            zoomRef.current += (targetZoom - zoomRef.current) * (dt * 6);
+            const targetZoom = focusShell === 'All' ? 1 : 120 / (35 + parseInt(focusShell) * 25)
+            const nextZoom = zoomRef.current + (targetZoom - zoomRef.current) * (dt * 6)
+            zoomRef.current = nextZoom
+            setZoom(nextZoom)
             
             frame = requestAnimationFrame(loop)
         }
@@ -82,15 +88,15 @@ export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, 
         const radY = rot.y * Math.PI / 180
         const radX = rot.x * Math.PI / 180
         
-        let scale = zoomRef.current;
+        let pointScale = zoom * scale
         if (explode > 0) {
-            if (pt.type === 'p' || pt.type === 'n') scale *= (1 + explode * 3);
-            if (pt.type === 'e' || pt.type === 'ring' || pt.type === 'label') scale *= (1 + explode * 0.4); 
+            if (pt.type === 'p' || pt.type === 'n') pointScale *= (1 + explode * 3)
+            if (pt.type === 'e' || pt.type === 'ring' || pt.type === 'label') pointScale *= (1 + explode * 0.4)
         }
 
-        let sx = pt.x * scale;
-        let sy = pt.y * scale;
-        let sz = pt.z * scale;
+        let sx = pt.x * pointScale
+        let sy = pt.y * pointScale
+        let sz = pt.z * pointScale
         
         let x1 = sx * Math.cos(radY) + sz * Math.sin(radY)
         let z1 = -sx * Math.sin(radY) + sz * Math.cos(radY)
@@ -119,7 +125,7 @@ export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, 
     ].sort((a, b) => a.mz - b.mz)
 
     const btnStyle = (active) => ({
-        padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 600, fontFamily: 'var(--mono)', cursor: 'pointer',
+        padding: mobile ? '8px 10px' : '6px 12px', borderRadius: 6, fontSize: mobile ? 11 : 12, fontWeight: 600, fontFamily: 'var(--mono)', cursor: 'pointer',
         background: active ? 'var(--blue)' : 'var(--bg2)',
         color: active ? '#fff' : 'var(--text2)',
         border: `1px solid ${active ? 'var(--blue)' : 'var(--border)'}`,
@@ -179,20 +185,20 @@ export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, 
 
                         if (item.type === 'ring') {
                             if (viewMode === 'cloud') {
-                                return <line key={`rc${i}`} x1={item.a.px} y1={item.a.py} x2={item.b.px} y2={item.b.py} stroke="#1D9E75" strokeOpacity={op * 0.4} strokeWidth={20 * zoomRef.current} strokeLinecap="round" filter="url(#cloudBlur)" pointerEvents="none" />
+                                return <line key={`rc${i}`} x1={item.a.px} y1={item.a.py} x2={item.b.px} y2={item.b.py} stroke="#1D9E75" strokeOpacity={op * 0.4} strokeWidth={20 * zoom * scale} strokeLinecap="round" filter="url(#cloudBlur)" pointerEvents="none" />
                             } else {
-                                return <line key={`r${i}`} x1={item.a.px} y1={item.a.py} x2={item.b.px} y2={item.b.py} stroke="rgba(255,255,255,0.15)" strokeWidth={1.5 * zoomRef.current} strokeOpacity={op} strokeLinecap="round" pointerEvents="none" />
+                                return <line key={`r${i}`} x1={item.a.px} y1={item.a.py} x2={item.b.px} y2={item.b.py} stroke="rgba(255,255,255,0.15)" strokeWidth={1.5 * zoom * scale} strokeOpacity={op} strokeLinecap="round" pointerEvents="none" />
                             }
                         } else if (item.type === 'p' || item.type === 'n') {
                             const nOp = focusShell !== 'All' ? 0.2 : 1;
                             return (
                                 <g key={item.id} opacity={nOp}>
-                                    <circle cx={item.px} cy={item.py} r={item.r * zoomRef.current} fill={item.color} pointerEvents="none" />
-                                    <circle cx={item.px} cy={item.py} r={item.r * zoomRef.current} fill="url(#sphere3D)" pointerEvents="none" />
+                                    <circle cx={item.px} cy={item.py} r={item.r * zoom * scale} fill={item.color} pointerEvents="none" />
+                                    <circle cx={item.px} cy={item.py} r={item.r * zoom * scale} fill="url(#sphere3D)" pointerEvents="none" />
                                 </g>
                             )
                         } else if (item.type === 'e') {
-                            const finalR = item.r * (1 + explode) * zoomRef.current;
+                            const finalR = item.r * (1 + explode) * zoom * scale
                             return (
                                 <g key={item.id} opacity={op}>
                                     <circle cx={item.px} cy={item.py} r={finalR} fill={item.color} pointerEvents="none" />
@@ -221,7 +227,7 @@ export default function Atom3D({ z, mass, symbol, name, scale = 1, offsetX = 0, 
                         <button onClick={() => setShowNucleus(v => !v)} style={btnStyle(showNucleus)}>🔴 Nucleus</button>
                         <button onClick={() => setEnergyLevels(v => !v)} style={btnStyle(energyLevels)}>📈 Energy Levels</button>
                         
-                        <select value={focusShell} onChange={e => setFocusShell(e.target.value)} style={{ padding: '6px 12px', borderRadius: 6, background: 'var(--bg2)', color: 'var(--text)', border: '1px solid var(--border)', fontFamily: 'var(--mono)', fontSize: 12, outline: 'none', cursor: 'pointer' }}>
+                        <select value={focusShell} onChange={e => setFocusShell(e.target.value)} style={{ padding: mobile ? '8px 10px' : '6px 12px', borderRadius: 6, background: 'var(--bg2)', color: 'var(--text)', border: '1px solid var(--border)', fontFamily: 'var(--mono)', fontSize: mobile ? 11 : 12, outline: 'none', cursor: 'pointer', width: mobile ? '100%' : 'auto' }}>
                             <option value="All">🔭 Focus: Entire Atom</option>
                             {shells.map((_, i) => <option key={i} value={i}>🔭 Focus: {['K', 'L', 'M', 'N'][i]} Shell</option>)}
                         </select>

@@ -100,7 +100,11 @@ const EngineeringDepartmentPage = () => {
 
                         <div className="semester-grid">
                             {ENGINEERING_SEMESTERS.map((semester) => (
-                                <div key={semester.id} className="semester-card">
+                                <Link 
+                                    key={semester.id} 
+                                    to={`/domains/engineering/${departmentId}/sem-${semester.number}`} 
+                                    className="semester-card"
+                                >
                                     <div className="semester-card-head">
                                         <span className="domain-code">{semester.code}</span>
                                         <span className="semester-phase">{getSemesterPhase(semester.number)}</span>
@@ -111,8 +115,8 @@ const EngineeringDepartmentPage = () => {
                                         <p>{department.title} pathway for {semester.title}, built to stage the sequence from fundamentals into advanced work.</p>
                                     </div>
 
-                                    <span className="view-more">SEMESTER LAYER READY &rarr;</span>
-                                </div>
+                                    <span className="view-more">VIEW SEMESTER CURRICULUM &rarr;</span>
+                                </Link>
                             ))}
                         </div>
                     </div>

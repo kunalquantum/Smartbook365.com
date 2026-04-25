@@ -233,3 +233,19 @@ export const LANGUAGE_LEVELS = [
 export function getComputerLanguageTrackById(trackId) {
     return COMPUTER_LANGUAGE_TRACKS.find((track) => track.id === trackId) || null
 }
+
+export const ENGINEERING_SUBJECTS = {
+    'computer-engineering': {
+        4: [
+            {
+                id: '8085-microprocessor',
+                title: '8085 Microprocessor',
+                code: 'CE-401',
+                summary: '8-bit architecture, instruction sets, and assembly logic.',
+                route: '/domains/engineering/computer-engineering/sem-4/8085',
+                status: 'Module Live',
+            },
+        ],
+    },
+}
+

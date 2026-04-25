@@ -2055,10 +2055,82 @@
     color: var(--chat-accent-strong);
     font-size: 0.6rem;
     font-family: 'Michroma', sans-serif;
+}
+
+@keyframes cursorFade {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* System message enhancements */
+.message.system {
+    align-self: center;
+    background: var(--chat-accent-glow);
+    color: var(--chat-accent-strong);
+    font-size: 0.6rem;
+    font-family: 'Michroma', sans-serif;
     text-align: center;
     padding: 4px 12px;
     border-radius: 2px;
     border: 1px solid var(--chat-accent-glow-strong);
     letter-spacing: 0.5px;
     max-width: 95%;
+}
+
+/* Semester Subjects */
+.semester-subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.subject-item {
+    display: block;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.subject-item:hover {
+    border-color: var(--department-accent, var(--primary));
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.subject-status {
+    display: inline-block;
+    font-size: 0.5rem;
+    font-family: 'Michroma', sans-serif;
+    color: var(--department-accent, var(--primary));
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.subject-item h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-family: 'Michroma', sans-serif;
+}
+
+.subject-item p {
+    font-size: 0.72rem !important;
+    line-height: 1.6 !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.semester-phase {
+    font-size: 0.6rem;
+    font-family: 'Michroma', sans-serif;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }

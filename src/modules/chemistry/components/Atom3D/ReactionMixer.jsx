@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useMemo, useState, useEffect, useRef } from 'react'
 import Atom3D from './Atom3D'
 
 // Helper: GCD for balancing
@@ -80,22 +80,16 @@ function calculateReaction(atomA, atomB) {
     };
 }
 
-export default function ReactionMixer({ atomA, atomB, collisionEnergy = 50 }) {
+export default function ReactionMixer({ atomA, atomB, collisionEnergy = 50, isMobile = false }) {
     const [phase, setPhase] = useState('idle') // idle, moving, reaction, result, inert
     const [progress, setProgress] = useState(0)
-    const [reaction, setReaction] = useState(null)
     const rafRef = useRef()
     
     // speed inversely proportional to energy (lower duration = faster)
     const duration = 2.5 - (collisionEnergy / 100) * 2; 
 
     const isInert = atomA.group === 18 || atomB.group === 18
-
-    useEffect(() => {
-        setPhase('idle')
-        setProgress(0)
-        setReaction(calculateReaction(atomA, atomB))
-    }, [atomA, atomB])
+    const reaction = useMemo(() => calculateReaction(atomA, atomB), [atomA, atomB])
 
     useEffect(() => {
         if (phase === 'moving') {
@@ -128,13 +122,13 @@ export default function ReactionMixer({ atomA, atomB, collisionEnergy = 50 }) {
         setProgress(0)
     }
 
-    const gap = 120 * (1 - progress)
+    const gap = (isMobile ? 78 : 120) * (1 - progress)
     const offsetA = -gap
     const offsetB = gap
 
     return (
         <div style={{ marginTop: 32 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? 12 : 0, marginBottom: 20 }}>
                 <div>
                     <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text1)', margin: 0 }}>3D LABORATORY SANDBOX</h3>
                     <p style={{ fontSize: 11, color: 'var(--text3)', margin: '4px 0 0' }}>Structural Subatomic Collision Visualizer</p>
@@ -146,7 +140,8 @@ export default function ReactionMixer({ atomA, atomB, collisionEnergy = 50 }) {
                         padding: '10px 20px', background: phase === 'idle' ? 'var(--blue)' : 'var(--bg3)',
                         border: 'none', borderRadius: 8, color: '#fff', fontSize: 12, fontWeight: 700,
                         fontFamily: 'var(--mono)', cursor: phase === 'idle' ? 'pointer' : 'not-allowed',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                        width: isMobile ? '100%' : 'auto'
                     }}
                 >
                     {phase === 'idle' ? 'INITIATE COLLISION' : 'SIMULATING...'}
@@ -154,18 +149,18 @@ export default function ReactionMixer({ atomA, atomB, collisionEnergy = 50 }) {
             </div>
 
             <div style={{ 
-                height: 350, background: 'var(--bg3)', borderRadius: 16, border: '1px solid var(--border)',
+                height: isMobile ? 280 : 350, background: 'var(--bg3)', borderRadius: 16, border: '1px solid var(--border)',
                 position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
                 <div style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }}>
                     {(phase !== 'result') && (
                         <div style={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', opacity: phase === 'inert' ? (1 - progress * 0.5) : 1 }}>
-                            <Atom3D {...atomA} compact={true} offsetX={offsetA} scale={0.7} />
+                            <Atom3D {...atomA} compact={true} offsetX={offsetA} scale={isMobile ? 0.55 : 0.7} mobile={isMobile} />
                         </div>
                     )}
                     {(phase !== 'result') && (
                         <div style={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', opacity: phase === 'inert' ? (1 - progress * 0.5) : 1 }}>
-                            <Atom3D {...atomB} compact={true} offsetX={offsetB} scale={0.7} />
+                            <Atom3D {...atomB} compact={true} offsetX={offsetB} scale={isMobile ? 0.55 : 0.7} mobile={isMobile} />
                         </div>
                     )}
 
@@ -179,8 +174,8 @@ export default function ReactionMixer({ atomA, atomB, collisionEnergy = 50 }) {
 
                     {phase === 'result' && (
                         <div style={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'moleculeSpin 10s linear infinite' }}>
-                             <Atom3D {...atomA} compact={true} offsetX={-25} scale={0.7} />
-                             <Atom3D {...atomB} compact={true} offsetX={25} scale={0.7} />
+                             <Atom3D {...atomA} compact={true} offsetX={isMobile ? -18 : -25} scale={isMobile ? 0.55 : 0.7} mobile={isMobile} />
+                             <Atom3D {...atomB} compact={true} offsetX={isMobile ? 18 : 25} scale={isMobile ? 0.55 : 0.7} mobile={isMobile} />
                         </div>
                     )}
                 </div>
@@ -203,9 +198,9 @@ export default function ReactionMixer({ atomA, atomB, collisionEnergy = 50 }) {
 
                 {phase === 'result' && (
                     <div style={{ position: 'absolute', bottom: 20, zIndex: 10, textAlign: 'center', width: '100%', padding: '0 20px', animation: 'fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)' }}>
-                        <div style={{ background: 'rgba(0,0,0,0.85)', padding: '16px 20px', borderRadius: 16, border: '1px solid var(--border)', display: 'inline-block', minWidth: 280, backdropFilter: 'blur(10px)', boxShadow: '0 10px 40px rgba(0,0,0,0.4)' }}>
-                            <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--teal)', letterSpacing: '-0.5px' }}>{reaction ? reaction.product : 'Interatomic Complex'}</div>
-                            <div style={{ fontSize: 16, fontFamily: 'var(--mono)', color: 'var(--gold)', margin: '10px 0', fontWeight: 700 }}>
+                        <div style={{ background: 'rgba(0,0,0,0.85)', padding: isMobile ? '14px 16px' : '16px 20px', borderRadius: 16, border: '1px solid var(--border)', display: 'inline-block', minWidth: isMobile ? 0 : 280, width: isMobile ? '100%' : 'auto', maxWidth: 320, backdropFilter: 'blur(10px)', boxShadow: '0 10px 40px rgba(0,0,0,0.4)' }}>
+                            <div style={{ fontSize: isMobile ? 16 : 18, fontWeight: 800, color: 'var(--teal)', letterSpacing: '-0.5px' }}>{reaction ? reaction.product : 'Interatomic Complex'}</div>
+                            <div style={{ fontSize: isMobile ? 13 : 16, fontFamily: 'var(--mono)', color: 'var(--gold)', margin: '10px 0', fontWeight: 700, wordBreak: 'break-word' }}>
                                 {reaction ? reaction.eq : `${atomA.sym} + ${atomB.sym} → Linkage`}
                             </div>
                             <div style={{ fontSize: 10, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>{reaction?.type} Interaction</div>

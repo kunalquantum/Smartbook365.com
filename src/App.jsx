@@ -8,6 +8,7 @@ import './index.css';
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const DomainPage = lazy(() => import('./pages/DomainPage'));
 const EngineeringDepartmentPage = lazy(() => import('./pages/EngineeringDepartmentPage'));
+const EngineeringSemesterPage = lazy(() => import('./pages/EngineeringSemesterPage'));
 const ProgrammingLanguagePage = lazy(() => import('./pages/ProgrammingLanguagePage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const SubscriptionPage = lazy(() => import('./pages/SubscriptionPage'));
@@ -16,6 +17,7 @@ const DemoPage = lazy(() => import('./pages/DemoPage'));
 const ChemistryModule = lazy(() => import('./modules/chemistry/ChemistryModule'));
 const MathsModule = lazy(() => import('./modules/maths/MathsModule'));
 const PhysicsModule = lazy(() => import('./modules/physics/PhysicsModule'));
+const Microprocessor8085Module = lazy(() => import('./modules/engineering/microprocessor8085/Microprocessor8085Module'));
 
 // Fallback Loading Screen with Typewriter Effect
 const LoadingScreen = () => {
@@ -98,6 +100,8 @@ function App() {
         <Suspense fallback={<LoadingScreen />}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/domains/engineering/computer-engineering/sem-4/8085" element={<Microprocessor8085Module />} />
+            <Route path="/domains/engineering/:departmentId/:semesterId" element={<EngineeringSemesterPage />} />
             <Route path="/domains/engineering/:departmentId" element={<EngineeringDepartmentPage />} />
             <Route path="/domains/computer-language/:languageId" element={<ProgrammingLanguagePage />} />
             <Route path="/domains/:domainId" element={<DomainPage />} />
