@@ -176,7 +176,7 @@ const LandingPage = () => {
                                 <h3>Total Control</h3>
                                 <p>MANIPULATE PARAMETERS IN REAL-TIME TO SEE INSTANT PHYSICAL RESULTS.</p>
                             </div>
-                            <div className="feature-card reveal delay-3">
+                            <div className="feature-card ">
                                 <h3>Pure Immersion</h3>
                                 <p>A DISTRACTION-FREE ENVIRONMENT DESIGNED FOR DEEP TECHNICAL FOCUS.</p>
                             </div>
@@ -253,7 +253,7 @@ const LandingPage = () => {
 
             {/* Chatbot Floating Button / Mascot */}
             <div 
-                className={`chatbot-fab ${isChatOpen ? 'hidden' : 'reveal delay-3'} ${isRoaming ? 'roaming' : ''}`} 
+                className={`chatbot-fab ${isChatOpen ? 'hidden' : ''} ${isRoaming ? 'roaming' : ''}`} 
                 onClick={() => setIsChatOpen(true)}
             >
                 <div className="chatbot-inner">
