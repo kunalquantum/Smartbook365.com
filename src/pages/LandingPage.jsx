@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import '../styles/landing.css';
 import Chatbot from '../components/Chatbot';
 import logoImg from '../assets/logo-removebg-preview.png';
@@ -9,7 +8,6 @@ import physicsImg from '../assets/subject-physics.png';
 import mathsImg from '../assets/subject-maths.png';
 
 const LandingPage = () => {
-    const { user, logout } = useAuth();
     const [scrolled, setScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -124,40 +122,6 @@ const LandingPage = () => {
         animate();
         return () => cancelAnimationFrame(animationFrame);
     }, [mousePos]);
-
-    // 4. Typewriter Effect
-    const Typewriter = ({ strings }) => {
-        const [text, setText] = useState('');
-        const [isDeleting, setIsDeleting] = useState(false);
-        const [loopNum, setLoopNum] = useState(0);
-        const [typingSpeed, setTypingSpeed] = useState(150);
-
-        useEffect(() => {
-            const handleType = () => {
-                const i = loopNum % strings.length;
-                const fullText = strings[i];
-
-                setText(isDeleting 
-                    ? fullText.substring(0, text.length - 1) 
-                    : fullText.substring(0, text.length + 1)
-                );
-
-                setTypingSpeed(isDeleting ? 50 : 150);
-
-                if (!isDeleting && text === fullText) {
-                    setTimeout(() => setIsDeleting(true), 2000);
-                } else if (isDeleting && text === '') {
-                    setIsDeleting(false);
-                    setLoopNum(loopNum + 1);
-                }
-            };
-
-            const timer = setTimeout(handleType, typingSpeed);
-            return () => clearTimeout(timer);
-        }, [text, isDeleting, loopNum, strings, typingSpeed]);
-
-        return <span className="typewriter-text">{text}</span>;
-    };
 
     return (
         <div className="landing-page">
