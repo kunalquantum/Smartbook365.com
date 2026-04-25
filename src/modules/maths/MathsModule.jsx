@@ -8,13 +8,19 @@ import { chapters } from './data/chapters';
 import './maths.css';
 import './App.css';
 
-function MathsModule() {
-  const [activeChapter, setActiveChapter] = useState('1');
+import { isDemoChapter } from '../../config/demoConfig';
+
+function MathsModule({ isDemoMode = false }) {
+  const [activeChapter, setActiveChapter] = useState(isDemoMode ? '2' : '1');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { hasAccess } = useAuth();
 
   const chapterData = chapters.find(ch => ch.id === activeChapter);
-  const isLocked = !hasAccess('maths', Number(activeChapter));
+  
+  const isLocked = isDemoMode 
+    ? !isDemoChapter('maths', activeChapter)
+    : !hasAccess('maths', Number(activeChapter));
+
 
   return (
     <div className="maths-theme">

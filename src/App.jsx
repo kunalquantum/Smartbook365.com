@@ -9,6 +9,7 @@ const LandingPage = lazy(() => import('./pages/LandingPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const SubscriptionPage = lazy(() => import('./pages/SubscriptionPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const DemoPage = lazy(() => import('./pages/DemoPage'));
 const ChemistryModule = lazy(() => import('./modules/chemistry/ChemistryModule'));
 const MathsModule = lazy(() => import('./modules/maths/MathsModule'));
 const PhysicsModule = lazy(() => import('./modules/physics/PhysicsModule'));
@@ -97,6 +98,14 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/subscription" element={<SubscriptionPage />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/demo" element={<DemoPage />} />
+            
+            {/* Demo routes — public, no auth */}
+            <Route path="/demo/chemistry/*" element={<ChemistryModule isDemoMode={true} />} />
+            <Route path="/demo/physics/*" element={<PhysicsModule isDemoMode={true} />} />
+            <Route path="/demo/maths/*" element={<MathsModule isDemoMode={true} />} />
+            
+            {/* Full access routes — auth required */}
             <Route 
               path="/chemistry/*" 
               element={
@@ -129,3 +138,4 @@ function App() {
 }
 
 export default App;
+

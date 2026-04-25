@@ -8,16 +8,21 @@ import ChapterList from './components/chapter/ChapterList'
 import StatCard from './components/ui/StatCard'
 import { useAuth } from '../../context/AuthContext'
 import AccessDenied from '../../components/auth/AccessDenied'
-import './physics.css'
+import { isDemoChapter } from '../../config/demoConfig'
 
-export default function PhysicsModule() {
+export default function PhysicsModule({ isDemoMode = false }) {
   const [activeId, setActiveId] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { done, toggle, chapterDone, reset } = useProgress()
   const { hasAccess } = useAuth()
 
   const activeChapter = CHAPTERS.find(c => c.id === activeId)
-  const isLocked = activeChapter && !hasAccess('physics', activeChapter.id)
+  const isLocked = activeChapter && (
+    isDemoMode 
+        ? !isDemoChapter('physics', activeChapter.id)
+        : !hasAccess('physics', activeChapter.id)
+  )
+
 
   return (
     <div className="physics-theme">

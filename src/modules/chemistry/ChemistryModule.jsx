@@ -9,6 +9,7 @@ import BranchBadge from './components/ui/BranchBadge'
 import AtomicExplorerPage from './components/Atom3D/AtomicExplorerPage'
 import { useAuth } from '../../context/AuthContext'
 import AccessDenied from '../../components/auth/AccessDenied'
+import { DEMO_CONFIG, isDemoChapter } from '../../config/demoConfig'
 import './chemistry.css'
 
 const BRANCH_COLOR = {
@@ -17,14 +18,21 @@ const BRANCH_COLOR = {
     Nuclear: '#378ADD', Applied: '#EF9F27',
 }
 
-export default function ChemistryModule() {
+export default function ChemistryModule({ isDemoMode = false }) {
     const [activeId, setActiveId] = useState(null)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const { done, toggle, chapterDone, reset } = useProgress()
     const { hasAccess } = useAuth()
 
     const activeChapter = CHAPTERS.find(c => c.id === activeId)
-    const isLocked = activeChapter && !hasAccess('chemistry', activeChapter.id)
+    
+    // Logic: In demo mode, only demo chapters are unlocked. In normal mode, hasAccess determines it.
+    const isLocked = activeChapter && (
+        isDemoMode 
+            ? !isDemoChapter('chemistry', activeChapter.id)
+            : !hasAccess('chemistry', activeChapter.id)
+    )
+
     const bColor = activeChapter ? (BRANCH_COLOR[activeChapter.branch] || 'var(--gold)') : 'var(--gold)'
 
     return (

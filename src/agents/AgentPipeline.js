@@ -60,38 +60,60 @@ class ChatSession {
 
 // ─── KNOWLEDGE BASE ──────────────────────────────────────────────────
 const KNOWLEDGE = {
+    demo: {
+        topics: ['demo', 'try', 'free', 'test', 'sample', 'example', 'preview', 'experience', 'cost', 'money', 'free of cost', 'subscription', 'no subscription'],
+        facts: [
+            "We have a full DEMO package available right now! You can explore curated chapters from Chemistry, Physics, and Maths completely free of cost — no subscription or credit card required.",
+            "Want to see the magic before you commit? Our DEMO mode lets you experience our high-fidelity 3D visualizations live. Just click the 'TRY DEMO' button on the home page.",
+            "Good news: you can access our most popular interactive chapters (like Structure of Atom or Newton's Laws) for free. It's the perfect way to see how Smartbook transforms learning.",
+            "No account needed for the demo! Just pick a subject and start exploring. If you love it (and we think you will), you can unlock all 48 chapters later with a premium plan.",
+        ],
+        depth: "The demo isn't just a video — it's the full interactive engine. You get same 3D controls as our paid members for the selected chapters.",
+        cta: "Skip the login and jump into the demo right now! Shall I show you where to click?"
+    },
+    pricing: {
+        topics: ['price', 'pricing', 'cost', 'pay', 'subscription', 'plan', 'free', 'premium', 'buy', 'purchase', 'trial', 'money', 'afford', 'cheap', 'expensive', 'worth', 'value'],
+        facts: [
+            "Smartbook offers a completely free DEMO mode — no subscription required! You can try curated chapters from every subject for $0 across all your devices.",
+            "For full access to all 48 chapters and advanced simulations, our plans start at just $9/month. But honestly, start with the free demo first to see the value!",
+            "Every plan starts with a 14-day free trial, and we also have the permanent 'Free Demo' mode for quick exploration without an account.",
+            "Cost should never be a barrier to quality education. That's why we kept the demo mode free forever and offer volume discounts for schools.",
+        ],
+        depth: "Think of it this way: one month of Smartbook costs less than a single textbook, but gives you an entire interactive lab.",
+        cta: "Want to try the demo first or jump straight into a 14-day full access trial?"
+    },
     chemistry: {
         topics: ['chemistry', 'atom', 'molecule', 'bond', 'reaction', 'element', 'compound', 'periodic', 'organic', 'inorganic', 'quantum'],
         facts: [
-            "Students using our Chemistry module scored 40% higher on molecular structure exams. You'll see 3D atomic orbitals that make textbook diagrams feel prehistoric.",
+            "Students using our Chemistry module scored 40% higher on molecular structure exams. You can try our 'Structure of Atom' chapter right now for free in Demo Mode!",
             "Imagine building a molecule with your hands — dragging atoms, forming bonds, and watching a reaction simulate in real-time. That's what 12,000+ students experience weekly on Smartbook.",
             "Our Chemistry lab is used by 3 top-50 universities for their virtual practicals. No goggles needed — just pure, interactive learning from anywhere.",
             "From periodic table deep-dives to quantum orbital visualizations — every concept clicks when you can rotate, zoom, and interact with it in 3D.",
         ],
         depth: "Students tell us Chemistry went from their hardest subject to their favorite after using Smartbook. The visual difference is that powerful.",
-        cta: "Want to try the free Chemistry demo? It takes 30 seconds to start."
+        cta: "Check out the Chemistry demo — it's completely free and requires no account."
     },
     physics: {
         topics: ['physics', 'gravity', 'force', 'motion', 'newton', 'einstein', 'relativity', 'wave', 'energy', 'momentum', 'velocity', 'acceleration'],
         facts: [
-            "Our Physics engine doesn't just show you formulas — it lets you bend spacetime, launch projectiles, and feel gravity in real-time 3D. Students retain 3x more with our simulations.",
+            "Our Physics engine doesn't just show you formulas — it lets you bend spacetime and launch projectiles. The 'Laws of Motion' chapter is available for free in Demo Mode today!",
             "Teachers have replaced 30% of their lecture time with Smartbook Physics simulations because students grasp concepts faster when they can interact with them.",
             "Picture this: you adjust the mass of a planet and watch the entire orbital system recalculate live. That's the power you get with our n-body gravitational simulator.",
             "From Newton's apple to Einstein's curvature — every physics milestone is a hands-on experience here, not a paragraph to memorize.",
         ],
         depth: "Physics is where Smartbook truly shines — our engine was originally built for physics simulations, and it shows.",
-        cta: "Ready to see physics come alive? Start your free trial now."
+        cta: "Ready to explore the free Physics demo? No subscription needed."
     },
     mathematics: {
         topics: ['math', 'mathematics', 'geometry', 'algebra', 'calculus', 'equation', 'graph', 'function', 'topology', 'fractal', 'coordinate'],
         facts: [
-            "Struggling with calculus? Our students say watching derivatives animate in 3D was their 'aha moment.' Abstract math becomes intuitive when you can see and touch it.",
+            "Struggling with calculus? Our students say watching derivatives animate in 3D was their 'aha moment.' Try our Trigonometry demo free to see the unit circle in 3D!",
             "We've turned geometry from flat textbook pages into explorable 3D manifolds. Over 8,000 students improved their spatial reasoning scores within the first month.",
             "Our interactive graphing engine lets you drag equations, morph functions, and see every transformation unfold — it's like having a personal math tutor in 3D.",
             "Fractals, topology, coordinate systems — we cover everything from pre-algebra to university-level mathematics, all with interactive 3D visualizations.",
         ],
         depth: "Math anxiety drops significantly when concepts are visual and interactive. That's the Smartbook difference.",
-        cta: "Try the Math module free — you'll understand why students call it a game-changer."
+        cta: "Start the Math demo for free — you'll understand why students call it a game-changer."
     },
     platform: {
         topics: ['smartbook', 'platform', 'app', 'website', 'how', 'work', 'what', 'feature', 'about', 'engine', '3d', 'visual', 'learn', 'study', 'why', 'different', 'special'],
@@ -102,19 +124,9 @@ const KNOWLEDGE = {
             "Students using Smartbook spend 2.5x more time studying voluntarily because the experience is engaging, not exhausting. Learning should feel like discovery, not homework.",
         ],
         depth: "We're not another ed-tech app. We're the platform that makes students actually want to study.",
-        cta: "See the difference yourself — start your 14-day free trial today."
+        cta: "See the difference yourself — explore our free demo today."
     },
-    pricing: {
-        topics: ['price', 'pricing', 'cost', 'pay', 'subscription', 'plan', 'free', 'premium', 'buy', 'purchase', 'trial', 'money', 'afford', 'cheap', 'expensive', 'worth', 'value'],
-        facts: [
-            "Great question! Our Starter plan is just $9/month — less than a coffee a week — and gives you full access to one subject module with all simulations included.",
-            "Most students go with our Pro plan at $19/month because it unlocks all three modules plus advanced controls. It's our best value, and you can cancel anytime.",
-            "Every plan starts with a 14-day free trial — full access, no credit card required. You'll have plenty of time to see why 25,000+ students chose to stay.",
-            "For schools and institutions, we offer volume licensing with significant discounts. Some schools have saved over 60% on lab equipment costs by switching to Smartbook.",
-        ],
-        depth: "Think of it this way: one month of Smartbook costs less than a single textbook, but gives you an entire interactive lab.",
-        cta: "Want to start your free trial? No credit card needed — you can be exploring in 30 seconds."
-    },
+
     support: {
         topics: ['help', 'support', 'issue', 'bug', 'error', 'problem', 'contact', 'email', 'phone', 'fix', 'broken', 'crash'],
         facts: [

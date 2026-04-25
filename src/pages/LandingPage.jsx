@@ -189,7 +189,7 @@ const LandingPage = () => {
                             </h1>
                             <div className="hero-btns reveal delay-2">
                                 <Link to="/login" className="btn btn-primary">GET STARTED</Link>
-                                <a href="#features" className="btn btn-outline">LEARN MORE</a>
+                                <Link to="/demo" className="btn btn-outline">TRY DEMO</Link>
                             </div>
                         </div>
                     </div>
