@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/landing.css';
 import Chatbot from '../components/Chatbot';
+import logoImg from '../assets/logo-removebg-preview.png';
+import chemistryImg from '../assets/subject-chemistry.png';
+import physicsImg from '../assets/subject-physics.png';
+import mathsImg from '../assets/subject-maths.png';
 
 const LandingPage = () => {
     const { user, logout } = useAuth();
@@ -164,7 +168,7 @@ const LandingPage = () => {
             <header id="main-header" className={`${scrolled ? 'scrolled' : ''} ${isMenuOpen ? 'menu-active' : ''}`}>
                 <nav className="container">
                     <div className="logo">
-                        <img src="/src/assets/logo-removebg-preview.png" alt="Smartbook 365 Logo" className="logo-img" />
+                        <img src={logoImg} alt="Smartbook 365 Logo" className="logo-img" />
                         <span className="logo-text">Smartbook</span>
                     </div>
 
@@ -226,7 +230,7 @@ const LandingPage = () => {
                         <div className="subject-tabs">
                             <div className="subject-card reveal delay-1">
                                 <div className="subject-visual">
-                                    <img src="/src/assets/subject-chemistry.png" alt="Chemistry Module Visual" />
+                                    <img src={chemistryImg} alt="Chemistry Module Visual" />
                                 </div>
                                 <div className="subject-info">
                                     <h3>Chemistry</h3>
@@ -236,7 +240,7 @@ const LandingPage = () => {
                             </div>
                             <div className="subject-card reveal delay-2">
                                 <div className="subject-visual">
-                                    <img src="/src/assets/subject-physics.png" alt="Physics Module Visual" />
+                                    <img src={physicsImg} alt="Physics Module Visual" />
                                 </div>
                                 <div className="subject-info">
                                     <h3>Physics</h3>
@@ -246,7 +250,7 @@ const LandingPage = () => {
                             </div>
                             <div className="subject-card reveal delay-3">
                                 <div className="subject-visual">
-                                    <img src="/src/assets/subject-maths.png" alt="Mathematics Module Visual" />
+                                    <img src={mathsImg} alt="Mathematics Module Visual" />
                                 </div>
                                 <div className="subject-info">
                                     <h3>Mathematics</h3>
@@ -262,7 +266,7 @@ const LandingPage = () => {
                     <div className="container footer-grid">
                         <div className="footer-brand">
                              <div className="logo">
-                                <img src="/src/assets/logo-removebg-preview.png" alt="Smartbook 365 Logo" className="logo-img" />
+                                <img src={logoImg} alt="Smartbook 365 Logo" className="logo-img" />
                                 <span className="logo-text">Smartbook</span>
                             </div>
                             <p>SMARTBOOK 365 VISUALIZER INTERFACE 1.0</p>
@@ -291,7 +295,7 @@ const LandingPage = () => {
                 onClick={() => setIsChatOpen(true)}
             >
                 <div className="chatbot-inner">
-                    <img src="/src/assets/logo-removebg-preview.png" alt="Chatbot Support" />
+                    <img src={logoImg} alt="Chatbot Support" />
                 </div>
                 <div className="chatbot-glow"></div>
                 

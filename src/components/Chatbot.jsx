@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { runPipeline, AGENTS, ChatSession } from '../agents/AgentPipeline';
+import logoImg from '../assets/logo-removebg-preview.png';
 
 const TypewriterResponse = ({ text, onComplete }) => {
     const [displayedText, setDisplayedText] = useState('');
@@ -100,7 +101,7 @@ const Chatbot = ({ isOpen, onClose }) => {
         <div className="chat-window">
             <div className="chat-header">
                 <div className="status-indicator"></div>
-                <img src="/src/assets/logo-removebg-preview.png" alt="Smartbook Logo" className="chat-header-logo" />
+                <img src={logoImg} alt="Smartbook Logo" className="chat-header-logo" />
                 <span>SB-365 PROTOCOL</span>
                 <button className="new-session-btn" onClick={startNewSession} title="Start New Session">↻</button>
                 <button className="close-btn" onClick={() => { session.endSession(); onClose(); }}>&times;</button>
