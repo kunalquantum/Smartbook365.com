@@ -44,17 +44,21 @@ const LandingPage = () => {
     // 2. Scroll Effects
     useEffect(() => {
         const container = containerRef.current;
-        if (!container) return;
+        const isMobile = window.innerWidth <= 768;
+        if (!container && !isMobile) return;
 
         let frameId;
         const handleScroll = () => {
-            const scrollTop = container.scrollTop;
-            const height = container.scrollHeight - container.clientHeight;
+            const scrollTop = isMobile ? window.scrollY : container.scrollTop;
+            const height = isMobile
+                ? document.documentElement.scrollHeight - window.innerHeight
+                : container.scrollHeight - container.clientHeight;
             const progress = height > 0 ? scrollTop / height : 0;
             
             // Set global scroll variable for parallax
-            container.style.setProperty('--scroll-progress', progress);
-            container.style.setProperty('--scroll-top', scrollTop);
+            const scrollHost = isMobile ? document.documentElement : container;
+            scrollHost.style.setProperty('--scroll-progress', progress);
+            scrollHost.style.setProperty('--scroll-top', scrollTop);
             
             frameId = requestAnimationFrame(() => {
                 setScrolled(scrollTop > 50);
@@ -63,13 +67,13 @@ const LandingPage = () => {
             });
         };
 
-        container.addEventListener('scroll', handleScroll);
-        // Prevent body scroll
-        document.body.style.overflow = 'hidden';
+        const scrollTarget = isMobile ? window : container;
+        scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
+        document.body.style.overflow = isMobile ? 'auto' : 'hidden';
         handleScroll();
         
         return () => {
-            container.removeEventListener('scroll', handleScroll);
+            scrollTarget.removeEventListener('scroll', handleScroll);
             document.body.style.overflow = 'auto';
             cancelAnimationFrame(frameId);
         };
