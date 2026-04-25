@@ -6,6 +6,9 @@ import './index.css';
 
 // Lazy load components for performance
 const LandingPage = lazy(() => import('./pages/LandingPage'));
+const DomainPage = lazy(() => import('./pages/DomainPage'));
+const EngineeringDepartmentPage = lazy(() => import('./pages/EngineeringDepartmentPage'));
+const ProgrammingLanguagePage = lazy(() => import('./pages/ProgrammingLanguagePage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const SubscriptionPage = lazy(() => import('./pages/SubscriptionPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
@@ -95,6 +98,9 @@ function App() {
         <Suspense fallback={<LoadingScreen />}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/domains/engineering/:departmentId" element={<EngineeringDepartmentPage />} />
+            <Route path="/domains/computer-language/:languageId" element={<ProgrammingLanguagePage />} />
+            <Route path="/domains/:domainId" element={<DomainPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/subscription" element={<SubscriptionPage />} />
             <Route path="/admin" element={<AdminDashboard />} />

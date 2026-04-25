@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/landing.css';
 import Chatbot from '../components/Chatbot';
 import logoImg from '../assets/logo-removebg-preview.png';
-import chemistryImg from '../assets/subject-chemistry.png';
-import physicsImg from '../assets/subject-physics.png';
-import mathsImg from '../assets/subject-maths.png';
+import { DOMAIN_CATALOG } from '../data/learningCatalog';
 
 const LandingPage = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -138,7 +136,7 @@ const LandingPage = () => {
 
                     <ul className="nav-links">
                         <li><a href="#features">Experience</a></li>
-                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#domains">Domains</a></li>
                         <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
                     </ul>
                 </nav>
@@ -182,42 +180,42 @@ const LandingPage = () => {
                     </div>
                 </section>
 
-                <section id="subjects" className="subjects-section">
+                <section id="domains" className="subjects-section">
                     <div className="container">
                         <div className="section-header">
-                            <h2 className="reveal">Target Modules</h2>
+                            <h2 className="reveal">Learning Domains</h2>
+                            <p className="reveal delay-1">ENTER THROUGH THE DOMAIN LAYER, THEN DROP INTO THE LIVE SUBJECT STACK.</p>
                         </div>
-                        <div className="subject-tabs">
-                            <div className="subject-card reveal delay-1">
-                                <div className="subject-visual">
-                                    <img src={chemistryImg} alt="Chemistry Module Visual" />
-                                </div>
-                                <div className="subject-info">
-                                    <h3>Chemistry</h3>
-                                    <p>QUANTUM STRUCTURES AND BONDS.</p>
-                                    <Link to="/chemistry" className="view-more">ENTER MODULE &rarr;</Link>
-                                </div>
-                            </div>
-                            <div className="subject-card reveal delay-2">
-                                <div className="subject-visual">
-                                    <img src={physicsImg} alt="Physics Module Visual" />
-                                </div>
-                                <div className="subject-info">
-                                    <h3>Physics</h3>
-                                    <p>GRAVITY AND ORBITAL SYSTEMS.</p>
-                                    <Link to="/physics" className="view-more">ENTER MODULE &rarr;</Link>
-                                </div>
-                            </div>
-                            <div className="subject-card reveal delay-3">
-                                <div className="subject-visual">
-                                    <img src={mathsImg} alt="Mathematics Module Visual" />
-                                </div>
-                                <div className="subject-info">
-                                    <h3>Mathematics</h3>
-                                    <p>GEOMETRIC MANIFOLD DYNAMICS.</p>
-                                    <Link to="/maths" className="view-more">ENTER MODULE &rarr;</Link>
-                                </div>
-                            </div>
+                        <div className="domain-grid">
+                            {DOMAIN_CATALOG.map((domain, index) => (
+                                <Link
+                                    key={domain.id}
+                                    to={`/domains/${domain.id}`}
+                                    className={`domain-card reveal delay-${index + 1}`}
+                                    style={{
+                                        '--domain-accent': domain.accent,
+                                        '--domain-glow': domain.glow,
+                                    }}
+                                >
+                                    <div className="domain-card-head">
+                                        <span className="domain-code">{domain.code}</span>
+                                        <span className="domain-status">{domain.status}</span>
+                                    </div>
+
+                                    <div className="domain-card-body">
+                                        <h3>{domain.title}</h3>
+                                        <p>{domain.summary}</p>
+                                    </div>
+
+                                    <div className="domain-track-list">
+                                        {domain.highlights.map((highlight) => (
+                                            <span key={highlight}>{highlight}</span>
+                                        ))}
+                                    </div>
+
+                                    <span className="view-more">ENTER DOMAIN &rarr;</span>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </section>

@@ -403,6 +403,118 @@
     color: var(--text-secondary);
 }
 
+.landing-page .domain-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.landing-page .domain-card {
+    position: relative;
+    min-height: 360px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background:
+        radial-gradient(circle at top left, var(--domain-glow, rgba(0, 255, 255, 0.15)), transparent 48%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+        #111;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.landing-page .domain-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 35%),
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.45));
+    pointer-events: none;
+}
+
+.landing-page .domain-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--domain-accent, var(--primary));
+    box-shadow: 0 0 40px var(--domain-glow, rgba(0, 255, 255, 0.15));
+}
+
+.landing-page .domain-card-head,
+.landing-page .domain-card-body,
+.landing-page .domain-track-list,
+.landing-page .domain-card .view-more {
+    position: relative;
+    z-index: 1;
+}
+
+.landing-page .domain-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.landing-page .domain-code,
+.landing-page .domain-status,
+.landing-page .subject-code {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: 'Michroma', sans-serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.12rem;
+    text-transform: uppercase;
+}
+
+.landing-page .domain-code,
+.landing-page .subject-code {
+    color: var(--domain-accent, var(--primary));
+    background: rgba(255, 255, 255, 0.04);
+    margin-bottom: 1rem;
+}
+
+.landing-page .domain-status {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.landing-page .domain-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.landing-page .domain-card p {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.8;
+    max-width: 280px;
+}
+
+.landing-page .domain-track-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.landing-page .domain-track-list span {
+    font-size: 0.62rem;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.82);
+    padding: 0.4rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+}
+
 /* Subject Tabs / Cards */
 .landing-page .subject-tabs {
     display: grid;
@@ -463,6 +575,10 @@
     z-index: 2;
 }
 
+.landing-page .subject-code {
+    margin-bottom: 1.1rem;
+}
+
 .landing-page .subject-card:hover {
     border-color: var(--primary);
     box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
@@ -495,6 +611,303 @@
     font-size: 0.7rem;
     color: var(--primary);
     letter-spacing: 0.1em;
+}
+
+.domain-page section {
+    height: auto;
+    min-height: unset;
+    padding: 6rem 5%;
+    scroll-snap-align: none;
+}
+
+.domain-page .domain-page-shell {
+    min-height: 100vh;
+    padding-top: 1rem;
+}
+
+.domain-page .domain-hero-section {
+    min-height: calc(100vh - 90px);
+    align-items: flex-end;
+    background:
+        radial-gradient(circle at top left, var(--domain-glow, rgba(0, 255, 255, 0.16)), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 55%);
+}
+
+.domain-page .domain-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 3rem;
+    align-items: end;
+}
+
+.domain-page .domain-hero-copy h1 {
+    font-size: 4.4rem;
+    margin: 0 0 1.5rem;
+    color: #fff;
+    text-shadow: 0 0 40px var(--domain-glow, rgba(0, 255, 255, 0.18));
+}
+
+.domain-page .domain-hero-copy p {
+    max-width: 760px;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 2rem;
+}
+
+.domain-page .domain-hero-panel {
+    padding: 2rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    background:
+        radial-gradient(circle at top left, var(--domain-glow, rgba(0, 255, 255, 0.14)), transparent 55%),
+        rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+}
+
+.domain-page .domain-hero-panel h2 {
+    font-size: 1.15rem;
+    margin: 1rem 0;
+    color: var(--domain-accent, var(--primary));
+}
+
+.domain-page .domain-hero-panel p {
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 1.5rem;
+}
+
+.domain-page .domain-subject-section {
+    align-items: flex-start;
+    padding-top: 2rem;
+}
+
+.domain-page .domain-section-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.domain-page .science-level-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.domain-page .science-level-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0 4rem;
+}
+
+.domain-page .science-level-head h3 {
+    font-size: 1.65rem;
+    color: #fff;
+}
+
+.domain-page .science-level-head p {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 580px;
+}
+
+.domain-page .department-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.domain-page .department-card {
+    position: relative;
+    min-height: 340px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background:
+        radial-gradient(circle at top left, var(--department-glow, rgba(0, 255, 255, 0.16)), transparent 44%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+        #111;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.domain-page .department-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 35%),
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+}
+
+.domain-page .department-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--department-accent, var(--domain-accent, var(--primary)));
+    box-shadow: 0 0 36px var(--department-glow, rgba(0, 255, 255, 0.18));
+}
+
+.domain-page .department-card-head,
+.domain-page .department-card-body,
+.domain-page .department-card .domain-track-list,
+.domain-page .department-card .view-more {
+    position: relative;
+    z-index: 1;
+}
+
+.domain-page .department-card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+}
+
+.domain-page .department-card-body h3,
+.department-page .semester-card h3 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+}
+
+.domain-page .department-card-body p,
+.department-page .semester-card p {
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.department-page .semester-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.department-page .semester-card {
+    position: relative;
+    min-height: 250px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    background:
+        radial-gradient(circle at top left, var(--department-glow, rgba(0, 255, 255, 0.15)), transparent 52%),
+        rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    transition: var(--transition);
+}
+
+.department-page .semester-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--department-accent, var(--domain-accent, var(--primary)));
+    box-shadow: 0 0 28px var(--department-glow, rgba(0, 255, 255, 0.18));
+}
+
+.department-page .semester-card-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+}
+
+.department-page .semester-phase {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.74);
+    font-family: 'Michroma', sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+}
+
+.domain-page .language-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.domain-page .language-card {
+    position: relative;
+    min-height: 320px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.4rem;
+    background:
+        radial-gradient(circle at top left, var(--domain-glow, rgba(167, 139, 250, 0.18)), transparent 46%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+        #111;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.domain-page .language-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 35%),
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+}
+
+.domain-page .language-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--language-accent, var(--domain-accent, var(--primary)));
+    box-shadow: 0 0 34px var(--language-glow, var(--domain-glow, rgba(167, 139, 250, 0.18)));
+}
+
+.domain-page .language-card .department-card-head,
+.domain-page .language-card .department-card-body,
+.domain-page .language-card .domain-track-list,
+.domain-page .language-card .view-more {
+    position: relative;
+    z-index: 1;
+}
+
+.language-page .language-level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.language-page .language-level-card {
+    position: relative;
+    min-height: 260px;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    background:
+        radial-gradient(circle at top left, var(--language-glow, rgba(0, 255, 255, 0.15)), transparent 52%),
+        rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    transition: var(--transition);
+}
+
+.language-page .language-level-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--language-accent, var(--domain-accent, var(--primary)));
+    box-shadow: 0 0 28px var(--language-glow, rgba(0, 255, 255, 0.18));
+}
+
+.language-page .language-level-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
 }
 
 /* Footer Bottom Fix */
@@ -694,6 +1107,11 @@
         gap: 2rem;
     }
 
+    .landing-page .domain-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 2rem;
+    }
+
     .landing-page .subject-tabs {
         grid-template-columns: repeat(2, 1fr);
         padding: 0 2rem;
@@ -714,6 +1132,30 @@
 
     .landing-page .section-header h2 {
         font-size: 2.8rem;
+    }
+
+    .domain-page .domain-hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .domain-page .domain-hero-copy h1 {
+        font-size: 3.4rem;
+    }
+
+    .domain-page .department-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .domain-page .language-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .department-page .semester-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .language-page .language-level-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .chat-window {
@@ -754,6 +1196,7 @@
     }
 
     .landing-page .features-grid,
+    .landing-page .domain-grid,
     .landing-page .subject-tabs {
         grid-template-columns: 1fr;
         padding: 0 1rem;
@@ -776,6 +1219,38 @@
 
     .landing-page .section-header p {
         font-size: 0.7rem;
+    }
+
+    .landing-page .domain-card {
+        min-height: 300px;
+    }
+
+    .domain-page section {
+        padding: 4rem 5%;
+    }
+
+    .domain-page .domain-hero-section {
+        min-height: auto;
+        padding-top: 7rem;
+    }
+
+    .domain-page .domain-hero-copy h1 {
+        font-size: 2.6rem;
+    }
+
+    .domain-page .domain-hero-copy p {
+        font-size: 0.82rem;
+    }
+
+    .domain-page .science-level-head {
+        padding: 0 1rem;
+    }
+
+    .domain-page .department-grid,
+    .domain-page .language-grid,
+    .department-page .semester-grid,
+    .language-page .language-level-grid {
+        grid-template-columns: 1fr;
     }
 
     .landing-page .feature-card {
@@ -910,6 +1385,14 @@
 
     .landing-page .subject-card p {
         font-size: 0.7rem;
+    }
+
+    .landing-page .domain-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .landing-page .domain-card p {
+        font-size: 0.72rem;
     }
 
     .landing-page .feature-card h3 {
