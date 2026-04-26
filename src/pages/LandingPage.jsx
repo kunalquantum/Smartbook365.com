@@ -147,16 +147,6 @@ const LandingPage = () => {
     // Mock admin login for testing
     const { login, user, logout, moduleVisibility } = useAuth();
     const nav = useNavigate();
-    const handleMockAdmin = async () => {
-        try {
-            await login('admin', 'admin');
-            nav('/admin');
-        } catch {
-            // fallback: set admin directly and navigate
-            localStorage.setItem('sb_user', JSON.stringify({ id: 0, name: 'admin', username: 'admin', role: 'admin', subscriptions: { physics: 'all', chemistry: 'all', maths: 'all' } }));
-            window.location.href = '/admin';
-        }
-    };
 
     return (
         <div className="landing-page">
@@ -184,17 +174,10 @@ const LandingPage = () => {
                                         <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>{user.name}</span>
                                     </Link>
                                 </li>
-                                {user.role === 'admin' ? (
-                                    <li><Link to="/admin" className="btn btn-outline" style={{ borderColor: '#ff00ff', color: '#ff00ff', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>ADMIN DASH</Link></li>
-                                ) : (
-                                    <li><button onClick={logout} className="btn btn-outline" style={{ borderColor: 'var(--text-3)', color: 'var(--text-3)', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>LOGOUT</button></li>
-                                )}
+                                <li><button onClick={logout} className="btn btn-outline" style={{ borderColor: 'var(--text-3)', color: 'var(--text-3)', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>LOGOUT</button></li>
                             </>
                         ) : (
-                            <>
                                 <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
-                                <li><button onClick={handleMockAdmin} className="btn btn-outline" style={{ borderColor: '#ff00ff', color: '#ff00ff', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>⚡ ADMIN</button></li>
-                            </>
                         )}
                     </ul>
                 </nav>
