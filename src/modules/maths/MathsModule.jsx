@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Sidebar } from './components/layout/Sidebar';
 import { TopBar } from './components/layout/TopBar';
 import { ChapterPage } from './components/book/ChapterPage';
@@ -11,9 +12,17 @@ import './App.css';
 import { isDemoChapter } from '../../config/demoConfig';
 
 function MathsModule({ isDemoMode = false }) {
-  const [activeChapter, setActiveChapter] = useState(isDemoMode ? '2' : '1');
+  const { "*": path } = useParams();
+  const chapterIdFromUrl = path?.split('/')[0];
+
+  const [activeChapter, setActiveChapter] = useState(chapterIdFromUrl || (isDemoMode ? '2' : '1'));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { checkAccess } = useAuth();
+
+  // Sync with URL changes
+  useEffect(() => {
+    if (chapterIdFromUrl) setActiveChapter(chapterIdFromUrl);
+  }, [chapterIdFromUrl]);
 
   const chapterData = chapters.find(ch => ch.id === activeChapter);
   
@@ -49,4 +58,3 @@ function MathsModule({ isDemoMode = false }) {
 }
 
 export default MathsModule;
-

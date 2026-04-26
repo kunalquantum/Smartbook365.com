@@ -81,16 +81,16 @@ const Chatbot = ({ isOpen, onClose }) => {
     const activeSessionRef = useRef(null)
     const previousPathRef = useRef(location.pathname)
 
+    const { fetchChatbotKnowledge, demoConfig, moduleVisibility } = useAuth()
+    
     const runtimeContext = useMemo(() => ({
         user,
         pricing,
-        demoConfig: DEMO_CONFIG,
+        demoConfig: demoConfig || DEMO_CONFIG,
+        moduleVisibility: moduleVisibility,
         currentPath: location.pathname,
         customKnowledge: [], // Fetched from context
-    }), [location.pathname, pricing, user])
-
-    // Load custom knowledge
-    const { fetchChatbotKnowledge } = useAuth()
+    }), [location.pathname, pricing, user, demoConfig, moduleVisibility])
     useEffect(() => {
         const loadK = async () => {
             if (fetchChatbotKnowledge) {

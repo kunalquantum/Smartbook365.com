@@ -561,6 +561,10 @@ const AdminDashboard = () => {
               <div style={{ marginBottom: 16 }}>
                 <label className="admin-label">Response Body (Markdown supported)</label>
                 <textarea required className="admin-input" rows={4} value={editKnowledge?.body || ''} onChange={e => setEditKnowledge({ ...editKnowledge, body: e.target.value })} />
+                <div style={{ fontSize: '0.65rem', color: 'var(--adm-text3)', marginTop: 4 }}>
+                  Use <b>Dynamic Placeholders</b> to stay in sync with prices: <br/>
+                  <code style={{ color: '#00ffff' }}>{"{{physics_full_price}}"}</code>, <code style={{ color: '#00ffff' }}>{"{{chemistry_chapter_price}}"}</code>, etc.
+                </div>
               </div>
               <div style={{ marginBottom: 16 }}>
                 <label className="admin-label">Tags (comma separated)</label>

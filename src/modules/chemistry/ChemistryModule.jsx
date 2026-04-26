@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { CHAPTERS, TOTAL_TOPICS } from './data/chapters'
 import { useProgress } from './hooks/useProgress'
 import Sidebar from './components/layout/Sidebar'
@@ -19,10 +20,18 @@ const BRANCH_COLOR = {
 }
 
 export default function ChemistryModule({ isDemoMode = false }) {
-    const [activeId, setActiveId] = useState(null)
+    const { "*": path } = useParams()
+    const chapterId = path?.split('/')[0]
+    
+    const [activeId, setActiveId] = useState(chapterId ? Number(chapterId) : null)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const { done, toggle, chapterDone, reset } = useProgress()
     const { checkAccess } = useAuth()
+
+    // Sync with URL changes
+    useEffect(() => {
+        if (chapterId) setActiveId(Number(chapterId))
+    }, [chapterId])
 
     const activeChapter = CHAPTERS.find(c => c.id === activeId)
     const isLocked = activeChapter && !checkAccess('chemistry', activeChapter.id, isDemoMode)

@@ -722,8 +722,11 @@ function subsequenceScore(source, query) {
 
 function buildKnowledgeBase(runtimeContext) {
     const pricing = runtimeContext.pricing || STATIC_PRICING
+    const visibility = runtimeContext.moduleVisibility || {}
 
-    const subjectEntries = SUBJECTS.flatMap((subject) => {
+    const subjectEntries = SUBJECTS
+        .filter(sub => visibility[sub.id] === undefined || visibility[sub.id]?.visible !== false)
+        .flatMap((subject) => {
         const pricingInfo = pricing[subject.id]
         const demoChapterIds = runtimeContext.demoConfig?.[subject.id]?.chapterIds || []
 
@@ -814,11 +817,21 @@ function buildKnowledgeBase(runtimeContext) {
         })
     }
 
+    const replacePricingPlaceholders = (text) => {
+        if (!text) return text;
+        let processed = text;
+        Object.entries(pricing).forEach(([subId, subPricing]) => {
+            processed = processed.replace(new RegExp(`{{${subId}_full_price}}`, 'g'), `₹${subPricing.fullPrice}`);
+            processed = processed.replace(new RegExp(`{{${subId}_chapter_price}}`, 'g'), `₹${subPricing.chapterPrice}`);
+        });
+        return processed;
+    };
+
     const customEntries = (runtimeContext.customKnowledge || []).map(entry => ({
         id: `custom-${entry.id}`,
         title: entry.title,
         tags: entry.tags || [],
-        body: entry.body,
+        body: replacePricingPlaceholders(entry.body),
         faq: entry.faq,
         quickReplies: (entry.quick_replies || []).map(qr => createQuickReply(qr.label, qr.config || { type: 'send_text', text: qr.label })),
     }))
@@ -993,14 +1006,22 @@ function searchKnowledge(inputText, entities, runtimeContext) {
         .slice(0, 4)
 }
 
-function getWorkflowStepDefinition(workflow) {
+function getWorkflowStepDefinition(workflow, runtimeContext) {
     if (!workflow) return null
     const definition = WORKFLOWS[workflow.id]
-    return definition?.steps[workflow.stepIndex] || null
+    const step = definition?.steps[workflow.stepIndex] || null
+    
+    if (step && step.id === 'subject' && runtimeContext?.moduleVisibility) {
+        const visibility = runtimeContext.moduleVisibility
+        const filteredOptions = step.options.filter(opt => visibility[opt.value] === undefined || visibility[opt.value]?.visible !== false)
+        return { ...step, options: filteredOptions }
+    }
+    
+    return step
 }
 
-function buildWorkflowQuickReplies(workflow) {
-    const step = getWorkflowStepDefinition(workflow)
+function buildWorkflowQuickReplies(workflow, runtimeContext) {
+    const step = getWorkflowStepDefinition(workflow, runtimeContext)
     if (!step || step.type !== 'choice') return []
 
     return step.options.map((option) => createQuickReply(option.label, {
@@ -1193,7 +1214,7 @@ function advanceWorkflow(session, inputValue, payload = {}, runtimeContext) {
     }
 
     const definition = WORKFLOWS[workflow.id]
-    const step = getWorkflowStepDefinition(workflow)
+    const step = getWorkflowStepDefinition(workflow, runtimeContext)
     if (!definition || !step) {
         session.workflows.active = null
         return { session, handled: false }
@@ -1206,7 +1227,7 @@ function advanceWorkflow(session, inputValue, payload = {}, runtimeContext) {
             session,
             handled: true,
             clarification: `I need a valid answer for "${step.label}".`,
-            quickReplies: buildWorkflowQuickReplies(workflow),
+            quickReplies: buildWorkflowQuickReplies(workflow, runtimeContext),
         }
     }
 
@@ -1224,9 +1245,9 @@ function advanceWorkflow(session, inputValue, payload = {}, runtimeContext) {
         }
     }
 
-    const nextStep = getWorkflowStepDefinition(workflow)
-    session.ui.workflowCard = summarizeWorkflowProgress(workflow)
-    session.ui.quickReplies = buildWorkflowQuickReplies(workflow)
+    const nextStep = getWorkflowStepDefinition(workflow, runtimeContext)
+    session.ui.workflowCard = summarizeWorkflowProgress(workflow, runtimeContext)
+    session.ui.quickReplies = buildWorkflowQuickReplies(workflow, runtimeContext)
 
     return {
         session,
@@ -1236,7 +1257,7 @@ function advanceWorkflow(session, inputValue, payload = {}, runtimeContext) {
     }
 }
 
-function summarizeWorkflowProgress(workflow) {
+function summarizeWorkflowProgress(workflow, runtimeContext) {
     if (!workflow) return null
     const definition = WORKFLOWS[workflow.id]
     return {
@@ -1244,7 +1265,7 @@ function summarizeWorkflowProgress(workflow) {
         title: definition?.title || workflow.id,
         stepIndex: workflow.stepIndex,
         totalSteps: definition?.steps.length || 0,
-        step: getWorkflowStepDefinition(workflow),
+        step: getWorkflowStepDefinition(workflow, runtimeContext),
         data: workflow.data,
     }
 }
@@ -1276,10 +1297,10 @@ function buildClarificationCandidate(intent, session) {
     }
 }
 
-function buildWorkflowPromptCandidate(session) {
+function buildWorkflowPromptCandidate(session, runtimeContext) {
     const workflow = session.workflows.active
-    const step = getWorkflowStepDefinition(workflow)
-    const quickReplies = buildWorkflowQuickReplies(workflow)
+    const step = getWorkflowStepDefinition(workflow, runtimeContext)
+    const quickReplies = buildWorkflowQuickReplies(workflow, runtimeContext)
 
     return {
         id: `workflow-${workflow.id}`,
@@ -1424,7 +1445,7 @@ export function buildAutocompleteSuggestions(session, inputValue, runtimeContext
 
     const workflow = session.workflows.active
     if (workflow) {
-        const step = getWorkflowStepDefinition(workflow)
+        const step = getWorkflowStepDefinition(workflow, runtimeContext)
         if (step?.type === 'choice') {
             return step.options
                 .filter((option) => option.label.toLowerCase().includes(text))
@@ -1554,7 +1575,7 @@ function processUserMessage(session, inputText, runtimeContext) {
     if (context.requiresClarification) {
         candidates.push(buildClarificationCandidate(context.intent, session))
     } else if (session.workflows.active) {
-        candidates.push(buildWorkflowPromptCandidate(session))
+        candidates.push(buildWorkflowPromptCandidate(session, runtimeContext))
     }
 
     const workflowSeedData = {
@@ -1722,7 +1743,7 @@ export function runPipeline({
             meta: {
                 persona: PERSONAS[nextSession.activePersonaId],
                 intent: nextSession.memory.shortTerm.lastIntent,
-                workflow: summarizeWorkflowProgress(nextSession.workflows.active),
+                workflow: summarizeWorkflowProgress(nextSession.workflows.active, context),
                 notifications: systemResult.notifications,
             },
             effects: systemResult.effects,
@@ -1733,9 +1754,9 @@ export function runPipeline({
         nextSession.workflows.active = nextSession.workflows.suspended
         nextSession.workflows.suspended = null
         nextSession.messages.push(createMessage('system', `WORKFLOW RESUMED -> ${WORKFLOWS[nextSession.workflows.active.id].title.toUpperCase()}`, { isAnimated: false }))
-        nextSession.ui.workflowCard = summarizeWorkflowProgress(nextSession.workflows.active)
-        nextSession.ui.quickReplies = buildWorkflowQuickReplies(nextSession.workflows.active)
-        nextSession.messages.push(createMessage('bot', getWorkflowStepDefinition(nextSession.workflows.active)?.label || 'Continue the workflow.'))
+        nextSession.ui.workflowCard = summarizeWorkflowProgress(nextSession.workflows.active, context)
+        nextSession.ui.quickReplies = buildWorkflowQuickReplies(nextSession.workflows.active, context)
+        nextSession.messages.push(createMessage('bot', getWorkflowStepDefinition(nextSession.workflows.active, context)?.label || 'Continue the workflow.'))
         nextSession.updatedAt = new Date().toISOString()
         return {
             session: nextSession,
@@ -1743,7 +1764,7 @@ export function runPipeline({
             meta: {
                 persona: PERSONAS[nextSession.activePersonaId],
                 intent: nextSession.memory.shortTerm.lastIntent,
-                workflow: summarizeWorkflowProgress(nextSession.workflows.active),
+                workflow: summarizeWorkflowProgress(nextSession.workflows.active, context),
             },
             effects: [],
         }
@@ -1780,7 +1801,7 @@ export function runPipeline({
             meta: {
                 persona: PERSONAS[nextSession.activePersonaId],
                 intent: nextSession.memory.shortTerm.lastIntent,
-                workflow: summarizeWorkflowProgress(nextSession.workflows.active),
+                workflow: summarizeWorkflowProgress(nextSession.workflows.active, context),
             },
             effects: [],
         }
@@ -1800,14 +1821,14 @@ export function runPipeline({
             nextSession.messages.push(createMessage('bot', workflowAdvance.clarification))
         }
         nextSession.ui.quickReplies = workflowAdvance.quickReplies || nextSession.ui.quickReplies
-        nextSession.ui.workflowCard = summarizeWorkflowProgress(nextSession.workflows.active)
+        nextSession.ui.workflowCard = summarizeWorkflowProgress(nextSession.workflows.active, context)
         return {
             session: nextSession,
             agentLog: [{ name: 'WORKFLOW_CONTROLLER', status: 'COMPLETE', score: nextSession.workflows.active?.id || 'completed' }],
             meta: {
                 persona: PERSONAS[nextSession.activePersonaId],
                 intent: nextSession.memory.shortTerm.lastIntent,
-                workflow: summarizeWorkflowProgress(nextSession.workflows.active),
+                workflow: summarizeWorkflowProgress(nextSession.workflows.active, context),
             },
             effects: workflowAdvance.effects || [],
         }
@@ -1824,7 +1845,7 @@ export function runPipeline({
         meta: {
             persona: PERSONAS[nextSession.activePersonaId],
             intent: nextSession.memory.shortTerm.lastIntent,
-            workflow: summarizeWorkflowProgress(nextSession.workflows.active),
+            workflow: summarizeWorkflowProgress(nextSession.workflows.active, context),
         },
         effects: [],
     }
