@@ -109,17 +109,39 @@ const SubscriptionPage = () => {
             <h1 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '8px' }}>Build Your Smartbook</h1>
             <p style={{ color: 'var(--text3)' }}>Select the modules you want to unlock</p>
           </div>
-          <Link to="/" style={{ 
-            textDecoration: 'none', 
-            color: 'var(--text2)', 
-            fontSize: '14px', 
-            fontWeight: '600',
-            padding: '10px 20px',
-            border: '1px solid var(--border)',
-            borderRadius: '12px'
-          }}>
-            Back to Home
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            {user ? (
+              <Link to="/profile" className="user-profile-badge" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-1)', textDecoration: 'none' }}>
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '0.9rem', color: '#000' }}>
+                  {user.name?.charAt(0).toUpperCase() || 'U'}
+                </div>
+                <span style={{ fontSize: '1rem', fontWeight: 500 }}>{user.name}</span>
+              </Link>
+            ) : (
+              <Link to="/login" style={{ 
+                textDecoration: 'none', 
+                color: 'var(--text2)', 
+                fontSize: '14px', 
+                fontWeight: '600',
+                padding: '10px 20px',
+                border: '1px solid var(--border)',
+                borderRadius: '12px'
+              }}>
+                Login
+              </Link>
+            )}
+            <Link to="/" style={{ 
+              textDecoration: 'none', 
+              color: 'var(--text2)', 
+              fontSize: '14px', 
+              fontWeight: '600',
+              padding: '10px 20px',
+              border: '1px solid var(--border)',
+              borderRadius: '12px'
+            }}>
+              Home
+            </Link>
+          </div>
         </header>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '32px', alignItems: 'start' }}>

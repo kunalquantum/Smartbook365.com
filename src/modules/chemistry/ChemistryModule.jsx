@@ -22,16 +22,10 @@ export default function ChemistryModule({ isDemoMode = false }) {
     const [activeId, setActiveId] = useState(null)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const { done, toggle, chapterDone, reset } = useProgress()
-    const { hasAccess } = useAuth()
+    const { checkAccess } = useAuth()
 
     const activeChapter = CHAPTERS.find(c => c.id === activeId)
-    
-    // Logic: In demo mode, only demo chapters are unlocked. In normal mode, hasAccess determines it.
-    const isLocked = activeChapter && (
-        isDemoMode 
-            ? !isDemoChapter('chemistry', activeChapter.id)
-            : !hasAccess('chemistry', activeChapter.id)
-    )
+    const isLocked = activeChapter && !checkAccess('chemistry', activeChapter.id, isDemoMode)
 
     return (
         <div className="chemistry-theme">

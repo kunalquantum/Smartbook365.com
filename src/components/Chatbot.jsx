@@ -86,7 +86,20 @@ const Chatbot = ({ isOpen, onClose }) => {
         pricing,
         demoConfig: DEMO_CONFIG,
         currentPath: location.pathname,
+        customKnowledge: [], // Fetched from context
     }), [location.pathname, pricing, user])
+
+    // Load custom knowledge
+    const { fetchChatbotKnowledge } = useAuth()
+    useEffect(() => {
+        const loadK = async () => {
+            if (fetchChatbotKnowledge) {
+                const k = await fetchChatbotKnowledge()
+                runtimeContext.customKnowledge = k || []
+            }
+        }
+        loadK()
+    }, [fetchChatbotKnowledge, runtimeContext])
 
     const activeSession = sessions.find((session) => session.id === activeSessionId) || sessions[0]
     activeSessionRef.current = activeSession || null

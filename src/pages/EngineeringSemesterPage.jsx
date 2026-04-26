@@ -5,10 +5,21 @@ import {
     ENGINEERING_SUBJECTS,
     ENGINEERING_SEMESTERS 
 } from '../data/learningCatalog';
+import { useAuth } from '../context/AuthContext';
+import logoImg from '../assets/logo-removebg-preview.png';
 import '../styles/landing.css';
 
 const EngineeringSemesterPage = () => {
     const { departmentId, semesterId } = useParams();
+    const [scrolled, setScrolled] = React.useState(false);
+    const { user, logout } = useAuth();
+    
+    React.useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 24);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     const deptId = departmentId;
     const semNum = parseInt(semesterId.replace('sem-', ''));
     
@@ -27,6 +38,38 @@ const EngineeringSemesterPage = () => {
 
     return (
         <div className="landing-page domain-page">
+            <header id="main-header" className={scrolled ? 'scrolled' : ''}>
+                <nav className="container">
+                    <Link to="/" className="logo">
+                        <img src={logoImg} alt="Smartbook 365 Logo" className="logo-img" />
+                        <span className="logo-text">Smartbook</span>
+                    </Link>
+
+                    <ul className="nav-links">
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to={`/domains/engineering/${deptId}`}>Semesters</Link></li>
+                        {user ? (
+                            <>
+                                <li>
+                                    <Link to="/profile" className="user-profile-badge" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-1)', textDecoration: 'none' }}>
+                                        <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '0.8rem', color: '#000' }}>
+                                            {user.name?.charAt(0).toUpperCase() || 'U'}
+                                        </div>
+                                        <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>{user.name}</span>
+                                    </Link>
+                                </li>
+                                {user.role === 'admin' ? (
+                                    <li><Link to="/admin" className="btn btn-outline" style={{ borderColor: '#ff00ff', color: '#ff00ff', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>ADMIN DASH</Link></li>
+                                ) : (
+                                    <li><button onClick={logout} className="btn btn-outline" style={{ borderColor: 'var(--text-3)', color: 'var(--text-3)', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>LOGOUT</button></li>
+                                )}
+                            </>
+                        ) : (
+                            <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
+                        )}
+                    </ul>
+                </nav>
+            </header>
             <div className="domain-page-shell">
                 <section className="domain-hero-section" style={{ minHeight: '40vh', alignItems: 'center' }}>
                     <div className="container">

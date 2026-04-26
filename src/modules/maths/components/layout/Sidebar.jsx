@@ -5,7 +5,7 @@ import { chapters } from '../../data/chapters';
 import { useAuth } from '../../../../context/AuthContext';
 
 export const Sidebar = ({ activeChapter, onSelectChapter, isOpen }) => {
-  const { hasAccess } = useAuth();
+  const { checkAccess } = useAuth();
   return (
     <>
       {/* Mobile Backdrop */}
@@ -41,7 +41,7 @@ export const Sidebar = ({ activeChapter, onSelectChapter, isOpen }) => {
         <div style={{ flex: 1, overflowY: 'auto', padding: '0 12px 24px 12px' }}>
           {chapters.map((ch, idx) => {
             const isActive = ch.id === activeChapter;
-            const locked = !hasAccess('maths', Number(ch.id));
+            const locked = !checkAccess('maths', ch.id);
             
             return (
               <motion.button

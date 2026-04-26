@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../../../context/AuthContext'
 
 export default function Sidebar({ chapters, activeId, onSelect, chapterDone, totalDone, isOpen }) {
-    const { hasAccess } = useAuth()
+    const { checkAccess } = useAuth()
     const globalPct = Math.round((totalDone / TOTAL_TOPICS) * 100)
 
     return (
@@ -57,7 +57,7 @@ export default function Sidebar({ chapters, activeId, onSelect, chapterDone, tot
                     {chapters.map(ch => {
                         const done = chapterDone(ch.id, ch.topics.length)
                         const active = ch.id === activeId
-                        const locked = !hasAccess('physics', ch.id)
+                        const locked = !checkAccess('physics', ch.id)
 
                         return (
                             <div

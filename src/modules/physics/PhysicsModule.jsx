@@ -14,14 +14,10 @@ export default function PhysicsModule({ isDemoMode = false }) {
   const [activeId, setActiveId] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { done, toggle, chapterDone, reset } = useProgress()
-  const { hasAccess } = useAuth()
+  const { checkAccess } = useAuth()
 
   const activeChapter = CHAPTERS.find(c => c.id === activeId)
-  const isLocked = activeChapter && (
-    isDemoMode 
-        ? !isDemoChapter('physics', activeChapter.id)
-        : !hasAccess('physics', activeChapter.id)
-  )
+  const isLocked = activeChapter && !checkAccess('physics', activeChapter.id, isDemoMode)
 
 
   return (

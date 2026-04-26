@@ -13,13 +13,11 @@ import { isDemoChapter } from '../../config/demoConfig';
 function MathsModule({ isDemoMode = false }) {
   const [activeChapter, setActiveChapter] = useState(isDemoMode ? '2' : '1');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { hasAccess } = useAuth();
+  const { checkAccess } = useAuth();
 
   const chapterData = chapters.find(ch => ch.id === activeChapter);
   
-  const isLocked = isDemoMode 
-    ? !isDemoChapter('maths', activeChapter)
-    : !hasAccess('maths', Number(activeChapter));
+  const isLocked = !checkAccess('maths', activeChapter, isDemoMode);
 
 
   return (

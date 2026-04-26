@@ -1,21 +1,28 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/landing.css';
-import Chatbot from '../components/Chatbot';
 import logoImg from '../assets/logo-removebg-preview.png';
 import { DOMAIN_CATALOG } from '../data/learningCatalog';
+import { useAuth } from '../context/AuthContext';
+
+// Lazy load the Chatbot — it's heavy and not needed for initial paint
+const Chatbot = React.lazy(() => import('../components/Chatbot'));
 
 const LandingPage = () => {
     const [scrolled, setScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-    const [followerPos, setFollowerPos] = useState({ x: 0, y: 0 });
     const [scrollWidth, setScrollWidth] = useState(0);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isRoaming, setIsRoaming] = useState(false);
     const [showBubble, setShowBubble] = useState(false);
     const containerRef = useRef(null);
+
+    // Refs for cursor — avoids state updates on every frame
+    const cursorRef = useRef(null);
+    const followerRef = useRef(null);
+    const mouseRef = useRef({ x: 0, y: 0 });
+    const cursorPosRef = useRef({ x: 0, y: 0 });
+    const followerPosRef = useRef({ x: 0, y: 0 });
 
     // Close menu on resize
     useEffect(() => {
@@ -98,38 +105,64 @@ const LandingPage = () => {
         sequence();
     }, []);
 
-    // 3. Custom Cursor
+    // 3. Custom Cursor — DOM-driven, no React state updates per frame
     useEffect(() => {
         const handleMouseMove = (e) => {
-            setMousePos({ x: e.clientX, y: e.clientY });
+            mouseRef.current = { x: e.clientX, y: e.clientY };
+        };
+
+        let animationFrame;
+        const animate = () => {
+            const mouse = mouseRef.current;
+            const cp = cursorPosRef.current;
+            const fp = followerPosRef.current;
+
+            cp.x += (mouse.x - cp.x) * 0.15;
+            cp.y += (mouse.y - cp.y) * 0.15;
+            fp.x += (mouse.x - fp.x) * 0.1;
+            fp.y += (mouse.y - fp.y) * 0.1;
+
+            if (cursorRef.current) {
+                cursorRef.current.style.transform = `translate3d(${cp.x}px, ${cp.y}px, 0)`;
+            }
+            if (followerRef.current) {
+                followerRef.current.style.transform = `translate3d(${fp.x - 14}px, ${fp.y - 14}px, 0)`;
+            }
+
+            animationFrame = requestAnimationFrame(animate);
         };
 
         window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        animate();
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            cancelAnimationFrame(animationFrame);
+        };
     }, []);
 
-    useEffect(() => {
-        let animationFrame;
-        const animate = () => {
-            setCursorPos(prev => ({
-                x: prev.x + (mousePos.x - prev.x) * 0.15,
-                y: prev.y + (mousePos.y - prev.y) * 0.15
-            }));
-            setFollowerPos(prev => ({
-                x: prev.x + (mousePos.x - prev.x) * 0.1,
-                y: prev.y + (mousePos.y - prev.y) * 0.1
-            }));
-            animationFrame = requestAnimationFrame(animate);
-        };
-        animate();
-        return () => cancelAnimationFrame(animationFrame);
-    }, [mousePos]);
+    const openChat = useCallback(() => setIsChatOpen(true), []);
+    const closeChat = useCallback(() => setIsChatOpen(false), []);
+
+    // Mock admin login for testing
+    const { login, user, logout, moduleVisibility } = useAuth();
+    const nav = useNavigate();
+    const handleMockAdmin = async () => {
+        try {
+            await login('admin', 'admin');
+            nav('/admin');
+        } catch {
+            // fallback: set admin directly and navigate
+            localStorage.setItem('sb_user', JSON.stringify({ id: 0, name: 'admin', username: 'admin', role: 'admin', subscriptions: { physics: 'all', chemistry: 'all', maths: 'all' } }));
+            window.location.href = '/admin';
+        }
+    };
 
     return (
         <div className="landing-page">
             <div id="scroll-progress" style={{ width: `${scrollWidth}%` }}></div>
-            <div id="custom-cursor" style={{ transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0)` }}></div>
-            <div id="cursor-follower" style={{ transform: `translate3d(${followerPos.x - 14}px, ${followerPos.y - 14}px, 0)` }}></div>
+            <div id="custom-cursor" ref={cursorRef}></div>
+            <div id="cursor-follower" ref={followerRef}></div>
 
             <header id="main-header" className={`${scrolled ? 'scrolled' : ''} ${isMenuOpen ? 'menu-active' : ''}`}>
                 <nav className="container">
@@ -141,7 +174,28 @@ const LandingPage = () => {
                     <ul className="nav-links">
                         <li><a href="#features">Experience</a></li>
                         <li><a href="#domains">Domains</a></li>
-                        <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
+                        {user ? (
+                            <>
+                                <li>
+                                    <Link to="/profile" className="user-profile-badge" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-1)', textDecoration: 'none' }}>
+                                        <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '0.8rem', color: '#000' }}>
+                                            {user.name?.charAt(0).toUpperCase() || 'U'}
+                                        </div>
+                                        <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>{user.name}</span>
+                                    </Link>
+                                </li>
+                                {user.role === 'admin' ? (
+                                    <li><Link to="/admin" className="btn btn-outline" style={{ borderColor: '#ff00ff', color: '#ff00ff', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>ADMIN DASH</Link></li>
+                                ) : (
+                                    <li><button onClick={logout} className="btn btn-outline" style={{ borderColor: 'var(--text-3)', color: 'var(--text-3)', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>LOGOUT</button></li>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
+                                <li><button onClick={handleMockAdmin} className="btn btn-outline" style={{ borderColor: '#ff00ff', color: '#ff00ff', fontSize: '0.6rem', padding: '0.4rem 1.2rem', minWidth: 'auto' }}>⚡ ADMIN</button></li>
+                            </>
+                        )}
                     </ul>
                 </nav>
             </header>
@@ -191,7 +245,15 @@ const LandingPage = () => {
                             <p className="reveal delay-1">ENTER THROUGH THE DOMAIN LAYER, THEN DROP INTO THE LIVE SUBJECT STACK.</p>
                         </div>
                         <div className="domain-grid">
-                            {DOMAIN_CATALOG.map((domain, index) => (
+                            {DOMAIN_CATALOG.filter(domain => {
+                                // Admins see everything
+                                if (user?.role === 'admin') return true;
+                                // Otherwise respect moduleVisibility settings
+                                if (moduleVisibility && moduleVisibility[domain.id]) {
+                                    return moduleVisibility[domain.id].visible !== false;
+                                }
+                                return true; // default to visible
+                            }).map((domain, index) => (
                                 <Link
                                     key={domain.id}
                                     to={`/domains/${domain.id}`}
@@ -199,11 +261,15 @@ const LandingPage = () => {
                                     style={{
                                         '--domain-accent': domain.accent,
                                         '--domain-glow': domain.glow,
+                                        border: (moduleVisibility?.[domain.id]?.visible === false) ? '1px dashed #ff00ff' : undefined,
+                                        opacity: (moduleVisibility?.[domain.id]?.visible === false) ? 0.6 : 1
                                     }}
                                 >
                                     <div className="domain-card-head">
                                         <span className="domain-code">{domain.code}</span>
-                                        <span className="domain-status">{domain.status}</span>
+                                        <span className="domain-status">
+                                            {moduleVisibility?.[domain.id]?.visible === false ? 'HIDDEN' : domain.status}
+                                        </span>
                                     </div>
 
                                     <div className="domain-card-body">
@@ -254,7 +320,7 @@ const LandingPage = () => {
             {/* Chatbot Floating Button / Mascot */}
             <div 
                 className={`chatbot-fab ${isChatOpen ? 'hidden' : ''} ${isRoaming ? 'roaming' : ''}`} 
-                onClick={() => setIsChatOpen(true)}
+                onClick={openChat}
             >
                 <div className="chatbot-inner">
                     <img src={logoImg} alt="Chatbot Support" />
@@ -268,8 +334,12 @@ const LandingPage = () => {
                 )}
             </div>
 
-            {/* Chatbot Window */}
-            <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+            {/* Chatbot Window — lazy loaded only when opened */}
+            {isChatOpen && (
+                <React.Suspense fallback={null}>
+                    <Chatbot isOpen={isChatOpen} onClose={closeChat} />
+                </React.Suspense>
+            )}
         </div>
     );
 };

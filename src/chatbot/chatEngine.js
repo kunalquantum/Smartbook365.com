@@ -814,7 +814,16 @@ function buildKnowledgeBase(runtimeContext) {
         })
     }
 
-    return [...subjectEntries, ...sharedEntries]
+    const customEntries = (runtimeContext.customKnowledge || []).map(entry => ({
+        id: `custom-${entry.id}`,
+        title: entry.title,
+        tags: entry.tags || [],
+        body: entry.body,
+        faq: entry.faq,
+        quickReplies: (entry.quick_replies || []).map(qr => createQuickReply(qr.label, qr.config || { type: 'send_text', text: qr.label })),
+    }))
+
+    return [...customEntries, ...subjectEntries, ...sharedEntries]
 }
 
 function scoreIntent(intent, lowerInput, tokens, entities, runtimeContext) {

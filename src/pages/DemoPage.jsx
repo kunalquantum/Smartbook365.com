@@ -1,31 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logoImg from '../assets/logo-removebg-preview.png';
-import { DEMO_CONFIG } from '../config/demoConfig';
+import { DEMO_CONFIG as STATIC_DEMO } from '../config/demoConfig';
 import '../styles/auth.css';
 
-const SUBJECTS = [
-    {
-        key: 'chemistry',
-        icon: '⚗️',
-        route: '/demo/chemistry',
-        ...DEMO_CONFIG.chemistry
-    },
-    {
-        key: 'physics',
-        icon: '⚛️',
-        route: '/demo/physics',
-        ...DEMO_CONFIG.physics
-    },
-    {
-        key: 'maths',
-        icon: '📐',
-        route: '/demo/maths',
-        ...DEMO_CONFIG.maths
-    }
-];
-
 const DemoPage = () => {
+    const [demoConf, setDemoConf] = useState(STATIC_DEMO);
+
+    // Load dynamic demo config (admin may have changed it)
+    useEffect(() => {
+        const loadDynamic = async () => {
+            // Try localStorage first (admin saves here)
+            try {
+                const local = localStorage.getItem('sb_demo_config');
+                if (local) { setDemoConf(JSON.parse(local)); return; }
+            } catch { /* ignore */ }
+        };
+        loadDynamic();
+    }, []);
+
+    const SUBJECTS = [
+        { key: 'chemistry', icon: '⚗️', route: '/demo/chemistry', ...(demoConf.chemistry || STATIC_DEMO.chemistry) },
+        { key: 'physics', icon: '⚛️', route: '/demo/physics', ...(demoConf.physics || STATIC_DEMO.physics) },
+        { key: 'maths', icon: '📐', route: '/demo/maths', ...(demoConf.maths || STATIC_DEMO.maths) },
+    ];
+
+    const totalFree = SUBJECTS.reduce((s, sub) => s + (sub.chapterIds?.length || 0), 0);
+
     return (
         <div className="demo-page">
             <div className="demo-scanlines"></div>
@@ -61,7 +62,7 @@ const DemoPage = () => {
                         <h2>{subject.label}</h2>
                         <p>{subject.description}</p>
                         <div className="demo-card-meta">
-                            {subject.chapterIds.length} FREE {subject.chapterIds.length === 1 ? 'CHAPTER' : 'CHAPTERS'}
+                            {subject.chapterIds?.length || 0} FREE {(subject.chapterIds?.length || 0) === 1 ? 'CHAPTER' : 'CHAPTERS'}
                         </div>
                         <div className="demo-card-cta">EXPLORE FREE →</div>
                     </Link>
@@ -70,7 +71,7 @@ const DemoPage = () => {
 
             {/* Upgrade Banner */}
             <div className="demo-upgrade">
-                <p>Want access to <strong>all 48 chapters</strong> across 3 subjects?</p>
+                <p>Want access to <strong>all chapters</strong> across {SUBJECTS.length} subjects?</p>
                 <Link to="/login" className="demo-upgrade-btn">UNLOCK FULL ACCESS</Link>
             </div>
 
@@ -133,6 +134,7 @@ const DemoPage = () => {
                     margin-bottom: 48px;
                     position: relative;
                     z-index: 1;
+                    padding: 0 16px;
                 }
 
                 .demo-logo {
@@ -177,6 +179,7 @@ const DemoPage = () => {
                     font-size: 0.85rem;
                     max-width: 520px;
                     line-height: 1.7;
+                    margin: 0 auto;
                 }
 
                 .demo-grid {
@@ -188,6 +191,7 @@ const DemoPage = () => {
                     position: relative;
                     z-index: 1;
                     margin-bottom: 48px;
+                    padding: 0 16px;
                 }
 
                 .demo-card {
@@ -266,6 +270,7 @@ const DemoPage = () => {
                     text-align: center;
                     position: relative;
                     z-index: 1;
+                    padding: 0 16px;
                 }
 
                 .demo-upgrade p {
@@ -292,15 +297,27 @@ const DemoPage = () => {
                     transform: translateY(-2px);
                 }
 
+                /* ═══ MOBILE RESPONSIVE ═══ */
                 @media (max-width: 768px) {
-                    .demo-grid { grid-template-columns: 1fr; }
-                    .demo-header h1 { font-size: 1.8rem; }
-                    .demo-page { padding: 50px 16px 60px; }
+                    .demo-page { padding: 50px 12px 60px; }
+                    .demo-grid { grid-template-columns: 1fr; gap: 16px; }
+                    .demo-header h1 { font-size: 1.6rem; letter-spacing: 0.08rem; }
+                    .demo-subtitle { font-size: 0.5rem; letter-spacing: 0.1rem; }
+                    .demo-desc { font-size: 0.78rem; }
+                    .demo-badge { font-size: 0.5rem; padding: 4px 10px; }
+                    .demo-logo { width: 50px; }
+                    .demo-card { padding: 24px 20px; }
+                    .demo-card-icon { font-size: 2rem; }
+                    .demo-card h2 { font-size: 0.85rem; }
+                    .demo-upgrade-btn { font-size: 0.6rem; padding: 10px 20px; }
                 }
 
                 @media (max-width: 480px) {
-                    .demo-header h1 { font-size: 1.4rem; }
-                    .demo-card { padding: 24px 20px; }
+                    .demo-header h1 { font-size: 1.3rem; }
+                    .demo-card { padding: 20px 16px; }
+                    .demo-card p { font-size: 0.75rem; }
+                    .demo-back { top: 12px; left: 12px; }
+                    .demo-back a { font-size: 0.5rem; }
                 }
             `}</style>
         </div>

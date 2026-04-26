@@ -38,36 +38,72 @@ export const AuthProvider = ({ children }) => {
         .eq('key', 'pricing')
         .single();
       
-      if (data && data.value) {
+      if (!error && data?.value) {
         setPricing(data.value);
+        return;
       }
     } catch (err) {
-      console.log('Using static pricing (dynamic table not ready)');
+      console.log('Supabase unreachable for pricing');
     }
+    // Fallback: localStorage
+    try { const local = localStorage.getItem('sb_pricing'); if (local) setPricing(JSON.parse(local)); } catch { /* use static */ }
   };
 
   const updatePricing = async (newPricing) => {
     if (user?.role !== 'admin') return;
+    localStorage.setItem('sb_pricing', JSON.stringify(newPricing));
+    setPricing(newPricing);
     try {
       const { error } = await supabase
         .from('smartbook_settings')
         .upsert({ key: 'pricing', value: newPricing });
-      
       if (error) throw error;
-      setPricing(newPricing);
       return true;
     } catch (err) {
-      console.error('Error updating pricing:', err.message);
-      return false;
+      console.log('Supabase unreachable — pricing saved to localStorage');
+      return true;
     }
   };
 
+  const [moduleVisibility, setModuleVisibility] = useState(null);
+  const [demoConfig, setDemoConfig] = useState(null);
+
   useEffect(() => {
-    const savedUser = localStorage.getItem('sb_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setLoading(false);
+    const init = async () => {
+      const savedUser = localStorage.getItem('sb_user');
+      if (savedUser) {
+        const parsed = JSON.parse(savedUser);
+        setUser(parsed);
+        
+        // Live Role Verification: Ensure admin role is still valid/detected
+        try {
+          const { data, error } = await supabase
+            .from('Smartbook365Users')
+            .select('role, subscriptions')
+            .eq('id', parsed.id)
+            .single();
+          
+          if (!error && data) {
+            const updated = { 
+              ...parsed, 
+              role: data.role || (parsed.username === 'admin' ? 'admin' : 'user'),
+              subscriptions: data.subscriptions || parsed.subscriptions
+            };
+            setUser(updated);
+            localStorage.setItem('sb_user', JSON.stringify(updated));
+          }
+        } catch (e) { /* fallback to saved session if offline */ }
+      }
+      
+      // Load global access settings
+      const vis = await fetchModuleVisibility();
+      const demo = await fetchDemoConfig();
+      if (vis) setModuleVisibility(vis);
+      if (demo) setDemoConfig(demo);
+      
+      setLoading(false);
+    };
+    init();
   }, []);
 
   const login = async (username, password) => {
@@ -87,16 +123,16 @@ export const AuthProvider = ({ children }) => {
 
       const data = users[0];
 
+      const isAdmin = data.role === 'admin' || data.username === 'admin' || data.email === 'admin@smartbook.com';
+
       // Prepare user object with subscriptions
-      // We assume data might have a 'subscriptions' column (jsonb)
-      // If not, we use the default ones
       const userProfile = {
         id: data.id,
         name: data.username,
         username: data.username,
-        email: `${data.username}@smartbook.com`, // Fallback for email-based UI
-        role: data.role || (data.username === 'admin' ? 'admin' : 'user'),
-        subscriptions: data.subscriptions || ( (data.role === 'admin' || data.username === 'admin') ? {
+        email: data.email || `${data.username}@smartbook.com`,
+        role: isAdmin ? 'admin' : (data.role || 'user'),
+        subscriptions: data.subscriptions || (isAdmin ? {
           physics: 'all',
           chemistry: 'all',
           maths: 'all'
@@ -119,14 +155,43 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('sb_user');
   };
 
-  const hasAccess = (subject, chapterId = null) => {
+  /**
+   * Unified Access Check (The "Access Layer")
+   * @param {string} subject - physics, chemistry, etc.
+   * @param {string|number} chapterId - specific chapter ID
+   * @param {boolean} isDemoRoute - whether we are on a /demo/ path
+   */
+  const checkAccess = (subject, chapterId = null, isDemoRoute = false) => {
+    // 1. Admin Bypass - Absolute override
+    if (user?.role === 'admin') return true;
+
+    // 2. Demo Route Override
+    // If we are specifically on a demo route, we only check if the chapter is in demo config
+    if (isDemoRoute) {
+      const demoChapters = demoConfig?.[subject]?.chapterIds || [];
+      return demoChapters.includes(Number(chapterId)) || demoChapters.includes(String(chapterId));
+    }
+
+    // 3. Subscription Check
     if (!user) return false;
-    const sub = user.subscriptions[subject];
+    const sub = user.subscriptions?.[subject];
     if (!sub) return false;
     if (sub === 'all') return true;
-    if (chapterId === null) return sub.length > 0;
-    return sub.includes(Number(chapterId));
+    
+    // Check specific chapter ID if provided
+    if (chapterId !== null) {
+      const hasSub = Array.isArray(sub) && (sub.includes(Number(chapterId)) || sub.includes(String(chapterId)));
+      if (hasSub) return true;
+      
+      // Also check if this is a demo chapter (even in standard mode, demo chapters are free)
+      const demoChapters = demoConfig?.[subject]?.chapterIds || [];
+      return demoChapters.includes(Number(chapterId)) || demoChapters.includes(String(chapterId));
+    }
+
+    return Array.isArray(sub) && sub.length > 0;
   };
+
+  const hasAccess = (subject, chapterId = null) => checkAccess(subject, chapterId);
 
   const fetchUsers = async () => {
     if (user?.role !== 'admin') return [];
@@ -174,18 +239,165 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteUser = async (userId) => {
+    if (user?.role !== 'admin') return false;
+    try {
+      const { error } = await supabase
+        .from('Smartbook365Users')
+        .delete()
+        .eq('id', userId);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error deleting user:', err.message);
+      return false;
+    }
+  };
+
+  const fetchModuleVisibility = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('smartbook_settings')
+        .select('*')
+        .eq('key', 'module_visibility')
+        .single();
+      if (!error && data?.value) return data.value;
+    } catch { /* supabase unreachable */ }
+    // Fallback: localStorage
+    try { const local = localStorage.getItem('sb_module_visibility'); return local ? JSON.parse(local) : null; } catch { return null; }
+  };
+
+  const updateModuleVisibility = async (config) => {
+    if (user?.role !== 'admin') return false;
+    // Update local state for immediate feedback
+    setModuleVisibility(config);
+    // Always save to localStorage as fallback
+    localStorage.setItem('sb_module_visibility', JSON.stringify(config));
+    try {
+      const { error } = await supabase
+        .from('smartbook_settings')
+        .upsert({ key: 'module_visibility', value: config });
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.log('Supabase unreachable — saved to localStorage instead');
+      return true; // still succeeds via localStorage
+    }
+  };
+
+  const fetchDemoConfig = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('smartbook_settings')
+        .select('*')
+        .eq('key', 'demo_config')
+        .single();
+      if (!error && data?.value) return data.value;
+    } catch { /* supabase unreachable */ }
+    // Fallback: localStorage
+    try { const local = localStorage.getItem('sb_demo_config'); return local ? JSON.parse(local) : null; } catch { return null; }
+  };
+
+  const updateDemoConfig = async (config) => {
+    if (user?.role !== 'admin') return false;
+    // Update local state for immediate feedback
+    setDemoConfig(config);
+    // Always save to localStorage as fallback
+    localStorage.setItem('sb_demo_config', JSON.stringify(config));
+    try {
+      const { error } = await supabase
+        .from('smartbook_settings')
+        .upsert({ key: 'demo_config', value: config });
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.log('Supabase unreachable — saved to localStorage instead');
+      return true; // still succeeds via localStorage
+    }
+  };
+
+  const fetchChatbotKnowledge = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('smartbook_chatbot_knowledge')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data;
+    } catch (err) {
+      console.log('Supabase unreachable for chatbot knowledge');
+      return [];
+    }
+  };
+
+  const addChatbotKnowledge = async (entry) => {
+    if (user?.role !== 'admin') return false;
+    try {
+      const { error } = await supabase
+        .from('smartbook_chatbot_knowledge')
+        .insert([entry]);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error adding knowledge:', err.message);
+      return false;
+    }
+  };
+
+  const updateChatbotKnowledge = async (id, updates) => {
+    if (user?.role !== 'admin') return false;
+    try {
+      const { error } = await supabase
+        .from('smartbook_chatbot_knowledge')
+        .update(updates)
+        .eq('id', id);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error updating knowledge:', err.message);
+      return false;
+    }
+  };
+
+  const deleteChatbotKnowledge = async (id) => {
+    if (user?.role !== 'admin') return false;
+    try {
+      const { error } = await supabase
+        .from('smartbook_chatbot_knowledge')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error deleting knowledge:', err.message);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ 
       user, 
       login, 
       logout, 
       hasAccess, 
+      checkAccess,
       loading, 
       fetchUsers, 
       updateSubscriptions,
       addNewUser,
+      deleteUser,
       pricing,
-      updatePricing
+      updatePricing,
+      moduleVisibility,
+      fetchModuleVisibility,
+      updateModuleVisibility,
+      demoConfig,
+      fetchDemoConfig,
+      updateDemoConfig,
+      fetchChatbotKnowledge,
+      addChatbotKnowledge,
+      updateChatbotKnowledge,
+      deleteChatbotKnowledge,
     }}>
       {children}
     </AuthContext.Provider>
