@@ -1,0 +1,8 @@
+.mc-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
+.mc-right { display: flex; flex-direction: column; gap: 16px; }
+.mc-summary { display: flex; flex-direction: column; gap: 4px; }
+.mc-mini-row { display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+
+@media (max-width: 900px) {
+  .mc-grid { grid-template-columns: 1fr; }
+}

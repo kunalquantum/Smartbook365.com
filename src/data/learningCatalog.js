@@ -265,6 +265,59 @@ export function getSoftwarePlacementTrackById(trackId) {
     return SOFTWARE_PLACEMENT_TRACKS.find((track) => track.id === trackId) || null
 }
 
+export const COMMERCE_TRACKS = [
+    {
+        id: 'accounts',
+        title: 'Accounts',
+        code: 'Trk 01',
+        summary: 'Financial ledgers, asset depreciation, venture structures, and core accounting logic.',
+        status: 'Track Live',
+        accent: '#f59e0b',
+        glow: 'rgba(245, 158, 11, 0.18)',
+        highlights: ['Financial accounting', 'Asset depreciation', 'Venture systems'],
+        route: '/domains/commerce/accounts'
+    }
+]
+
+export function getCommerceTrackById(trackId) {
+    return COMMERCE_TRACKS.find((track) => track.id === trackId) || null
+}
+
+export const COMMERCE_ACCOUNTS_LEVELS = [
+    {
+        id: '11th',
+        title: '11th Accounts',
+        code: 'Level 01',
+        copy: 'Foundations of commerce, accounting logic, and financial statements.',
+        subjects: [
+            {
+                id: 'accounts-11',
+                title: 'Accounts 11th Module',
+                code: 'ACC-11',
+                description: 'Core concepts including financial statements, depreciation, and fundamental accounting entries.',
+                image: mathsImg, // using mathsImg placeholder since it involves math
+                route: '/commerce/accounts/11th',
+            }
+        ]
+    },
+    {
+        id: 'advanced',
+        title: 'Advanced Accounts',
+        code: 'Level 02',
+        copy: 'Advanced accounting, cost accounting, and detailed financial analysis.',
+        subjects: [
+            {
+                id: 'accounts-advanced',
+                title: 'Advanced Accounts Module',
+                code: 'ACC-ADV',
+                description: 'In-depth topics including cash flow, ratio analysis, standard costing, and budgeting.',
+                image: physicsImg, // using physicsImg placeholder
+                route: '/commerce/accounts/advanced',
+            }
+        ]
+    }
+]
+
 export const ENGINEERING_SUBJECTS = {
     'computer-engineering': {
         4: [

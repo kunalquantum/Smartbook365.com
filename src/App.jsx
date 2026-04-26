@@ -19,6 +19,9 @@ const MathsModule = lazy(() => import('./modules/maths/MathsModule'));
 const PhysicsModule = lazy(() => import('./modules/physics/PhysicsModule'));
 const Microprocessor8085Module = lazy(() => import('./modules/engineering/microprocessor8085/Microprocessor8085Module'));
 const DSAVisualizerModule = lazy(() => import('./modules/placement/dsa/DSAVisualizerModule'));
+const CommerceAccountsPage = lazy(() => import('./pages/CommerceAccountsPage'));
+const Accounts11Module = lazy(() => import('./modules/commerce/accounts11/Accounts11Module'));
+const AccountsAdvancedModule = lazy(() => import('./modules/commerce/accounts_advanced/AccountsAdvancedModule'));
 
 // Fallback Loading Screen with Typewriter Effect
 const LoadingScreen = () => {
@@ -111,6 +114,7 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/demo" element={<DemoPage />} />
             <Route path="/domains/software-placement/dsa-practice/*" element={<DSAVisualizerModule />} />
+            <Route path="/domains/commerce/accounts" element={<CommerceAccountsPage />} />
             
             {/* Demo routes — public, no auth */}
             <Route path="/demo/chemistry/*" element={<ChemistryModule isDemoMode={true} />} />
@@ -141,6 +145,14 @@ function App() {
                   <PhysicsModule />
                 </ProtectedRoute>
               } 
+            />
+            <Route 
+              path="/commerce/accounts/11th/*" 
+              element={<Accounts11Module />} 
+            />
+            <Route 
+              path="/commerce/accounts/advanced/*" 
+              element={<AccountsAdvancedModule />} 
             />
           </Routes>
         </Suspense>

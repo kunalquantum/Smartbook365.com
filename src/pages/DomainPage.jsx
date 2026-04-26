@@ -8,6 +8,7 @@ import {
     ENGINEERING_DEPARTMENTS,
     LIVE_SUBJECTS,
     SCIENCE_LEVELS,
+    COMMERCE_TRACKS,
     SOFTWARE_PLACEMENT_TRACKS,
     getDomainById,
 } from '../data/learningCatalog'
@@ -20,17 +21,20 @@ const DomainPage = () => {
     const domain = useMemo(() => getDomainById(domainId), [domainId])
     const isEngineering = domain?.id === 'engineering'
     const isScience = domain?.id === 'science'
+    const isCommerce = domain?.id === 'commerce'
     const isComputerLanguage = domain?.id === 'computer-language'
     const isSoftwarePlacement = domain?.id === 'software-placement'
     const sectionId = isEngineering
         ? 'engineering-departments'
         : isScience
             ? 'science-standards'
-            : isComputerLanguage
-                ? 'language-tracks'
-                : isSoftwarePlacement
-                    ? 'placement-tracks'
-                    : 'live-subjects'
+            : isCommerce
+                ? 'commerce-tracks'
+                : isComputerLanguage
+                    ? 'language-tracks'
+                    : isSoftwarePlacement
+                        ? 'placement-tracks'
+                        : 'live-subjects'
 
     useEffect(() => {
         const handleScroll = () => {
@@ -63,7 +67,7 @@ const DomainPage = () => {
 
                     <ul className="nav-links">
                         <li><Link to="/">Home</Link></li>
-                        <li><a href={`#${sectionId}`}>{isEngineering ? 'Departments' : isScience ? 'Standards' : isComputerLanguage ? 'Languages' : isSoftwarePlacement ? 'Tracks' : 'Live Subjects'}</a></li>
+                        <li><a href={`#${sectionId}`}>{isEngineering ? 'Departments' : isScience ? 'Standards' : isCommerce ? 'Tracks' : isComputerLanguage ? 'Languages' : isSoftwarePlacement ? 'Tracks' : 'Live Subjects'}</a></li>
                         <li><Link to="/subscription" className="btn btn-secondary">Join Now</Link></li>
                     </ul>
                 </nav>
@@ -78,7 +82,7 @@ const DomainPage = () => {
                             <p>{domain.summary}</p>
 
                             <div className="hero-btns">
-                                <a href={`#${sectionId}`} className="btn btn-primary">{isEngineering ? 'VIEW DEPARTMENTS' : isScience ? 'VIEW STANDARDS' : isComputerLanguage ? 'VIEW LANGUAGES' : isSoftwarePlacement ? 'VIEW TRACKS' : 'VIEW SUBJECTS'}</a>
+                                <a href={`#${sectionId}`} className="btn btn-primary">{isEngineering ? 'VIEW DEPARTMENTS' : isScience ? 'VIEW STANDARDS' : isCommerce ? 'VIEW TRACKS' : isComputerLanguage ? 'VIEW LANGUAGES' : isSoftwarePlacement ? 'VIEW TRACKS' : 'VIEW SUBJECTS'}</a>
                                 <Link to="/" className="btn btn-outline">BACK HOME</Link>
                             </div>
                         </div>
@@ -162,6 +166,38 @@ const DomainPage = () => {
                                             ))}
                                         </div>
                                     </div>
+                                ))}
+                            </div>
+                        ) : isCommerce ? (
+                            <div className="language-grid">
+                                {COMMERCE_TRACKS.map((track) => (
+                                    <Link
+                                        key={track.id}
+                                        to={track.route}
+                                        className="language-card"
+                                        style={{
+                                            '--language-accent': track.accent,
+                                            '--language-glow': track.glow,
+                                        }}
+                                    >
+                                        <div className="department-card-head">
+                                            <span className="domain-code">{track.code}</span>
+                                            <span className="domain-status">{track.status}</span>
+                                        </div>
+
+                                        <div className="department-card-body">
+                                            <h3>{track.title}</h3>
+                                            <p>{track.summary}</p>
+                                        </div>
+
+                                        <div className="domain-track-list">
+                                            {track.highlights.map((highlight) => (
+                                                <span key={highlight}>{highlight}</span>
+                                            ))}
+                                        </div>
+
+                                        <span className="view-more">ENTER TRACK &rarr;</span>
+                                    </Link>
                                 ))}
                             </div>
                         ) : isComputerLanguage ? (
